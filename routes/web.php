@@ -25,20 +25,20 @@ Route::prefix('kepegawaian')->name('kepegawaian.')->group(function () {
 
     Route::get('/jadwal/{user}', [AdminController::class, 'detailJadwal'])
         ->name('jadwal.detail');
-    
+
         Route::put('/jadwal/{jamKerja}', [AdminController::class, 'updateJadwal'])
         ->name('jadwal.update');
 
     Route::post('jadwal/{user}', [AdminController::class, 'storeJadwal'])
         ->name('jadwal.store');
-    
+
         Route::delete('jadwal/{jamKerja}', [AdminController::class, 'destroyJadwal'])
         ->name('jadwal.destroy');
 
     // Izin
     Route::get('/izin', [AdminController::class, 'indexIzin'])
         ->name('izin');
-    
+
     Route::get('/izin/{user}', [AdminController::class, 'detailIzin'])
         ->name('izin.detail');
 
@@ -53,7 +53,7 @@ Route::get('/kurikulum', function () {
 })->name('kurikulum.index');
 
 Route::prefix('kurikulum')->name('kurikulum.')->group(function() {
-    
+
     Route::get('/wali-kelas', [AdminController::class, 'indexWaliKelas'])
         ->name('wali-kelas');
 
@@ -84,7 +84,7 @@ Route::prefix('kurikulum')->name('kurikulum.')->group(function() {
 
     Route::delete('/kelas/delete-kelas/{kelas}', [AdminController::class, 'destroyKelas'])
         ->name('kelas.delete');
-    
+
     Route::get('/siswa', [AdminController::class, 'indexSiswa'])
         ->name('siswa');
 
@@ -94,28 +94,35 @@ Route::prefix('kurikulum')->name('kurikulum.')->group(function() {
         // jadwal mengajar
     Route::get('/jadwal', [AdminController::class, 'indexJadwalMengajar'])
     ->name('jadwal');
-    
+
     Route::get('/jadwal/buat-jam-pelajaran', [AdminController::class, 'tambahJamPelajaran'])
         ->name('jadwal.jam-pelajaran');
-    
+
     Route::post('/jadwal/buat-jam-pelajaran', [AdminController::class, 'storeJamPelajaran'])
         ->name('jadwal.store-jam-pelajaran');
-        
+
     Route::get('/jadwal/buat-jadwal', [AdminController::class, 'createJadwalMengajar'])
         ->name('jadwal.create');
-    
+
     Route::get('/jadwal/edit-jadwal/{jadwal}', [AdminController::class, 'editJadwalMengajar'])
         ->name('jadwal.edit');
-        
+
     Route::put('/jadwal/update-jadwal/{jadwal}', [AdminController::class, 'updateJadwalMengajar'])
         ->name('jadwal.update');
-        
+
     Route::post('/jadwal/buat-jadwal', [AdminController::class, 'storeJadwalMengajar'])
         ->name('jadwal.store');
 
     Route::delete('/jadwal/delete-jadwal/{jadwal}', [AdminController::class, 'destroyJadwalMengajar'])
         ->name('jadwal.delete');
 
+        // list murid
+    Route::get('/siswa', [AdminController::class, 'indexSiswa'])->name('siswa');
+    Route::get('/siswa/tambah-siswa', [AdminController::class, 'createSiswa'])->name('siswa.create');
+    Route::post('/siswa/simpan-siswa', [AdminController::class, 'storeSiswa'])->name('siswa.store');
+    Route::get('/siswa/edit-siswa/{siswa}', [AdminController::class, 'editSiswa'])->name('siswa.edit');
+    Route::put('/siswa/update-siswa/{siswa}', [AdminController::class, 'updateSiswa'])->name('siswa.update');
+    Route::delete('/siswa/delete-siswa/{siswa}', [AdminController::class, 'destroySiswa'])->name('siswa.delete');
 
 });
 

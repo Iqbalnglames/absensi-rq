@@ -3,7 +3,7 @@
 @section('content')
     <div class="max-w-3xl mx-auto">
 
-        <h1 class="text-2xl font-bold mb-6">Tambah Kelas</h1>
+        <h1 class="text-2xl font-bold mb-6">Edit data Kelas</h1>
 
         @if(session('error'))
             <div class="bg-red-100 text-red-700 p-3 rounded mb-4">

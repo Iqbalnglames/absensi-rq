@@ -9,6 +9,7 @@ use App\Models\Jenjang;
 use App\Models\Jurnal;
 use App\Models\Kelas;
 use App\Models\Mapel;
+use App\Models\Murid;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -88,7 +89,7 @@ class AdminController extends Controller
         $jenjang = Jenjang::all();
         return view('pages.kurikulum.tambahJamPelajaran',compact('jenjang'));
     }
-    
+
     public function storeJamPelajaran(Request $request){
 
         $request->validate([
@@ -115,7 +116,7 @@ class AdminController extends Controller
 
         return back()->with('success', 'Jam pelajaran berhasil dibuat');
     }
-    
+
     public function indexJadwalMengajar(Request $request)
     {
         $query = Mapel::query();
@@ -212,18 +213,18 @@ class AdminController extends Controller
                     $q->where('jam_pelajaran_id', $jamId);
                 })
                 ->exists();
-    
+
             if ($kelasBentrok) {
                 return back()->with('error', 'Kelas sudah memiliki jadwal di jam tersebut.');
             }
-    
+
             $guruBentrok = Jadwal::where('hari', $request->hari)
                 ->where('user_id', $request->user_id)
                 ->whereHas('jam_pelajaran', function($q) use ($jamId){
                     $q->where('jam_pelajaran_id', $jamId);
                 })
                 ->exists();
-    
+
             if ($guruBentrok) {
                 return back()->with('error', 'Guru sudah mengajar di jam tersebut.');
             }
@@ -235,7 +236,7 @@ class AdminController extends Controller
             'user_id' => $request->user_id,
             'mapel_id' => $request->mapel_id,
         ]);
-        
+
         $jadwal->jam_pelajaran()->attach($request->jam_pelajaran_id);
 
         return redirect()
@@ -270,18 +271,18 @@ class AdminController extends Controller
                     $q->where('jam_pelajaran_id', $jamId);
                 })
                 ->exists();
-    
+
             if ($kelasBentrok) {
                 return back()->with('error', 'Kelas sudah memiliki jadwal di jam tersebut.');
             }
-    
+
             $guruBentrok = Jadwal::where('hari', $request->hari)
                 ->where('user_id', $request->user_id)
                 ->whereHas('jam_pelajaran', function($q) use ($jamId){
                     $q->where('jam_pelajaran_id', $jamId);
                 })
                 ->exists();
-    
+
             if ($guruBentrok) {
                 return back()->with('error', 'Guru sudah mengajar di jam tersebut.');
             }
@@ -304,12 +305,12 @@ class AdminController extends Controller
         ->with('success', 'Jadwal berhasil dihapus.');
     }
 
-    // jurnal 
+    // jurnal
     public function indexJurnal()
     {
         $jurnal = Jurnal::with('jadwal')->get();
         $kelas = Kelas::all();
-        
+
         return view('pages.kurikulum.jurnal', compact('jurnal', 'kelas'));
     }
 
@@ -327,7 +328,7 @@ class AdminController extends Controller
 
         return view('pages.kurikulum.tambahKelas', compact('jenjang'));
     }
-    
+
     public function editKelas(Kelas $kelas)
     {
         $jenjang = Jenjang::all();
@@ -335,7 +336,7 @@ class AdminController extends Controller
 
         return view('pages.kurikulum.editKelas', compact('kelas', 'jenjang'));
     }
-    
+
     public function updateKelas(Request $request, Kelas $kelas)
     {
         $request->validate([
@@ -346,7 +347,7 @@ class AdminController extends Controller
 
          return redirect()->route('kurikulum.kelas')->with('success', 'Kelas berhasil diupdate');
     }
-    
+
     public function storeKelas(Request $request)
     {
         $request->validate([
@@ -359,7 +360,7 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Kelas berhasil ditambahkan');
 
     }
-    
+
     public function destroyKelas(Kelas $kelas)
     {
         $kelas->delete();
@@ -382,5 +383,79 @@ class AdminController extends Controller
         Jenjang::create($request->all());
 
         return redirect()->back()->with('success', 'Jenjang berhasil ditambahkan');
+    }
+
+    public function indexSiswa(Request $request)
+    {
+        $query = Murid::query();
+
+         $query->whereHas('kelas', function ($q) use ($request) {
+
+            if ($request->filled('jenjang_id')) {
+                $q->where('jenjang_id', $request->jenjang_id);
+            }
+
+            if ($request->filled('kelas_id')) {
+                $q->where('kelas_id', $request->kelas_id);
+            }
+        });
+
+        $siswa = $query->paginate(20)->withQueryString();
+        $kelas = Kelas::all();
+        $jenjang = Jenjang::all();
+
+        return view('pages.kurikulum.siswa', compact('siswa', 'kelas', 'jenjang'));
+    }
+
+    public function createSiswa(Murid $siswa)
+    {
+        $jenjang = Jenjang::all();
+        $kelas = Kelas::all();
+
+        return view('pages.kurikulum.tambahSiswa', compact('jenjang', 'kelas'));
+    }
+
+    public function storeSiswa(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'nis' => 'required',
+            'alamat' => 'required',
+            'kelas_id' => 'required|exists:kelas,id',
+        ]);
+
+        Murid::create($request->all());
+
+        return redirect()->route('kurikulum.siswa.create')->with('success', 'Santri berhasil ditambahkan');
+    }
+
+    public function editSiswa(Murid $siswa)
+    {
+        $jenjang = Jenjang::all();
+        $kelas = Kelas::all();
+        $siswa->load('kelas');
+
+        return view('pages.kurikulum.editSiswa', compact('siswa', 'jenjang', 'kelas'));
+    }
+
+    public function updateSiswa(Murid $siswa, Request $request)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'nis' => 'required',
+            'alamat' => 'required',
+            'kelas_id' => 'required|exists:kelas,id',
+        ]);
+        $siswa->update($request->all());
+
+        return redirect()->route('kurikulum.siswa')->with('success', 'Santri berhasil diupdate');
+    }
+
+    public function destroySiswa(Murid $siswa)
+    {
+        $siswa->delete();
+
+        return redirect()->back()->with('success', 'Siswa berhasil dihapus');
+
     }
 }
