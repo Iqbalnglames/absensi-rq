@@ -7,11 +7,11 @@
         <div class="flex justify-between mb-4">
             <h2 class="text-xl font-semibold">Data Wali Kelas</h2>
         </div>
-        @if (session('error'))
+        @if(session('error'))
             <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
                 {{ session('error') }}
             </div>
-        @elseif(session('success'))
+            @elseif(session('success'))
             <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
                 {{ session('success') }}
             </div>
@@ -21,7 +21,7 @@
 
                 <select id="jenjang" name="jenjang_id" class="border rounded px-3 py-2">
                     <option value="">Semua Jenjang</option>
-                    @foreach ($jenjang as $j)
+                    @foreach($jenjang as $j)
                         <option value="{{ $j->id }}" {{ request('jenjang_id') == $j->id ? 'selected' : '' }}>
                             {{ $j->nama_jenjang }}
                         </option>
@@ -37,7 +37,7 @@
 
             </form>
             <div class="flex space-x-2 items-center">
-                <a href="{{ route('kurikulum.kelas.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                <a href="{{ route('kurikulum.siswa.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
                     Tambah Data Kelas
                 </a>
             </div>
@@ -56,19 +56,12 @@
                     @forelse($kelas as $k)
                         <tr class="border-b border-gray-200 hover:bg-gray-50">
                             <td class="p-4">Kelas {{ $k->nama_kelas }}</td>
-                            <td class="p-4">
-                                @if (!$k->user_id)
-                                    <a href="{{ route('kurikulum.wali-kelas.edit', $k->id) }}" class="text-blue-600 hover:text-blue-800">Tambah Wali Kelas</a>
-                                @else
-                                    {{ $k->wali_kelas->name }} <a href="{{ route('kurikulum.wali-kelas.edit', $k->id) }}" class="text-blue-600 hover:text-blue-800">Edit Wali Kelas</a>
-                                @endif
-                            </td>
+                            <td class="p-4">{{ $k->wali_kelas_id }}</td>
                             <td class="p-4">{{ $k->jenjang->nama_jenjang }}</td>
                             <td class="p-4">
                                 <div>
-                                    <a class="text-blue-600 hover:text-blue-800"
-                                        href="{{ route('kurikulum.kelas.edit', $k->id) }}">Edit</a>
-                                    <form action="{{ route('kurikulum.kelas.delete', $k->id) }}" method="POST">
+                                    <a class="text-blue-600 hover:text-blue-800" href="{{ route('kurikulum.siswa.edit', $k->id) }}">Edit</a>
+                                    <form action="{{ route('kurikulum.siswa.delete', $k->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="text-red-600 hover:text-red-800">Hapus</button>
@@ -92,9 +85,11 @@
     </div>
     <script>
         const jenjang = document.getElementById('jenjang')
+        const kelas = document.getElementById('kelas')
 
         function resetFilter() {
             jenjang.value = ""
+            kelas.value = ""
             document.querySelector('form').submit()
         }
     </script>

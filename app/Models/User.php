@@ -16,7 +16,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $guarded = []; 
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,12 +41,12 @@ class User extends Authenticatable
         ];
     }
 
-    
+
     public function izins()
     {
         return $this->hasMany(Izin::class);
     }
-    
+
     public function mapel()
     {
         return $this->belongsToMany(Mapel::class, 'mapel_gurus');

@@ -78,12 +78,6 @@ class AdminController extends Controller
     }
 
     // kurikulum
-
-    // bagian wali kelas
-    public function waliKelas()
-    {
-    }
-
     // bagian jadwal mengajar
     public function tambahJamPelajaran(){
         $jenjang = Jenjang::all();
@@ -315,11 +309,37 @@ class AdminController extends Controller
     }
 
     // kelas dan jenjang
-    public function indexKelas()
+    public function editWaliKelas(Kelas $kelas)
     {
-        $kelas = Kelas::orderBy('nama_kelas')->get()->sortByDesc('jenjang.nama_jenjang');
+        $guru = User::whereHas('roles', function($query){
+            $query->where('name', 'guru');
+        })->get();
 
-        return view('pages.kurikulum.kelas', compact('kelas'));
+        return view('pages.kurikulum.editWaliKelas', compact('guru', 'kelas'));
+    }
+
+    public function updateWaliKelas(Kelas $kelas, Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+        ]);
+        $kelas->update($request->all());
+
+        return redirect()->route('kurikulum.kelas')->with('success', 'Wali Kelas berhasil diupdate');
+    }
+
+    public function indexKelas(Request $request)
+    {
+        $query = Kelas::query();
+
+        if ($request->filled('jenjang_id')) {
+            $query->where('jenjang_id', $request->jenjang_id);
+        }
+
+        $jenjang = Jenjang::all();
+        $kelas = $query->orderBy('jenjang_id')->orderBy('nama_kelas')->paginate(10);
+
+        return view('pages.kurikulum.kelas', compact('kelas', 'jenjang'));
     }
 
     public function createKelas()
@@ -389,7 +409,7 @@ class AdminController extends Controller
     {
         $query = Murid::query();
 
-         $query->whereHas('kelas', function ($q) use ($request) {
+        $query->whereHas('kelas', function ($q) use ($request) {
 
             if ($request->filled('jenjang_id')) {
                 $q->where('jenjang_id', $request->jenjang_id);
@@ -400,7 +420,7 @@ class AdminController extends Controller
             }
         });
 
-        $siswa = $query->paginate(20)->withQueryString();
+        $siswa = $query->orderBy('kelas_id')->orderBy('nama')->paginate(20)->withQueryString();
         $kelas = Kelas::all();
         $jenjang = Jenjang::all();
 

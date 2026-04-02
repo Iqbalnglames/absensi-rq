@@ -19,7 +19,7 @@
         <!-- Data Kelas -->
         <a href="{{ route('kurikulum.kelas') }}"
            class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
-            <h2 class="font-semibold text-lg">Data Kelas</h2>
+            <h2 class="font-semibold text-lg">Data Kelas dan Wali Kelas</h2>
             <p class="text-sm text-gray-500">Tambah & kelola kelas</p>
         </a>
 
@@ -35,13 +35,6 @@
            class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
             <h2 class="font-semibold text-lg">Mapel & Guru</h2>
             <p class="text-sm text-gray-500">Tentukan mapel yang diajar guru</p>
-        </a>
-
-        <!-- Wali Kelas -->
-        <a href="{{ route('kurikulum.wali-kelas') }}"
-           class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
-            <h2 class="font-semibold text-lg">Wali Kelas</h2>
-            <p class="text-sm text-gray-500">Tentukan wali kelas</p>
         </a>
 
         <!-- Jadwal Mengajar -->

@@ -13,7 +13,7 @@
   <!-- Sidebar -->
   <aside class="w-64 bg-white shadow-md hidden md:block">
     <div class="p-6 text-xl font-bold border-b border-gray-400">
-      Absensi App
+      Raudhatul Quran App
     </div>
     <nav class="p-4 space-y-2 text-sm">
       <nav class="p-4 space-y-2 text-sm">

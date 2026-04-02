@@ -116,13 +116,31 @@ Route::prefix('kurikulum')->name('kurikulum.')->group(function() {
     Route::delete('/jadwal/delete-jadwal/{jadwal}', [AdminController::class, 'destroyJadwalMengajar'])
         ->name('jadwal.delete');
 
-        // list murid
-    Route::get('/siswa', [AdminController::class, 'indexSiswa'])->name('siswa');
-    Route::get('/siswa/tambah-siswa', [AdminController::class, 'createSiswa'])->name('siswa.create');
-    Route::post('/siswa/simpan-siswa', [AdminController::class, 'storeSiswa'])->name('siswa.store');
-    Route::get('/siswa/edit-siswa/{siswa}', [AdminController::class, 'editSiswa'])->name('siswa.edit');
-    Route::put('/siswa/update-siswa/{siswa}', [AdminController::class, 'updateSiswa'])->name('siswa.update');
-    Route::delete('/siswa/delete-siswa/{siswa}', [AdminController::class, 'destroySiswa'])->name('siswa.delete');
+        // data murid
+    Route::get('/siswa', [AdminController::class, 'indexSiswa'])
+    ->name('siswa');
+
+    Route::get('/siswa/tambah-siswa', [AdminController::class, 'createSiswa'])
+    ->name('siswa.create');
+
+    Route::post('/siswa/simpan-siswa', [AdminController::class, 'storeSiswa'])
+    ->name('siswa.store');
+
+    Route::get('/siswa/edit-siswa/{siswa}', [AdminController::class, 'editSiswa'])
+    ->name('siswa.edit');
+
+    Route::put('/siswa/update-siswa/{siswa}', [AdminController::class, 'updateSiswa'])
+    ->name('siswa.update');
+
+    Route::delete('/siswa/delete-siswa/{siswa}', [AdminController::class, 'destroySiswa'])
+    ->name('siswa.delete');
+
+    // wali kelas
+    Route::get('/edit-wali-kelas/{kelas}', [AdminController::class, 'editWaliKelas'])
+    ->name('wali-kelas.edit');
+
+    Route::patch('/update-wali-kelas/{kelas}', [AdminController::class, 'updateWaliKelas'])
+    ->name('wali-kelas.update');
 
 });
 
