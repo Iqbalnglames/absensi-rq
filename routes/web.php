@@ -142,6 +142,22 @@ Route::prefix('kurikulum')->name('kurikulum.')->group(function() {
     Route::patch('/update-wali-kelas/{kelas}', [AdminController::class, 'updateWaliKelas'])
     ->name('wali-kelas.update');
 
+    // mapel ajar guru
+    Route::get('/mapel-guru', [AdminController::class, 'mapelGuru'])
+    ->name('mapel-guru');
+
+    Route::get('/buat-mapel-guru/{guru}', [AdminController::class, 'createMapelGuru'])
+    ->name('mapel-guru.create');
+
+    Route::post('/update-mapel-guru', [AdminController::class, 'storeMapelGuru'])
+    ->name('mapel-guru.store');
+
+    Route::get('/edit-mapel-guru/{guru}', [AdminController::class, 'editMapelGuru'])
+    ->name('mapel-guru.edit');
+
+    Route::patch('/update-mapel-guru/{guru}', [AdminController::class, 'updateMapelGuru'])
+    ->name('mapel-guru.update');
+
 });
 
 Route::get('/tahfidz', function () {

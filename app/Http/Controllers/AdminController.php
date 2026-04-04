@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GuruMapelKelas;
 use App\Models\Jadwal;
 use App\Models\JamKerja;
 use App\Models\JamPelajaran;
@@ -477,5 +478,75 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Siswa berhasil dihapus');
 
+    }
+
+    public function mapelGuru(Request $request)
+    {
+        $query = User::query();
+
+        if ($request->search) {
+            $search = $request->search;
+
+            $query->where('name', 'like', '%' . $search . '%')
+                ->orWhereHas('guruMapelKelas.mapel', function ($q2) use ($search) {
+                    $q2->where('nama_mapel', 'like', '%' . $search . '%');
+                });
+            };
+
+        $guru = $query->whereHas('roles', function($q){
+            $q->where('name', 'guru');
+        })->paginate(10)->withQueryString();
+
+        return view('pages.kurikulum.mapelGuru', compact('guru'));
+    }
+
+    public function createMapelGuru(User $guru)
+    {
+        $mapels = Mapel::all();
+        $kelas = Kelas::all();
+
+        return view('pages.kurikulum.tambahMapelGuru', compact('guru', 'mapels', 'kelas'));
+    }
+
+    public function storeMapelGuru(Request $request)
+    {
+        $pengajar = GuruMapelKelas::query();
+         $request->validate([
+            'mapel_id.*' => 'exists:mapels,id',
+        ]);
+
+        // dd($request->mapel);
+
+        $pengajar->create([
+            'user_id' => $request->user_id,
+            'kelas_id' => $request->kelas_id,
+            'mapel_id' => $request->mapel_id,
+        ]);
+
+
+        return redirect()->back()->with('success', 'Mapel ajar berhasil dibuat');
+    }
+
+    public function editMapelGuru(GuruMapelKelas $guru)
+    {
+        $editGuruMapel = $guru->load('guru', 'mapel', 'kelas');
+        $mapels = Mapel::all();
+        $kelas = Kelas::all();
+
+        return view('pages.kurikulum.editMapelGuru', compact('editGuruMapel', 'mapels', 'kelas'));
+    }
+
+    public function updateMapelGuru(Request $request, GuruMapelKelas $guru)
+    {
+         $request->validate([
+            'mapel_id.*' => 'exists:mapels,id',
+        ]);
+
+        $guru->update([
+            'mapel_id' => $request->mapel_id,
+            'kelas_id' => $request->kelas_id,
+        ]);
+
+        return redirect()->back()->with('success', 'Mapel ajar berhasil diperbarui');
     }
 }

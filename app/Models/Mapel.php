@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mapel extends Model
 {
-    protected $guarded = []; 
-    
-    public function guru_mapel(){
-        return $this->belongsToMany(Jadwal::class, 'mapel_gurus');
+    protected $guarded = [];
+
+    public function guruMapelKelas()
+    {
+        return $this->hasMany(GuruMapelKelas::class, 'mapel_id');
     }
 
     public function jadwal(){

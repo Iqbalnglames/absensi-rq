@@ -19,6 +19,10 @@ class Kelas extends Model
     public function murid(){
         return $this->hasMany(Murid::class);
     }
+    public function guruMapelKelas()
+    {
+        return $this->hasMany(GuruMapelKelas::class, 'kelas_id');
+    }
     public function nilai(){
         return $this->hasMany(Nilai::class);
     }

@@ -47,9 +47,14 @@ class User extends Authenticatable
         return $this->hasMany(Izin::class);
     }
 
-    public function mapel()
+    public function guruMapelKelas()
+{
+    return $this->hasMany(GuruMapelKelas::class, 'user_id');
+}
+
+    public function kelas_mapel_ajar()
     {
-        return $this->belongsToMany(Mapel::class, 'mapel_gurus');
+        return $this->belongsToMany(Kelas::class, 'mapel_gurus');
     }
 
     public function jadwal_mengajar()
