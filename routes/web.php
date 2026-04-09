@@ -168,4 +168,11 @@ Route::get('/kesantrian', function () {
     return view('pages.kesantrian.index');
 })->name('kesantrian.index');
 
+Route::prefix('kesantrian')->name('kesantrian.')->group(function() {
+
+    // keasramaan
+    Route::get('/asrama', [AdminController::class, 'indexAsrama'])->name('asrama');
+
+});
+
 Route::get('users-list', [AdminController::class, 'listUser']);

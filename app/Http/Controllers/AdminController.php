@@ -549,4 +549,16 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Mapel ajar berhasil diperbarui');
     }
+
+    public function destroyMapelGuru(GuruMapelKelas $guruMapel)
+    {
+        $guruMapel->delete();
+
+        return redirect()->back()->with('success', 'Penyerahan Mapel berhasil dihapus');
+    }
+
+    public function indexAsrama()
+    {
+        return view('pages.kesantrian.asrama');
+    }
 }

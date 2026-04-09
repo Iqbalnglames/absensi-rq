@@ -1,26 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="space-y-6">
 
-<div class="bg-white p-6 rounded-xl shadow">
-    <h2 class="text-lg font-semibold mb-4">Data Santri</h2>
+    <h1 class="text-xl font-bold text-gray-800">
+        Manajemen Kesantrian
+    </h1>
 
-    <table class="w-full text-sm">
-        <thead>
-            <tr class="border-b">
-                <th class="text-left py-2">Nama</th>
-                <th class="text-left py-2">Kamar</th>
-                <th class="text-left py-2">Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="border-b">
-                <td class="py-2">Zaid</td>
-                <td>Al-Fatih</td>
-                <td class="text-green-500">Mukim</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Data Asrama -->
+        <a href="{{ route('kesantrian.asrama') }}"
+           class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+            <h2 class="font-semibold text-lg">Data Asrama</h2>
+            <p class="text-sm text-gray-500">Kelola Asrama Santri</p>
+        </a>
+
+        <!-- Data Pelanggaran -->
+        <a href="{{ route('kurikulum.kelas') }}"
+           class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+            <h2 class="font-semibold text-lg">Data Pelanggaran Santri</h2>
+            <p class="text-sm text-gray-500">Kelola pelanggaran santri</p>
+        </a>
+
+        <!-- Data Perizinan -->
+        <a href="{{ route('kurikulum.siswa') }}"
+           class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+            <h2 class="font-semibold text-lg">Data Perizinan Santri</h2>
+            <p class="text-sm text-gray-500">Kelola perizinan santri</p>
+        </a>
+
+    </div>
 </div>
-
 @endsection
