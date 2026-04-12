@@ -29,6 +29,12 @@
             <h2 class="font-semibold text-lg">Data Siswa</h2>
             <p class="text-sm text-gray-500">Tambah & tentukan kelas siswa</p>
         </a>
+        
+        <a href="{{ route('kurikulum.absen-siswa') }}"
+           class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+            <h2 class="font-semibold text-lg">Data Absen Siswa</h2>
+            <p class="text-sm text-gray-500">Rekap absen siswa</p>
+        </a>
 
         <!-- Mapel Guru -->
         <a href="{{ route('kurikulum.mapel-guru') }}"

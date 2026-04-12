@@ -20,7 +20,7 @@ class Jadwal extends Model
         return $this->belongsToMany(JamPelajaran::class, 'jam_mapels');
     }
 
-    public function absens()
+    public function absen_murid()
     {
         return $this->hasMany(AbsenMurid::class);
     }

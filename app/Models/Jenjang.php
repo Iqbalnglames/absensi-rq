@@ -10,6 +10,11 @@ class Jenjang extends Model
     {
         return $this->hasMany(Kelas::class);
     }
+    
+    public function asrama()
+    {
+        return $this->hasMany(Asrama::class);
+    }
 
     public function jamPelajarans()
     {

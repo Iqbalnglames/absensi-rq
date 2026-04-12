@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
+<a href="{{ route('kepegawaian.index') }}" class="text-sm text-blue-500 mb-4 inline-block">
+            ← Kembali ke Menu Kepegawaian
+</a>
 <div class="bg-white rounded-xl shadow p-6">
 
     <div class="flex justify-between items-center mb-6">

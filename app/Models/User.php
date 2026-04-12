@@ -48,9 +48,9 @@ class User extends Authenticatable
     }
 
     public function guruMapelKelas()
-{
-    return $this->hasMany(GuruMapelKelas::class, 'user_id');
-}
+    {
+        return $this->hasMany(GuruMapelKelas::class, 'user_id');
+    }
 
     public function kelas_mapel_ajar()
     {
@@ -71,6 +71,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(Kelas::class);
     }
+    
+    public function asrama()
+    {
+        return $this->hasOne(Asrama::class);
+    }
+    
 
     public function roles()
     {

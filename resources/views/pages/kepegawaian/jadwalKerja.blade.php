@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
+ <a href="{{ route('kepegawaian.index') }}" class="text-sm text-blue-500 mb-4 inline-block">
+            ← Kembali ke Menu Kepegawaian
+</a>
 <h2 class="text-xl font-semibold mb-6">
     Penjadwalan Guru
 </h2>

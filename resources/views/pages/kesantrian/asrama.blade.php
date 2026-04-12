@@ -19,14 +19,14 @@
         <div class="p-4 mb-4 flex justify-between bg-white shadow rounded">
             <form method="GET" class="flex gap-3">
 
-                <select id="jenjang" name="jenjang_id" class="border rounded px-3 py-2">
+                {{-- <select id="jenjang" name="jenjang_id" class="border rounded px-3 py-2">
                     <option value="">Semua Jenjang</option>
                     @foreach ($jenjang as $j)
                         <option value="{{ $j->id }}" {{ request('jenjang_id') == $j->id ? 'selected' : '' }}>
                             {{ $j->nama_jenjang }}
                         </option>
                     @endforeach
-                </select>
+                </select> --}}
 
                 <button class="bg-blue-600 text-white px-4 rounded">
                     Filter
@@ -37,8 +37,8 @@
 
             </form>
             <div class="flex space-x-2 items-center">
-                <a href="{{ route('kurikulum.kelas.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
-                    Tambah Data Kelas
+                <a href="{{ route('kesantrian.asrama.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                    Tambah Data Asrama
                 </a>
             </div>
         </div>
@@ -46,47 +46,47 @@
             <table class="w-full text-sm">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="text-left p-4">Kelas</th>
-                        <th class="text-left p-4">Nama Wali Kelas</th>
+                        <th class="text-left p-4">Asrama</th>
+                        <th class="text-left p-4">Nama Pengasuh Asrama</th>
                         <th class="text-left p-4">Jenjang</th>
                         <th class="text-left p-4">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($kelas as $k)
+                    @forelse($asrama as $a)
                         <tr class="border-b border-gray-200 hover:bg-gray-50">
-                            <td class="p-4">Kelas {{ $k->nama_kelas }}</td>
+                            <td class="p-4">Asrama {{ $a->nama_asrama }}</td>
                             <td class="p-4">
-                                @if (!$k->user_id)
-                                    <a href="{{ route('kurikulum.wali-kelas.edit', $k->id) }}" class="text-blue-600 hover:text-blue-800">Tambah Wali Kelas</a>
+                                @if (!$a->user_id)
+                                    <a href="{{ route('kesantrian.pengasuh-asrama.edit', $a->id) }}" class="text-blue-600 hover:text-blue-800">Tambah Pengasuh Asrama</a>
                                 @else
-                                    {{ $k->wali_kelas->name }} <a href="{{ route('kurikulum.wali-kelas.edit', $k->id) }}" class="text-blue-600 hover:text-blue-800">Edit Wali Kelas</a>
+                                    {{ $a->pengasuh_asrama->name }} <a href="{{ route('kesantrian.pengasuh-asrama.edit', $a->id) }}" class="text-blue-600 hover:text-blue-800">Edit Pengasuh Asrama</a>
                                 @endif
                             </td>
-                            <td class="p-4">{{ $k->jenjang->nama_jenjang }}</td>
+                            <td class="p-4">{{ $a->jenjang->nama_jenjang }}</td>
                             <td class="p-4">
-                                <div>
+                                {{-- <div>
                                     <a class="text-blue-600 hover:text-blue-800"
-                                        href="{{ route('kurikulum.kelas.edit', $k->id) }}">Edit</a>
-                                    <form action="{{ route('kurikulum.kelas.delete', $k->id) }}" method="POST">
+                                        href="{{ route('kurikulum.kelas.edit', $ak->id) }}">Edit</a>
+                                    <form action="{{ route('kurikulum.kelas.delete', $a->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="text-red-600 hover:text-red-800">Hapus</button>
                                     </form>
-                                </div>
+                                </div> --}}
                             </td>
                         </tr>
                     @empty
                         <tr>
                             <td colspan="4" class="text-center py-6 text-gray-400">
-                                Tidak ada data Siswa
+                                Tidak ada data Asrama
                             </td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
             <div class="bg-white text-black p-2">
-                {{ $kelas->links() }}
+                {{ $asrama->links() }}
             </div>
         </div>
     </div>
