@@ -6,11 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Murid extends Model
 {
-    protected $guarded = []; 
-    
+    protected $guarded = [];
+
     public function absen_murid()
     {
         return $this->hasMany(AbsenMurid::class);
+    }
+
+    public function pelanggaran()
+    {
+        return $this->hasMany(CatatanPelanggaran::class);
     }
 
     public function kelas(){

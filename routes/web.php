@@ -197,6 +197,16 @@ Route::prefix('kesantrian')->name('kesantrian.')->group(function () {
 
     Route::patch('/asrama/update-pengasuh-asrama/{asrama}', [KesantrianController::class, 'updatePengasuhAsrama'])
         ->name('pengasuh-asrama.update');
+
+    Route::get('/pelanggaran', [KesantrianController::class, 'indexPelanggaran'])
+        ->name('pelanggaran-siswa');
+
+    Route::get('/pelanggaran/tambah-pelanggaran', [KesantrianController::class, 'createPelanggaran'])
+        ->name('pelanggaran-siswa.create');
+
+    Route::post('/pelanggaran/simpan-pelanggaran', [KesantrianController::class, 'storePelanggaran'])
+        ->name('pelanggaran-siswa.store');
+
 });
 
 Route::get('/tahfidz', function () {

@@ -17,7 +17,7 @@
         </a>
 
         <!-- Data Pelanggaran -->
-        <a href="{{ route('kurikulum.kelas') }}"
+        <a href="{{ route('kesantrian.pelanggaran-siswa') }}"
            class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
             <h2 class="font-semibold text-lg">Data Pelanggaran Santri</h2>
             <p class="text-sm text-gray-500">Kelola pelanggaran santri</p>
