@@ -201,6 +201,12 @@ Route::prefix('kesantrian')->name('kesantrian.')->group(function () {
     Route::get('/pelanggaran', [KesantrianController::class, 'indexPelanggaran'])
         ->name('pelanggaran-siswa');
 
+    Route::get('/pelanggaran/tambah-jenis-pelanggaran', [KesantrianController::class, 'createJenisPelanggaran'])
+        ->name('jenis-pelanggaran-siswa.create');
+
+    Route::post('/pelanggaran/simpan-jenis-pelanggaran', [KesantrianController::class, 'storeJenisPelanggaran'])
+        ->name('jenis-pelanggaran-siswa.store');
+
     Route::get('/pelanggaran/tambah-pelanggaran', [KesantrianController::class, 'createPelanggaran'])
         ->name('pelanggaran-siswa.create');
 

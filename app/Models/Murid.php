@@ -18,6 +18,11 @@ class Murid extends Model
         return $this->hasMany(CatatanPelanggaran::class);
     }
 
+    public function perizinan()
+    {
+        return $this->hasMany(Perizinan::class);
+    }
+
     public function kelas(){
         return $this->belongsTo(Kelas::class);
     }

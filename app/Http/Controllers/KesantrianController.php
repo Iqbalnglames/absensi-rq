@@ -80,6 +80,23 @@ class KesantrianController extends Controller
         return view('pages.kesantrian.pelanggaranSiswa', compact('pelanggaranSiswa', 'kelas', 'jenjang'));
     }
 
+    public function createJenisPelanggaran()
+    {
+        return view('pages.kesantrian.tambahJenisPelanggaran');
+    }
+
+    public function storeJenisPelanggaran(Request $request)
+    {
+         $request->validate([
+            'jenis_pelanggaran' => 'required',
+            'poin' => 'required',
+        ]);
+
+        Pelanggaran::create($request->all());
+
+        return redirect()->back()->with('success', 'data jenis pelanggaran berhasil disimpan');
+
+    }
     public function createPelanggaran()
     {
         $siswa = Murid::all();

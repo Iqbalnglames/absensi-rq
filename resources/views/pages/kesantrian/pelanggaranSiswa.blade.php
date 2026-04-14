@@ -46,6 +46,9 @@
 
             </form>
             <div class="flex space-x-2 items-center">
+                <a href="{{ route('kesantrian.jenis-pelanggaran-siswa.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                    Tambah Data Jenis Pelanggaran
+                </a>
                 <a href="{{ route('kesantrian.pelanggaran-siswa.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
                     Tambah Data Pelanggaran
                 </a>
@@ -59,7 +62,7 @@
                         <th class="text-left p-4">Kelas</th>
                         <th class="text-left p-4">Jenis Pelanggaran</th>
                         <th class="text-left p-4">Detail Pelanggaran</th>
-                        <th class="text-left p-4">Poin Pelanggaran</th>
+                        <th class="text-left p-4">Total Poin Pelanggaran</th>
                         <th class="text-left p-4">Aksi</th>
                     </tr>
                 </thead>
@@ -83,10 +86,10 @@
                                         </div>
                                     @endforeach
                                 </td>
-                                <td class="p-4">
-                                    @foreach ($s->pelanggaran as $pelanggaran)
-                                        {{ $pelanggaran->pelanggaran->poin }}
-                                    @endforeach
+                                <td class="p-4 font-bold">
+                                    {{ $s->pelanggaran->sum(function ($item) {
+                                        return $item->pelanggaran->poin;
+                                    }) }}
                                 </td>
                                 @else
                                  <td class="p-4 text-gray-400 text-center" colspan="3">
