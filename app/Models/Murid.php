@@ -8,6 +8,10 @@ class Murid extends Model
 {
     protected $guarded = [];
 
+    public function ekskul()
+    {
+        return $this->belongsToMany(Ekskul::class, 'ekskul_murids');
+    }
     public function absen_murid()
     {
         return $this->hasMany(AbsenMurid::class);

@@ -225,6 +225,9 @@ Route::prefix('kesantrian')->name('kesantrian.')->group(function () {
     Route::post('/perizinan', [KesantrianController::class, 'storePerizinan'])
         ->name('perizinan.store');
 
+   Route::get('/ekskul', [KesantrianController::class, 'ekskul'])
+        ->name('ekskul');
+
 });
 
 Route::get('/tahfidz', function () {
