@@ -8,6 +8,7 @@ use App\Models\Jenjang;
 use App\Models\Kelas;
 use App\Models\Murid;
 use App\Models\Pelanggaran;
+use App\Models\Perizinan;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -116,6 +117,49 @@ class KesantrianController extends Controller
         CatatanPelanggaran::create($request->all());
 
         return redirect()->back()->with('success', 'data pelanggaran berhasil disimpan');
+    }
 
+    public function perizinan(Request $request)
+    {
+       $query = Perizinan::query();
+
+        $query->whereHas('murid', function ($q) use ($request) {
+
+            if ($request->filled('jenjang_id')) {
+                $q->whereHas('kelas', function($qu) use ($request){
+                    $qu->where('jenjang_id', $request->jenjang_id);
+                });
+            }
+
+            if ($request->filled('kelas_id')) {
+                $q->where('kelas_id', $request->kelas_id);
+            }
+        })->orWhereHas('murid', function($q) use ($request) {
+            $q->where('nama', $request->nama_santri);
+        });
+
+        $jenjang = Jenjang::all();
+        $kelas = Kelas::all();
+        $perizinan = $query->orderBy('created_at')->paginate(20);
+
+       return view('pages.kesantrian.perizinan', compact('perizinan', 'jenjang', 'kelas'));
+    }
+
+    public function createPerizinan()
+    {
+        return view('pages.kesantrian.tambahPerizinan');
+    }
+
+    public function storePerizinan(Request $request)
+    {
+         $request->validate([
+            'murid_id' => 'required',
+            'waktu_perizinan' => 'required',
+            'tanggal' => 'required',
+        ]);
+
+        Perizinan::create($request->all());
+
+        return redirect()->back()->with('success', 'data pelanggaran berhasil disimpan');
     }
 }

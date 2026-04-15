@@ -3,11 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\JamKerja;
+use App\Models\Murid;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    public function searchMurid(Request $request)
+    {
+        $query = $request->q;
+
+        $data = Murid::where('nama', 'like' . '%' . $query . '%')->get();
+
+        return response()->json($data);
+    }
+
     // penjadwalan
     public function indexJadwal(User $user)
     {

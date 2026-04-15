@@ -14,6 +14,9 @@ Route::get('/kepegawaian', function () {
     return view('pages.kepegawaian.index');
 })->name('kepegawaian.index');
 
+Route::get('/search-murid', [AdminController::class, 'searchMurid'])
+    ->name('search-siswa');
+
 Route::prefix('kepegawaian')->name('kepegawaian.')->group(function () {
 
     // CRUD User
@@ -212,6 +215,15 @@ Route::prefix('kesantrian')->name('kesantrian.')->group(function () {
 
     Route::post('/pelanggaran/simpan-pelanggaran', [KesantrianController::class, 'storePelanggaran'])
         ->name('pelanggaran-siswa.store');
+
+    Route::get('/perizinan', [KesantrianController::class, 'perizinan'])
+        ->name('perizinan');
+
+    Route::get('/perizinan/tambah-perizinan', [KesantrianController::class, 'createPerizinan'])
+        ->name('perizinan.create');
+
+    Route::post('/perizinan', [KesantrianController::class, 'storePerizinan'])
+        ->name('perizinan.store');
 
 });
 

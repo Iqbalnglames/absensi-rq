@@ -24,7 +24,7 @@
         </a>
 
         <!-- Data Perizinan -->
-        <a href="{{ route('kurikulum.siswa') }}"
+        <a href="{{ route('kesantrian.perizinan') }}"
            class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
             <h2 class="font-semibold text-lg">Data Perizinan Santri</h2>
             <p class="text-sm text-gray-500">Kelola perizinan santri</p>
