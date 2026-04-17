@@ -124,26 +124,15 @@ class KesantrianController extends Controller
     {
        $query = Perizinan::query();
 
-        $query->whereHas('murid', function ($q) use ($request) {
-
-            if ($request->filled('jenjang_id')) {
-                $q->whereHas('kelas', function($qu) use ($request){
-                    $qu->where('jenjang_id', $request->jenjang_id);
-                });
+        $query->whereHas('murid', function($q) use ($request) {
+            if ($request->filled('nama_siswa')){
+                $q->where('nama', 'like', '%' . $request->nama_siswa . '%');
             }
-
-            if ($request->filled('kelas_id')) {
-                $q->where('kelas_id', $request->kelas_id);
-            }
-        })->orWhereHas('murid', function($q) use ($request) {
-            $q->where('nama', $request->nama_santri);
         });
 
-        $jenjang = Jenjang::all();
-        $kelas = Kelas::all();
         $perizinan = $query->orderByDesc('created_at')->paginate(20);
 
-       return view('pages.kesantrian.perizinan', compact('perizinan', 'jenjang', 'kelas'));
+       return view('pages.kesantrian.perizinan', compact('perizinan'));
     }
 
     public function createPerizinan()
@@ -151,7 +140,7 @@ class KesantrianController extends Controller
         $siswa = Murid::all();
         return view('pages.kesantrian.tambahPerizinan', compact('siswa'));
     }
-    
+
     public function editPerizinan(Perizinan $perizinan)
     {
         $siswa = Murid::all();
@@ -173,7 +162,7 @@ class KesantrianController extends Controller
             'tanggal' => $request->tanggal,
         ]);
 
-        return redirect()->back()->with('success', 'data perizinan berhasil diupdate');
+        return redirect()->route('kesantrian.perizinan')->with('success', 'data perizinan berhasil diupdate');
     }
 
     public function storePerizinan(Request $request)
@@ -196,27 +185,78 @@ class KesantrianController extends Controller
 
     public function ekskul(Request $request)
     {
-        $query = Ekskul::query();
+        $ekskul = Ekskul::orderByDesc('created_at')->paginate(20);
 
-        $query->whereHas('murid', function ($q) use ($request) {
+        return view('pages.kesantrian.ekskul', compact('ekskul'));
+    }
 
-            if ($request->filled('jenjang_id')) {
-                $q->whereHas('kelas', function($qu) use ($request){
-                    $qu->where('jenjang_id', $request->jenjang_id);
-                });
-            }
+    public function createEkskul()
+    {
+        return view('pages.kesantrian.tambahEkskul');
+    }
 
-            if ($request->filled('kelas_id')) {
-                $q->where('kelas_id', $request->kelas_id);
-            }
-        })->orWhereHas('murid', function($q) use ($request) {
-            $q->where('nama', $request->nama_santri);
-        });
+    public function storeEkskul(Request $request)
+    {
+         $request->validate([
+            'nama_ekskul' => 'required',
+        ]);
 
-        $jenjang = Jenjang::all();
-        $kelas = Kelas::all();
-        $ekskul = $query->orderByDesc('created_at')->paginate(20);
+        Ekskul::create($request->all());
 
-       return view('pages.kesantrian.ekskul', compact('ekskul', 'jenjang', 'kelas'));
+        return redirect()->back()->with('success', 'data ekskul berhasil disimpan');
+    }
+
+    public function editEkskul(Ekskul $ekskul)
+    {
+        return view('pages.kesantrian.editEkskul', compact('ekskul'));
+    }
+
+    public function updateEkskul(Request $request, Ekskul $ekskul)
+    {
+         $request->validate([
+            'nama_ekskul' => 'required',
+        ]);
+
+        $ekskul->update($request->all());
+
+        return redirect()->route('kesantrian.ekskul')->with('success', 'data ekskul berhasil disimpan');
+    }
+
+    public function destroyEkskul(Ekskul $ekskul)
+    {
+        $ekskul->delete();
+
+        return redirect()->back()->with('success', 'ekskul berhasil dihapus');
+    }
+
+    public function pesertaEkskul(Ekskul $ekskul)
+    {
+        $siswa = Murid::all();
+        $detailEkskul = $ekskul->load('murid');
+
+        return view('pages.kesantrian.pesertaEkskul', compact('detailEkskul', 'siswa'));
+    }
+
+    public function storePesertaEkskul(Request $request, Ekskul $ekskul)
+    {
+         $request->validate([
+            'murid_id' => 'required',
+        ]);
+
+        $exist = $ekskul->murid()->where('murid_id', $request->murid_id)->exists();
+
+        if($exist){
+            return redirect()->back()->with('error', 'peserta ekskul sudah ditambahkan sebelumnya!');
+        }
+
+        $ekskul->murid()->syncWithoutDetaching($request->murid_id);
+
+        return redirect()->back()->with('success', 'peserta ekskul berhasil ditambahkan');
+    }
+
+    public function hapusPesertaEkskul(Ekskul $ekskul, Murid $murid)
+    {
+        $murid->ekskul()->detach($ekskul->id);
+        return redirect()->back()->with('success', 'peserta ekskul berhasil dihapus');
     }
 }

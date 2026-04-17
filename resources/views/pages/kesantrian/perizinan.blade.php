@@ -18,26 +18,7 @@
         @endif
         <div class="p-4 mb-4 flex justify-between bg-white shadow rounded">
             <form method="GET" class="flex gap-3">
-
-                <select id="jenjang" name="jenjang_id" class="border rounded px-3 py-2">
-                    <option value="">Semua Jenjang</option>
-                    @foreach ($jenjang as $j)
-                        <option value="{{ $j->id }}" {{ request('jenjang_id') == $j->id ? 'selected' : '' }}>
-                            {{ $j->nama_jenjang }}
-                        </option>
-                    @endforeach
-                </select>
-
-                <select id="kelas" name="kelas_id" class="border rounded px-3 py-2">
-                    <option value="">Semua Kelas</option>
-                    @foreach ($kelas as $k)
-                        <option value="{{ $k->id }}" {{ request('jenjang_id') == $k->id ? 'selected' : '' }}>
-                            {{ $k->nama_kelas }}
-                        </option>
-                    @endforeach
-                </select>
-
-                <input id="kelas" name="nama_siswa" class="border rounded px-3 py-2" placeholder="cari santri...">
+                <input id="nama" name="nama_siswa" class="border rounded px-3 py-2" placeholder="cari santri...">
 
                 <button class="bg-blue-600 text-white px-4 rounded">
                     Filter
@@ -96,12 +77,9 @@
         </div>
     </div>
     <script>
-        const jenjang = document.getElementById('jenjang')
-        const kelas = document.getElementById('kelas')
+        const nama = document.getElementById('nama_siswa')
 
         function resetFilter() {
-            jenjang.value = ""
-            kelas.value = ""
             document.querySelector('form').submit()
         }
     </script>

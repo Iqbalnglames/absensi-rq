@@ -18,7 +18,7 @@
         @endif
         <div class="p-4 mb-4 flex justify-between bg-white shadow rounded">
             <div class="flex space-x-2 items-center">
-                <a href="{{ route('kesantrian.asrama.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                <a href="{{ route('kesantrian.ekskul.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
                     Tambah Data Ekskul
                 </a>
             </div>
@@ -36,17 +36,17 @@
                     @forelse($ekskul as $e)
                         <tr class="border-b border-gray-200 hover:bg-gray-50">
                             <td class="p-4">{{ $e->nama_ekskul }}</td>
-                            <td class="p-4">Lihat Peserta</td>
+                            <td class="p-4">{{ $e->murid->count() }} Peserta<a class="text-blue-600 hover:text-blue-800" href="{{ route('kesantrian.ekskul.member', $e->id) }}"> Lihat Peserta</a></td>
                             <td class="p-4">
-                                {{-- <div>
+                                <div>
                                     <a class="text-blue-600 hover:text-blue-800"
-                                        href="{{ route('kurikulum.kelas.edit', $ak->id) }}">Edit</a>
-                                    <form action="{{ route('kurikulum.kelas.delete', $a->id) }}" method="POST">
+                                        href="{{ route('kesantrian.ekskul.edit', $e->id) }}">Edit</a>
+                                    <form action="{{ route('kesantrian.ekskul.delete', $e->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="text-red-600 hover:text-red-800">Hapus</button>
                                     </form>
-                                </div> --}}
+                                </div>
                             </td>
                         </tr>
                     @empty
