@@ -228,6 +228,9 @@ Route::prefix('kesantrian')->name('kesantrian.')->group(function () {
    Route::get('/ekskul', [KesantrianController::class, 'ekskul'])
         ->name('ekskul');
 
+   Route::get('/ekskul/tambah-ekskul', [KesantrianController::class, 'createEkskul'])
+        ->name('ekskul.create');
+
 });
 
 Route::get('/tahfidz', function () {
