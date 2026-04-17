@@ -234,6 +234,30 @@ Route::prefix('kesantrian')->name('kesantrian.')->group(function () {
    Route::get('/ekskul', [KesantrianController::class, 'ekskul'])
         ->name('ekskul');
 
+   Route::get('/ekskul/tambah-ekskul', [KesantrianController::class, 'createEkskul'])
+        ->name('ekskul.create');
+
+   Route::get('/ekskul/edit-ekskul/{ekskul}', [KesantrianController::class, 'editEkskul'])
+        ->name('ekskul.edit');
+
+   Route::delete('/ekskul/delete-ekskul/{ekskul}', [KesantrianController::class, 'destroyEkskul'])
+        ->name('ekskul.delete');
+
+   Route::put('/ekskul/update-ekskul/{ekskul}', [KesantrianController::class, 'updateEkskul'])
+        ->name('ekskul.update');
+
+   Route::get('/ekskul/peserta-ekskul/{ekskul}', [KesantrianController::class, 'pesertaEkskul'])
+        ->name('ekskul.member');
+
+   Route::post('/ekskul/simpan-ekskul', [KesantrianController::class, 'storeEkskul'])
+        ->name('ekskul.store');
+
+   Route::post('/ekskul/simpan-peserta/{ekskul}', [KesantrianController::class, 'storePesertaEkskul'])
+        ->name('ekskul.storePeserta');
+
+   Route::delete('/ekskul/hapus-peserta/{ekskul}/{murid}', [KesantrianController::class, 'hapusPesertaEkskul'])
+        ->name('ekskul.deletePeserta');
+
 });
 
 Route::get('/tahfidz', function () {
