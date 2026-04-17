@@ -222,6 +222,12 @@ Route::prefix('kesantrian')->name('kesantrian.')->group(function () {
     Route::get('/perizinan/tambah-perizinan', [KesantrianController::class, 'createPerizinan'])
         ->name('perizinan.create');
 
+    Route::get('/perizinan/edit-perizinan/{perizinan}', [KesantrianController::class, 'editPerizinan'])
+        ->name('perizinan.edit');
+
+    Route::put('/perizinan/update-perizinan/{perizinan}', [KesantrianController::class, 'updatePerizinan'])
+        ->name('perizinan.update');
+
     Route::post('/perizinan', [KesantrianController::class, 'storePerizinan'])
         ->name('perizinan.store');
 
