@@ -151,6 +151,30 @@ class KesantrianController extends Controller
         $siswa = Murid::all();
         return view('pages.kesantrian.tambahPerizinan', compact('siswa'));
     }
+    
+    public function editPerizinan(Perizinan $perizinan)
+    {
+        $siswa = Murid::all();
+        return view('pages.kesantrian.editPerizinan', compact('perizinan', 'siswa'));
+    }
+
+    public function updatePerizinan(Perizinan $perizinan, Request $request)
+    {
+         $request->validate([
+            'murid_id' => 'required',
+            'waktu_mulai_izin' => 'required',
+            'waktu_selesai_izin' => 'required',
+            'tanggal' => 'required',
+        ]);
+
+        $perizinan->update([
+            'murid_id' => $request->murid_id,
+            'waktu_izin' => $request->waktu_mulai_izin . "-" . $request->waktu_selesai_izin,
+            'tanggal' => $request->tanggal,
+        ]);
+
+        return redirect()->back()->with('success', 'data perizinan berhasil diupdate');
+    }
 
     public function storePerizinan(Request $request)
     {
