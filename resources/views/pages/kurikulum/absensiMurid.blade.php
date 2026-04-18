@@ -43,13 +43,8 @@
                 <button type="button" onclick="resetFilter()" class="border border-blue-600 text-blue-600 px-4 rounded">
                     Reset
                 </button>
-
             </form>
-            <div class="flex space-x-2 items-center">
-                {{-- <a href="{{ route('kurikulum.siswa.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
-                    Tambah Data Santri
-                </a> --}}
-            </div>
+
         </div>
         <div class="bg-white shadow rounded-xl overflow-x-auto">
             <table class="w-full text-sm">

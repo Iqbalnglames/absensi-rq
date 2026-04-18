@@ -9,8 +9,8 @@ class Jadwal extends Model
 
     protected $table = 'jadwal_mengajars';
 
-    protected $guarded = []; 
-    
+    protected $guarded = [];
+
     public function jurnals()
     {
         return $this->hasMany(Jurnal::class);
@@ -22,7 +22,7 @@ class Jadwal extends Model
 
     public function absen_murid()
     {
-        return $this->hasMany(AbsenMurid::class);
+        return $this->hasMany(AbsenMurid::class, 'jadwal_mengajar_id');
     }
 
     public function user()

@@ -92,6 +92,7 @@
                     @endforelse
                 </tbody>
             </table>
+            {{ $jurnal->links() }}
         </div>
     </div>
     <script>

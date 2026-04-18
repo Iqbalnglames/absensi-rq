@@ -29,7 +29,7 @@
             <h2 class="font-semibold text-lg">Data Siswa</h2>
             <p class="text-sm text-gray-500">Tambah & tentukan kelas siswa</p>
         </a>
-        
+
         <a href="{{ route('kurikulum.absen-siswa') }}"
            class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
             <h2 class="font-semibold text-lg">Data Absen Siswa</h2>
@@ -48,6 +48,13 @@
            class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
             <h2 class="font-semibold text-lg">Jadwal Mengajar</h2>
             <p class="text-sm text-gray-500">Atur jadwal guru</p>
+        </a>
+
+        <!-- Pembelajaran -->
+        <a href="{{ route('kurikulum.pembelajaran') }}"
+           class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+            <h2 class="font-semibold text-lg">Pembelajaran</h2>
+            <p class="text-sm text-gray-500">Absen santri dan isi jurnal kelas</p>
         </a>
 
     </div>

@@ -136,6 +136,18 @@ Route::prefix('kurikulum')->name('kurikulum.')->group(function () {
     Route::delete('/jadwal/delete-jadwal/{jadwal}', [KurikulumController::class, 'destroyJadwalMengajar'])
         ->name('jadwal.delete');
 
+    Route::get('/pembelajaran', [KurikulumController::class, 'pembelajaran'])
+        ->name('pembelajaran');
+
+    Route::get('/pembelajaran/{jadwal}', [KurikulumController::class, 'jurnalKelas'])
+        ->name('pembelajaran.jurnal');
+
+    Route::post('/pembelajaran/simpan-jurnal/{jadwal}', [KurikulumController::class, 'storeJurnalKelas'])
+        ->name('pembelajaran.storeJurnal');
+
+    Route::put('/pembelajaran/update-jurnal/{jadwal}/{jurnal}', [KurikulumController::class, 'updateJurnalKelas'])
+        ->name('pembelajaran.updateJurnal');
+
     // data murid
     Route::get('/siswa', [KurikulumController::class, 'indexSiswa'])
         ->name('siswa');

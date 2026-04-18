@@ -242,10 +242,90 @@ class KurikulumController extends Controller
     // jurnal
     public function indexJurnal()
     {
-        $jurnal = Jurnal::with('jadwal')->get();
+        $jurnal = Jurnal::with('jadwal')->orderByDesc('tanggal')->paginate(20);
         $kelas = Kelas::all();
 
         return view('pages.kurikulum.jurnal', compact('jurnal', 'kelas'));
+    }
+
+    public function pembelajaran()
+    {
+        $jadwal = Jadwal::where('user_id', '3')->orderByRaw("FIELD(hari, 'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu')")->get();
+
+        return view('pages.kurikulum.pembelajaran', compact('jadwal'));
+    }
+
+    public function jurnalKelas(Jadwal $jadwal)
+    {
+        $jadwal->load('kelas.murid');
+        $today = now()->toDateString();
+
+        $jurnal = Jurnal::where('jadwal_mengajar_id', $jadwal->id)
+        ->where('tanggal', $today)
+        ->first();
+
+        return view('pages.kurikulum.jurnalKelas', compact('jadwal', 'jurnal'));
+    }
+
+    public function storeJurnalKelas(Request $request, Jadwal $jadwal)
+    {
+        $request->validate([
+            'tanggal' => 'required',
+            'bab' => 'required',
+            'materi' => 'required',
+        ]);
+
+        Jurnal::create([
+            'tanggal' => $request->tanggal,
+            'bab' => $request->bab,
+            'materi' => $request->materi,
+            'catatan' => $request->catatan,
+            'jadwal_mengajar_id' => $jadwal->id,
+            ]);
+
+            foreach($jadwal->kelas->murid as $murid){
+                $status = $request->absen[$murid->id] ?? 'alpha';
+
+            AbsenMurid::create([
+                'tanggal' => $request->tanggal,
+                'jadwal_mengajar_id' => $jadwal->id,
+                'murid_id' => $murid->id,
+                'status' => $status,
+            ]);
+        }
+        return redirect()->back()->with('success', 'berhasil mengisi jurnal');
+    }
+
+    public function updateJurnalKelas(Request $request, Jadwal $jadwal, Jurnal $jurnal)
+    {
+        $request->validate([
+            'tanggal' => 'required',
+            'bab' => 'required',
+            'materi' => 'required',
+        ]);
+
+        $jurnal->update([
+            'tanggal' => $request->tanggal,
+            'bab' => $request->bab,
+            'materi' => $request->materi,
+            'catatan' => $request->catatan,
+            'jadwal_mengajar_id' => $jadwal->id,
+            ]);
+
+            AbsenMurid::where('jadwal_mengajar_id', $jadwal->id)->where('tanggal', $request->tanggal)->delete();
+
+            foreach($jadwal->kelas->murid as $murid){
+                $status = $request->absen[$murid->id] ?? 'alpha';
+
+
+            AbsenMurid::create([
+                'tanggal' => $request->tanggal,
+                'jadwal_mengajar_id' => $jadwal->id,
+                'murid_id' => $murid->id,
+                'status' => $status,
+            ]);
+        }
+        return redirect()->back()->with('success', 'berhasil mengisi jurnal');
     }
 
     // kelas dan jenjang
@@ -490,7 +570,7 @@ class KurikulumController extends Controller
 
         return redirect()->back()->with('success', 'Penyerahan Mapel berhasil dihapus');
     }
-    
+
     public function indexAbsenSiswa(Request $request)
     {
         $query = Murid::query();
