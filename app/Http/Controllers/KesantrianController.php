@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AbsenEkskul;
 use App\Models\Asrama;
 use App\Models\CatatanPelanggaran;
 use App\Models\Ekskul;
+use App\Models\JadwalEkskul;
 use App\Models\Jenjang;
+use App\Models\JurnalEkskul;
 use App\Models\Kelas;
 use App\Models\Murid;
 use App\Models\Pelanggaran;
 use App\Models\Perizinan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class KesantrianController extends Controller
 {
@@ -258,5 +262,107 @@ class KesantrianController extends Controller
     {
         $murid->ekskul()->detach($ekskul->id);
         return redirect()->back()->with('success', 'peserta ekskul berhasil dihapus');
+    }
+
+    public function createJadwalEkskul()
+    {
+        $ekskul = Ekskul::all();
+        $guru = User::whereHas('roles', function($q){
+            $q->where('name', 'guru');
+        })->get();
+        return view('pages.kesantrian.tambahJadwalEkskul', compact('ekskul', 'guru'));
+    }
+
+    public function storeJadwalEkskul(Request $request)
+    {
+         $request->validate([
+        'ekskul_id' => ['required', Rule::unique('jadwal_ekskuls')->where(function($q) use ($request){
+            return $q->where('hari', $request->hari);
+        }),
+        ],
+        'hari' => 'required',
+    ], [
+        'ekskul_id.unique' => 'Jadwal ekskul di hari tersebut sudah dibuat!',
+    ]);
+
+        JadwalEkskul::create($request->all());
+
+        return redirect()->back()->with('success', 'jadwal ekskul berhasil dibuat');
+    }
+
+    public function pembelajaranEkskul()
+    {
+        $ekskul = JadwalEkskul::where('user_id', '2')->orderByRaw("FIELD(hari, 'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu')")->get();
+
+        return view('pages.kesantrian.pembelajaranEkskul', compact('ekskul'));
+    }
+
+    public function createJurnalEkskul(JadwalEkskul $jadwal)
+    {
+        $jadwal->load('ekskul.murid');
+        $today = now()->toDateString();
+
+        $jurnal = JurnalEkskul::where('jadwal_ekskul_id', $jadwal->id)
+        ->where('tanggal', $today)
+        ->first();
+
+        return view('pages.kesantrian.jurnalEkskul', compact('jadwal', 'jurnal'));
+    }
+
+    public function storeJurnalEkskul(Request $request, JadwalEkskul $jadwal)
+    {
+        $request->validate([
+            'tanggal' => 'required',
+            'materi' => 'required',
+        ]);
+
+        JurnalEkskul::create([
+            'tanggal' => $request->tanggal,
+            'materi' => $request->materi,
+            'catatan' => $request->catatan,
+            'jadwal_ekskul_id' => $jadwal->id,
+            ]);
+
+            foreach($jadwal->ekskul->murid as $murid){
+                $status = $request->absen[$murid->id] ?? 'alpha';
+
+            AbsenEkskul::create([
+                'tanggal' => $request->tanggal,
+                'jadwal_ekskul_id' => $jadwal->id,
+                'murid_id' => $murid->id,
+                'status' => $status,
+            ]);
+        }
+        return redirect()->back()->with('success', 'berhasil mengisi jurnal');
+    }
+
+    public function updateJurnalEkskul(Request $request, JadwalEkskul $jadwal, JurnalEkskul $jurnal)
+    {
+        $request->validate([
+            'tanggal' => 'required',
+            'materi' => 'required',
+        ]);
+
+        $jurnal->update([
+            'tanggal' => $request->tanggal,
+            'materi' => $request->materi,
+            'catatan' => $request->catatan,
+            'jadwal_ekskul_id' => $jadwal->id,
+            ]);
+
+            AbsenEkskul::where('jadwal_ekskul_id', $jadwal->id)->where('tanggal', $request->tanggal)->delete();
+
+            foreach($jadwal->ekskul->murid as $murid){
+                $status = $request->absen[$murid->id] ?? 'alpha';
+
+
+            AbsenEkskul::create([
+                'tanggal' => $request->tanggal,
+                'jadwal_ekskul_id' => $jadwal->id,
+                'murid_id' => $murid->id,
+                'status' => $status,
+            ]);
+        }
+        return redirect()->back()->with('success', 'berhasil mengisi jurnal');
     }
 }

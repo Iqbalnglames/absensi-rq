@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class JamHalaqah extends Model
 {
     protected $guarded = []; 
-    public function halaqah(){
+    public function halaqah()
+    {
         return $this->belongsTo(Halaqah::class);
     }
 }

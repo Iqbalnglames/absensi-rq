@@ -21,6 +21,9 @@
                 <a href="{{ route('kesantrian.ekskul.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
                     Tambah Data Ekskul
                 </a>
+                <a href="{{ route('kesantrian.ekskul.createJadwal') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                    Tambah Jadwal Ekskul
+                </a>
             </div>
         </div>
         <div class="bg-white shadow rounded-xl overflow-x-auto">
@@ -29,6 +32,7 @@
                     <tr>
                         <th class="text-left p-4">Nama Ekskul</th>
                         <th class="text-left p-4">Peserta</th>
+                        <th class="text-left p-4">Hari Ekskul</th>
                         <th class="text-left p-4">Aksi</th>
                     </tr>
                 </thead>
@@ -37,6 +41,11 @@
                         <tr class="border-b border-gray-200 hover:bg-gray-50">
                             <td class="p-4">{{ $e->nama_ekskul }}</td>
                             <td class="p-4">{{ $e->murid->count() }} Peserta<a class="text-blue-600 hover:text-blue-800" href="{{ route('kesantrian.ekskul.member', $e->id) }}"> Lihat Peserta</a></td>
+                            <td class="p-4">
+                                @foreach ($e->jadwal_ekskul as $j)
+                                    {{ $j->hari }}
+                                @endforeach
+                            </td>
                             <td class="p-4">
                                 <div>
                                     <a class="text-blue-600 hover:text-blue-800"

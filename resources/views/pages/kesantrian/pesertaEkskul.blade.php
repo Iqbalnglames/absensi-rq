@@ -17,7 +17,7 @@
             </div>
         @endif
     <div>
-        <form action="{{ route('kesantrian.ekskul.storePeserta', $detailEkskul->id) }}" method="POST" class="bg-white shadow rounded-xl p-6 space-y-4">
+        <form action="{{ route('kesantrian.ekskul.storePeserta', $detailEkskul->id) }}" method="POST" class="bg-white shadow rounded-xl p-6 space-y-4 mb-2">
             <h1>Tambah peserta</h1>
                 @csrf
                 <div>
@@ -50,13 +50,6 @@
     </div>
     <div class="flex flex-col justify-center gap-10">
         <div class="bg-white shadow rounded-xl overflow-x-auto">
-            <div class="p-4 mb-4 flex justify-between bg-white shadow rounded">
-               <div class="flex space-x-2 items-center">
-                   <a href="{{ route('kesantrian.ekskul.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
-                       Tambah Peserta
-                   </a>
-               </div>
-           </div>
             <table class="w-full text-sm">
                 <thead class="bg-gray-100">
                     <tr>

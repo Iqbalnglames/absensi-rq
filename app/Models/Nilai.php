@@ -8,10 +8,17 @@ class Nilai extends Model
 {
     protected $guarded = []; 
     
-    public function murid(){
+    public function murid()
+    {
         return $this->belongsTo(Murid::class);
     }
-    public function mapel(){
+    public function mapel()
+    {
         return $this->belongsTo(Mapel::class);
+    }
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class);
     }
 }

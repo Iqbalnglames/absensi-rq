@@ -269,7 +269,24 @@ Route::prefix('kesantrian')->name('kesantrian.')->group(function () {
 
    Route::delete('/ekskul/hapus-peserta/{ekskul}/{murid}', [KesantrianController::class, 'hapusPesertaEkskul'])
         ->name('ekskul.deletePeserta');
+        
+    Route::get('/ekskul/tambah-jadwal', [KesantrianController::class, 'createJadwalEkskul'])
+        ->name('ekskul.createJadwal');
+        
+    Route::post('/ekskul/simpan-jadwal', [KesantrianController::class, 'storeJadwalEkskul'])
+        ->name('ekskul.storeJadwal');
+        
+    Route::get('/ekskul/pembelajaran', [KesantrianController::class, 'pembelajaranEkskul'])
+        ->name('ekskul.pembelajaran');
 
+    Route::get('/ekskul/pembelajaran/jurnal/{jadwal}', [KesantrianController::class, 'createJurnalEkskul'])
+        ->name('ekskul.jurnal');
+
+     Route::post('/ekskul/simpan-jurnal/{jadwal}', [KesantrianController::class, 'storeJurnalEkskul'])
+        ->name('ekskul.storeJurnal');
+
+    Route::put('/ekskul/update-jurnal/{jadwal}/{jurnal}', [KesantrianController::class, 'updateJurnalEkskul'])
+        ->name('ekskul.updateJurnal');
 });
 
 Route::get('/tahfidz', function () {

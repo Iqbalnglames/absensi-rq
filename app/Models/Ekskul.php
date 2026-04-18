@@ -12,4 +12,9 @@ class Ekskul extends Model
     {
         return $this->belongsToMany(Murid::class, 'ekskul_murids');
     }
+
+    public function jadwal_ekskul()
+    {
+        return $this->hasMany(JadwalEkskul::class);
+    }
 }

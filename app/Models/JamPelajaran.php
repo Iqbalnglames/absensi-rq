@@ -8,7 +8,8 @@ class JamPelajaran extends Model
 {
     protected $guarded = []; 
 
-    public function jadwal(){
+    public function jadwal()
+    {
         return $this->belongsToMany(Jadwal::class, 'jam_mapels');
     }
 

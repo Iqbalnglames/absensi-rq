@@ -49,14 +49,13 @@
                         <tr class="border-b border-gray-200 hover:bg-gray-50">
                             <td class="p-4">{{ $g->name }}</td>
                             <td class="p-4">
-                                @if ($g->guruMapelKelas->count() == 0)
-                                    <a href="{{ route('kurikulum.mapel-guru.create', $g->id) }}" class="text-blue-600 hover:text-blue-800">Tambah Mapel Ajar</a>
-                                    @else
+                                <a href="{{ route('kurikulum.mapel-guru.create', $g->id) }}" class="text-blue-600 hover:text-blue-800">Tambah Mapel Ajar</a>
+                                <div>
                                     @foreach ($g->guruMapelKelas as $item)
                                     {{ $item->mapel->nama_mapel . ' ' . $item->kelas->nama_kelas  }}
-                                    <a href="{{ route('kurikulum.mapel-guru.edit', $g->id) }}" class="text-blue-600 hover:text-blue-800">Edit</a>
+                                    <a href="{{ route('kurikulum.mapel-guru.edit', $item->id) }}" class="text-blue-600 hover:text-blue-800">Edit</a>
                                     @endforeach
-                                @endif
+                                </div>
                             </td>
                             <td class="p-4">
                                 {{-- <div>

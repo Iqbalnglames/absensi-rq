@@ -8,7 +8,8 @@ class Halaqah extends Model
 {
     protected $guarded = []; 
     
-    public function jam_halaqah(){
+    public function jam_halaqah()
+    {
         return $this->hasMany(JamHalaqah::class);
     }
 }

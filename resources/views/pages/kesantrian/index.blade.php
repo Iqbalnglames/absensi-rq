@@ -37,6 +37,13 @@
             <p class="text-sm text-gray-500">Kelola ekskul santri</p>
         </a>
 
+        <!-- Data Ekskul -->
+        <a href="{{ route('kesantrian.ekskul.pembelajaran') }}"
+           class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+            <h2 class="font-semibold text-lg">Pembelajaran Ekskul</h2>
+            <p class="text-sm text-gray-500">Kelola kehadiran dan jurnal ekskul santri</p>
+        </a>
+
     </div>
 </div>
 @endsection

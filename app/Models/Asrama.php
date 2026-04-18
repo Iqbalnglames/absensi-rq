@@ -8,11 +8,13 @@ class Asrama extends Model
 {
     protected $guarded = [];
     
-    public function pengasuh_asrama(){
+    public function pengasuh_asrama()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function jenjang(){
+    public function jenjang()
+    {
         return $this->belongsTo(Jenjang::class);
     }
 }

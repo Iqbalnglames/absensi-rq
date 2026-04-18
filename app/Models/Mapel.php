@@ -13,10 +13,12 @@ class Mapel extends Model
         return $this->hasMany(GuruMapelKelas::class, 'mapel_id');
     }
 
-    public function jadwal(){
+    public function jadwal()
+    {
         return $this->hasMany(Jadwal::class);
     }
-    public function nilai(){
+    public function nilai()
+    {
         return $this->hasMany(Nilai::class);
     }
 }
