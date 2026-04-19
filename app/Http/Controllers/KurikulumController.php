@@ -11,12 +11,38 @@ use App\Models\Jurnal;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Murid;
+use App\Models\Nilai;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class KurikulumController extends Controller
 {
-      // bagian jadwal mengajar
+    public function createMapel()
+    {
+        $mapel = Mapel::paginate(10);
+        return view('pages.kurikulum.tambahMapel', compact('mapel'));
+    }
+    
+    public function storeMapel(Request $request)
+    {
+        $request->validate([
+            'nama_mapel' => 'required',
+        ]);
+
+        Mapel::create($request->all());
+
+        return redirect()->back()->with('success', 'Mapel berhasil disimpan');
+    }
+
+    public function destroyMapel(Mapel $mapel)
+    {
+        $mapel->delete();
+
+        return redirect()->back()->with('success', 'Mapel berhasil dihapus');
+    }
+
+    // bagian jadwal mengajar
     public function tambahJamPelajaran()
     {
         $jenjang = Jenjang::all();
@@ -261,8 +287,8 @@ class KurikulumController extends Controller
         $today = now()->toDateString();
 
         $jurnal = Jurnal::where('jadwal_mengajar_id', $jadwal->id)
-        ->where('tanggal', $today)
-        ->first();
+            ->where('tanggal', $today)
+            ->first();
 
         return view('pages.kurikulum.jurnalKelas', compact('jadwal', 'jurnal'));
     }
@@ -281,10 +307,10 @@ class KurikulumController extends Controller
             'materi' => $request->materi,
             'catatan' => $request->catatan,
             'jadwal_mengajar_id' => $jadwal->id,
-            ]);
+        ]);
 
-            foreach($jadwal->kelas->murid as $murid){
-                $status = $request->absen[$murid->id] ?? 'alpha';
+        foreach ($jadwal->kelas->murid as $murid) {
+            $status = $request->absen[$murid->id] ?? 'alpha';
 
             AbsenMurid::create([
                 'tanggal' => $request->tanggal,
@@ -310,12 +336,12 @@ class KurikulumController extends Controller
             'materi' => $request->materi,
             'catatan' => $request->catatan,
             'jadwal_mengajar_id' => $jadwal->id,
-            ]);
+        ]);
 
-            AbsenMurid::where('jadwal_mengajar_id', $jadwal->id)->where('tanggal', $request->tanggal)->delete();
+        AbsenMurid::where('jadwal_mengajar_id', $jadwal->id)->where('tanggal', $request->tanggal)->delete();
 
-            foreach($jadwal->kelas->murid as $murid){
-                $status = $request->absen[$murid->id] ?? 'alpha';
+        foreach ($jadwal->kelas->murid as $murid) {
+            $status = $request->absen[$murid->id] ?? 'alpha';
 
 
             AbsenMurid::create([
@@ -528,7 +554,17 @@ class KurikulumController extends Controller
     {
         $pengajar = GuruMapelKelas::query();
         $request->validate([
-            'mapel_id.*' => 'exists:mapels,id',
+            'user_id' => [
+                'required',
+                Rule::unique('mapel_gurus')->where(function ($query) use ($request) {
+                    return $query->where('kelas_id', $request->kelas_id)
+                        ->where('mapel_id', $request->mapel_id);
+                }),
+            ],
+            'kelas_id' => 'required',
+            'mapel_id' => 'required',
+        ], [
+            'user_id.unique' => 'Pengajar dengan kelas dan mapel ini sudah ada',
         ]);
 
         $pengajar->create([
@@ -552,8 +588,25 @@ class KurikulumController extends Controller
 
     public function updateMapelGuru(Request $request, GuruMapelKelas $guru)
     {
+        if(
+            $request->user_id == $guru->user_id &&
+            $request->kelas_id == $guru->kelas_id &&
+            $request->mapel_id == $guru->mapel_id
+        ){
+            return redirect()->route('kurikulum.mapel-guru')->with('info', 'tidak ada perubahan');
+        }
         $request->validate([
-            'mapel_id.*' => 'exists:mapels,id',
+            'user_id' => [
+                'required',
+                Rule::unique('mapel_gurus')->where(function ($query) use ($request) {
+                    return $query->where('kelas_id', $request->kelas_id)
+                        ->where('mapel_id', $request->mapel_id);
+                })->ignore($guru->id),
+            ],
+            'kelas_id' => 'required',
+            'mapel_id' => 'required',
+        ], [
+            'user_id.unique' => 'Pengajar dengan kelas dan mapel ini sudah ada',
         ]);
 
         $guru->update([
@@ -564,9 +617,9 @@ class KurikulumController extends Controller
         return redirect()->back()->with('success', 'Mapel ajar berhasil diperbarui');
     }
 
-    public function destroyMapelGuru(GuruMapelKelas $guruMapel)
+    public function destroyMapelGuru(GuruMapelKelas $guru)
     {
-        $guruMapel->delete();
+        $guru->delete();
 
         return redirect()->back()->with('success', 'Penyerahan Mapel berhasil dihapus');
     }
@@ -597,5 +650,138 @@ class KurikulumController extends Controller
     {
         $siswa->load('kelas');
         return view('pages.kurikulum.detailAbsenSiswa', compact('siswa'));
+    }
+
+    public function penilaian(Request $request)
+    {
+        $query = Kelas::query();
+
+        if ($request->filled('jenjang_id')) {
+            $query->where('jenjang_id', $request->jenjang_id);
+        }
+
+        $jenjang = Jenjang::all();
+        $kelas = $query->orderBy('jenjang_id')->orderBy('nama_kelas')->paginate(10);
+
+        return view('pages.kurikulum.penilaian', compact('kelas', 'jenjang'));
+    }
+
+    public function detailPenilaianKelas(Kelas $kelas)
+    {
+        $murid = $kelas->murid()->orderBy('nama')->paginate(20);
+        return view('pages.kurikulum.detailPenilaianKelas', compact('kelas', 'murid'));
+    }
+
+    public function detailPenilaianSiswa(Murid $murid)
+    {
+        $mapel = Mapel::paginate(10);
+        return view('pages.kurikulum.detailPenilaianSiswa', compact('murid', 'mapel'));
+    }
+
+    public function detailNilaiSiswa(Murid $murid, Mapel $mapel, Kelas $kelas, $semester)
+    {
+        $nilai = Nilai::where('murid_id', $murid->id)
+        ->where('mapel_id', $mapel->id)
+        ->where('kelas_id', $kelas->id)
+        ->where('semester', $semester)
+        ->first();
+
+        return view('pages.kurikulum.detailNilaiMapelSiswa', compact('nilai', 'mapel', 'murid', 'semester'));
+    }
+
+    public function storeNilaiSiswa(Request $request)
+    {
+        $request->validate([
+            'tugas_1' => 'nullable|numeric|min:0|max:100',
+            'tugas_2' => 'nullable|numeric|min:0|max:100',
+            'tugas_3' => 'nullable|numeric|min:0|max:100',
+            'pts'     => 'nullable|numeric|min:0|max:100',
+            'pas'     => 'nullable|numeric|min:0|max:100',
+            'semester'=> 'required|numeric|min:0|max:2',
+            'murid_id' =>'required',
+            'mapel_id' => 'required',
+            'kelas_id' => 'required',
+        ], [
+            'murid_id.unique' => 'Nilai siswa untuk mapel & semester ini sudah ada'
+        ]);
+
+        // hitung nilai akhir (opsional)
+        // $semester = collect([
+        //     $request->tugas_1,
+        //     $request->tugas_2,
+        //     $request->tugas_3,
+        //     $request->pts,
+        //     $request->pas
+        // ])->filter()->avg();
+
+        Nilai::create([
+            'tugas_1' => $request->tugas_1,
+            'tugas_2' => $request->tugas_2,
+            'tugas_3' => $request->tugas_3,
+            'pts'     => $request->pts,
+            'pas'     => $request->pas,
+            'semester'=> $request->semester,
+
+            'murid_id'=> $request->murid_id,
+            'mapel_id'=> $request->mapel_id,
+            'kelas_id'=> $request->kelas_id,
+
+            // 'semester_nilai' => $semester, 
+        ]);
+
+        return back()->with('success', 'Nilai berhasil ditambahkan');
+    }
+
+    public function updateNilaiSiswa(Request $request, Nilai $nilai)
+    {
+        // cek tidak ada perubahan
+        if (
+            $nilai->tugas_1 == $request->tugas_1 &&
+            $nilai->tugas_2 == $request->tugas_2 &&
+            $nilai->tugas_3 == $request->tugas_3 &&
+            $nilai->pts == $request->pts &&
+            $nilai->pas == $request->pas &&
+            $nilai->semester == $request->semester
+        ) {
+            return back()->with('info', 'Tidak ada perubahan data');
+        }
+
+        $request->validate([
+            'tugas_1' => 'nullable|numeric|min:0|max:100',
+            'tugas_2' => 'nullable|numeric|min:0|max:100',
+            'tugas_3' => 'nullable|numeric|min:0|max:100',
+            'pts'     => 'nullable|numeric|min:0|max:100',
+            'pas'     => 'nullable|numeric|min:0|max:100',
+            'semester'=> 'required|numeric|min:0|max:2',
+            'murid_id' => 'required',
+            'mapel_id' => 'required',
+            'kelas_id' => 'required',
+        ]);
+
+        // hitung ulang nilai akhir
+        // $semester = collect([
+        //     $request->tugas_1,
+        //     $request->tugas_2,
+        //     $request->tugas_3,
+        //     $request->pts,
+        //     $request->pas
+        // ])->filter()->avg();
+
+        $nilai->update([
+            'tugas_1' => $request->tugas_1,
+            'tugas_2' => $request->tugas_2,
+            'tugas_3' => $request->tugas_3,
+            'pts'     => $request->pts,
+            'pas'     => $request->pas,
+            'semester'=> $request->semester,
+
+            'murid_id'=> $request->murid_id,
+            'mapel_id'=> $request->mapel_id,
+            'kelas_id'=> $request->kelas_id,
+
+            // 'semester_nilai' => $semester,
+        ]);
+
+        return back()->with('success', 'Nilai berhasil diperbarui');
     }
 }

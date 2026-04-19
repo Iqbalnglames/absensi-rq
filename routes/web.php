@@ -71,6 +71,15 @@ Route::prefix('kurikulum')->name('kurikulum.')->group(function () {
     Route::get('/wali-kelas', [KurikulumController::class, 'indexWaliKelas'])
         ->name('wali-kelas');
 
+    Route::get('/mapel', [KurikulumController::class, 'createMapel'])
+        ->name('mapel');
+        
+    Route::post('/simpan-mapel', [KurikulumController::class, 'storeMapel'])
+        ->name('mapel.store');
+
+    Route::delete('/hapus-mapel/{mapel}', [KurikulumController::class, 'destroyMapel'])
+        ->name('mapel.destroy');
+
     // kelas dan jenjang
     Route::get('/jurnal', [KurikulumController::class, 'indexJurnal'])
         ->name('jurnal');
@@ -189,6 +198,28 @@ Route::prefix('kurikulum')->name('kurikulum.')->group(function () {
 
     Route::patch('/update-mapel-guru/{guru}', [KurikulumController::class, 'updateMapelGuru'])
         ->name('mapel-guru.update');
+
+    Route::delete('/delete-mapel-guru/{guru}', [KurikulumController::class, 'destroyMapelGuru'])
+        ->name('mapel-guru.delete');
+
+    // penilaian
+    Route::get('/penilaian', [KurikulumController::class, 'penilaian'])
+        ->name('penilaian');
+
+    Route::get('/penilaian/{kelas}', [KurikulumController::class, 'detailPenilaianKelas'])
+        ->name('penilaian.detailKelas');
+        
+    Route::get('/penilaian-siswa/{murid}', [KurikulumController::class, 'detailPenilaianSiswa'])
+        ->name('penilaian.detailSiswa');
+        
+    Route::get('/penilaian-siswa/{murid}/{mapel}/{kelas}/{semester}/detail', [KurikulumController::class, 'detailNilaiSiswa'])
+        ->name('penilaian.detailNilaiSiswa');
+    
+    Route::post('/penilaian-siswa/simpan-nilai', [KurikulumController::class, 'storeNilaiSiswa'])
+        ->name('penilaian.storeNilai');
+
+    Route::put('/penilaian-siswa/update-nilai/{nilai}', [KurikulumController::class, 'updateNilaiSiswa'])
+        ->name('penilaian.updateNilai');
 });
 
 Route::get('/kesantrian', function () {

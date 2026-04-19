@@ -15,25 +15,24 @@
             <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
                 {{ session('success') }}
             </div>
+        @elseif(session('info'))
+            <div class="bg-blue-100 text-blue-700 p-3 rounded mb-4">
+                {{ session('info') }}
+            </div>
         @endif
         <div class="p-4 mb-4 flex justify-between bg-white shadow rounded">
             <form method="GET" class="flex gap-3">
-
                 <input id="search" name="search" placeholder="Cari..." class="border rounded px-3 py-2">
-
                 <button class="bg-blue-600 text-white px-4 rounded">
                     Cari
                 </button>
                 <button type="button" onclick="resetFilter()" class="border border-blue-600 text-blue-600 px-4 rounded">
                     Reset
                 </button>
-
             </form>
-            {{-- <div class="flex space-x-2 items-center">
-                <a href="{{ route('kurikulum.mapel-guru.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
-                    Tambah Pengajar Mapel
+            <a href="{{ route('kurikulum.mapel') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                    Tambah Mapel
                 </a>
-            </div> --}}
         </div>
         <div class="bg-white shadow rounded-xl overflow-x-auto">
             <table class="w-full text-sm">
@@ -49,13 +48,20 @@
                         <tr class="border-b border-gray-200 hover:bg-gray-50">
                             <td class="p-4">{{ $g->name }}</td>
                             <td class="p-4">
-                                <a href="{{ route('kurikulum.mapel-guru.create', $g->id) }}" class="text-blue-600 hover:text-blue-800">Tambah Mapel Ajar</a>
-                                <div>
+                                <div class="flex gap-2 items-center">
                                     @foreach ($g->guruMapelKelas as $item)
                                     {{ $item->mapel->nama_mapel . ' ' . $item->kelas->nama_kelas  }}
-                                    <a href="{{ route('kurikulum.mapel-guru.edit', $item->id) }}" class="text-blue-600 hover:text-blue-800">Edit</a>
+                                    <div>
+                                        <a href="{{ route('kurikulum.mapel-guru.edit', $item->id) }}" class="text-blue-600 hover:text-blue-800">Edit</a>
+                                        <form action="{{ route('kurikulum.mapel-guru.delete', $item->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="text-red-600 hover:text-red-800">Hapus</button>
+                                        </form>
+                                    </div>
                                     @endforeach
                                 </div>
+                                <a href="{{ route('kurikulum.mapel-guru.create', $g->id) }}" class="text-blue-600 hover:text-blue-800">Tambah Mapel Ajar</a>
                             </td>
                             <td class="p-4">
                                 {{-- <div>

@@ -9,9 +9,23 @@
             <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
                 {{ session('error') }}
             </div>
+        @elseif($errors->any())
+            <div class="bg-red-100 text-red-700 p-3 rounded mb-3">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @elseif(session('success'))
+            <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                {{ session('success') }}
+            </div>
         @endif
 
-        <form action="{{ route('kurikulum.mapel-guru.store') }}" method="POST" class="bg-white shadow rounded-xl p-6 space-y-4">
+
+        <form action="{{ route('kurikulum.mapel-guru.store') }}" method="POST"
+            class="bg-white shadow rounded-xl p-6 space-y-4">
             @csrf
             <div>
                 <label class="block text-sm font-medium mb-1">Kelas</label>
@@ -34,11 +48,11 @@
                 <label class="block text-sm font-medium mb-1">Mata Pelajaran</label>
                 <div class="space-y-4">
                     <select name="mapel_id" class="w-full border rounded-lg px-3 py-2" required>
-                    <option value="">Pilih Mapel</option>
-                    @foreach($mapels as $mapel)
-                        <option value="{{ $mapel->id }}">{{ $mapel->nama_mapel }}</option>
-                    @endforeach
-                </select>
+                        <option value="">Pilih Mapel</option>
+                        @foreach($mapels as $mapel)
+                            <option value="{{ $mapel->id }}">{{ $mapel->nama_mapel }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
 
