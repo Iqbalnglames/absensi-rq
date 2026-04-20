@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\KepegawaianController;
 use App\Http\Controllers\KesantrianController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\UserController;
@@ -33,6 +34,9 @@ Route::prefix('kepegawaian')->name('kepegawaian.')->group(function () {
 
     Route::put('users/{user}/roles', [UserController::class, 'updateRole'])
         ->name('users.roles.update');
+
+    Route::get('absen', [KepegawaianController::class, 'absen'])
+        ->name('absen');
 
     // Jadwal Kerja
     Route::get('/jadwal', [AdminController::class, 'indexJadwal'])

@@ -285,6 +285,8 @@ class KurikulumController extends Controller
     {
         $jadwal->load('kelas.murid');
         $today = now()->toDateString();
+        
+        // dd($today);
 
         $jurnal = Jurnal::where('jadwal_mengajar_id', $jadwal->id)
             ->where('tanggal', $today)
