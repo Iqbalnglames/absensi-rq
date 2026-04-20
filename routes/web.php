@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('dashboard');
-})->name('/');
+})->name('dashboard');
 
 Route::get('/kepegawaian', function () {
     return view('pages.kepegawaian.index');
@@ -77,7 +77,7 @@ Route::prefix('kurikulum')->name('kurikulum.')->group(function () {
 
     Route::get('/mapel', [KurikulumController::class, 'createMapel'])
         ->name('mapel');
-        
+
     Route::post('/simpan-mapel', [KurikulumController::class, 'storeMapel'])
         ->name('mapel.store');
 
@@ -212,13 +212,13 @@ Route::prefix('kurikulum')->name('kurikulum.')->group(function () {
 
     Route::get('/penilaian/{kelas}', [KurikulumController::class, 'detailPenilaianKelas'])
         ->name('penilaian.detailKelas');
-        
+
     Route::get('/penilaian-siswa/{murid}', [KurikulumController::class, 'detailPenilaianSiswa'])
         ->name('penilaian.detailSiswa');
-        
+
     Route::get('/penilaian-siswa/{murid}/{mapel}/{kelas}/{semester}/detail', [KurikulumController::class, 'detailNilaiSiswa'])
         ->name('penilaian.detailNilaiSiswa');
-    
+
     Route::post('/penilaian-siswa/simpan-nilai', [KurikulumController::class, 'storeNilaiSiswa'])
         ->name('penilaian.storeNilai');
 
@@ -304,13 +304,13 @@ Route::prefix('kesantrian')->name('kesantrian.')->group(function () {
 
    Route::delete('/ekskul/hapus-peserta/{ekskul}/{murid}', [KesantrianController::class, 'hapusPesertaEkskul'])
         ->name('ekskul.deletePeserta');
-        
+
     Route::get('/ekskul/tambah-jadwal', [KesantrianController::class, 'createJadwalEkskul'])
         ->name('ekskul.createJadwal');
-        
+
     Route::post('/ekskul/simpan-jadwal', [KesantrianController::class, 'storeJadwalEkskul'])
         ->name('ekskul.storeJadwal');
-        
+
     Route::get('/ekskul/pembelajaran', [KesantrianController::class, 'pembelajaranEkskul'])
         ->name('ekskul.pembelajaran');
 
