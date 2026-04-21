@@ -72,7 +72,7 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        return redirect()->route('kepegawaian.users.index');
+        return redirect()->back()->with('success', 'user berhasil dibuat');
     }
 
     public function edit(User $user)
@@ -83,7 +83,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $user->update($request->only('name', 'username', 'email'));
-        return redirect('kepegawaian/users');
+        return redirect()->route('kepegawaian.users.index')->with('success', 'user berhasil diupdate');
     }
 
     public function destroy(User $user)

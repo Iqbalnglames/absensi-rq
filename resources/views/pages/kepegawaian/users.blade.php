@@ -4,6 +4,21 @@
  <a href="{{ route('kepegawaian.index') }}" class="text-sm text-blue-500 mb-4 inline-block">
             ← Kembali ke Menu Kepegawaian
 </a>
+@if(session('error'))
+        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if(session('info'))
+        <div class="bg-blue-100 text-blue-700 p-3 rounded mb-4">
+            {{ session('info') }}
+        </div>
+    @endif
+    @if(session('success'))
+        <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+            {{ session('success') }}
+        </div>
+    @endif
 <div class="bg-white rounded-xl shadow p-6">
 
     <div class="flex justify-between items-center mb-6">

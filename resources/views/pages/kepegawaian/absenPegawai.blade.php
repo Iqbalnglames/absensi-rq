@@ -8,7 +8,11 @@
 <div class="bg-white p-6 rounded-xl shadow max-w-lg">
     <h2 class="text-xl font-semibold mb-6">Absen Masuk Pegawai</h2>
     <div id="reader"></div>
-    <p id="result">hasil</p>
+    <div id="result"></div>
+    <form action="{{ route('kepegawaian.absen.masuk') }}" method="POST">
+        @csrf
+        <input type="hidden" name="token_absen" value="{{ $rawToken }}" id="tokenAbsen">
+    </form>
 </div>
 
 @endsection

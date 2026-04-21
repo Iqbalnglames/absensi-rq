@@ -6,7 +6,17 @@
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
-    <!-- Kelola User -->
+    <!-- tampilkan qr -->
+    <a href="{{ route('kepegawaian.qr-absen') }}"
+       class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <div class="text-blue-500 text-3xl mb-3">👤</div>
+        <h3 class="font-semibold text-lg">Qr Absen</h3>
+        <p class="text-sm text-gray-500 mt-1">
+            Absen Masuk
+        </p>
+    </a>
+
+    <!-- Kelola Absen -->
     <a href="{{ route('kepegawaian.absen') }}"
        class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
         <div class="text-blue-500 text-3xl mb-3">👤</div>

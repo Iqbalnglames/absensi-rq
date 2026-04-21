@@ -5,17 +5,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const el = document.getElementById("reader");
     if (!el) return;
     const resultEl = document.getElementById('result')
+    const rawToken = document.getElementById('tokenAbsen')
 
     const scanner = new Html5QrcodeScanner("reader", {
         fps: 10,
-        qrbox: 250,
+        qrbox: 200,
         supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
     });
 
     scanner.render((decodedText) => {
         if(resultEl){
-            resultEl.innerText = decodedText
+            resultEl.innerText = `${decodedText} DITAMBAH ${rawToken.value}`
+            scanner.pause()
         }
-        scanner.pause()
     });
 });

@@ -47,7 +47,10 @@
    Kesantrian
 </a>
         <a href="{{ route('kesantrian.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-100">APi Documentation</a>
-        {{-- <a href="{{ route('logout') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-100 text-red-500">Logout</a> --}}
+        <form action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button class="block px-4 py-2 rounded-lg hover:bg-gray-100 text-red-500">Logout</button>
+        </form>
     </nav>
   </aside>
 

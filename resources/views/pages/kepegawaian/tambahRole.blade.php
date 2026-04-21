@@ -4,7 +4,22 @@
 <a href="{{ route('kepegawaian.users.index') }}" class="text-sm text-blue-500 mb-4 inline-block">
     ← Kembali ke daftar user
 </a>
-<div class="max-w-3xl mx-auto bg-white shadow rounded-xl p-6">
+@if(session('error'))
+        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if(session('info'))
+        <div class="bg-blue-100 text-blue-700 p-3 rounded mb-4">
+            {{ session('info') }}
+        </div>
+    @endif
+    @if(session('success'))
+        <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+            {{ session('success') }}
+        </div>
+    @endif
+<div class="max-w-lg mx-auto bg-white shadow rounded-xl p-6">
 
     <h2 class="text-2xl font-bold mb-6">Edit Role User</h2>
 

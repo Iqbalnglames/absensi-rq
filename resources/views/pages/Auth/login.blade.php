@@ -1,10 +1,14 @@
-@extends('layouts.app')
 
-@section('content')
-<a href="{{ route('kepegawaian.users.index') }}" class="text-sm text-blue-500 mb-4 inline-block">
-    ← Kembali ke daftar user
-</a>
-@if(session('error'))
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @vite('resources/css/app.css')
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body class="p-6 overflow-y-auto flex flex-col bg-[#D9A976] h-screen justify-center items-center">
+    @if(session('error'))
         <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
             {{ session('error') }}
         </div>
@@ -19,24 +23,12 @@
             {{ session('success') }}
         </div>
     @endif
-<div class="bg-white p-6 rounded-xl shadow max-w-lg mx-auto">
+<div class="bg-white p-6 rounded-xl shadow max-w-lg max-h-lg my-auto mx-auto">
 
-    <h2 class="text-xl font-semibold mb-6">Tambah User</h2>
+    <h2 class="text-xl font-semibold mb-6">Login</h2>
 
-    <form action="{{ route('kepegawaian.users.store') }}" method="POST" class="space-y-4">
+    <form action="{{ route('login') }}" method="POST" class="space-y-4">
         @csrf
-
-        <div>
-            <label class="text-sm">Nama</label>
-            <input type="text" name="name"
-                   class="w-full border rounded-lg px-3 py-2 mt-1">
-        </div>
-
-        <div>
-            <label class="text-sm">Email</label>
-            <input type="email" name="email"
-                   class="w-full border rounded-lg px-3 py-2 mt-1">
-        </div>
 
         <div>
             <label class="text-sm">Username</label>
@@ -50,6 +42,11 @@
                    class="w-full border rounded-lg px-3 py-2 mt-1">
         </div>
 
+        <div>
+            <input type="checkbox" name="remember">
+            <label class="text-sm">Ingat Saya</label>
+        </div>
+
         <button class="bg-blue-600 text-white px-4 py-2 rounded-lg">
             Simpan
         </button>
@@ -57,4 +54,5 @@
 
 </div>
 
-@endsection
+</body>
+</html>

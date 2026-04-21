@@ -47,10 +47,9 @@ class AbsenKerjaController extends Controller
     {
         $user = Auth::user(); // guru login
         $today = Carbon::today();
-        $hariIni = strtolower($today->locale('id')->dayName); 
+        $hariIni = strtolower($today->locale('id')->dayName);
         // hasil: senin, selasa, dst
-
-        // 1️⃣ cek jadwal kerja hari ini
+  
         $jadwal = JamKerja::where('user_id', $user->id)
             ->where('hari', $hariIni)
             ->first();
@@ -60,8 +59,7 @@ class AbsenKerjaController extends Controller
                 'message' => 'Tidak ada jadwal kerja hari ini'
             ], 422);
         }
-
-        // 2️⃣ cegah absen ganda
+        
         $sudahAbsen = JamKerja::where('user_id', $user->id)
             ->where('tanggal', $today->toDateString())
             ->exists();
@@ -71,14 +69,12 @@ class AbsenKerjaController extends Controller
                 'message' => 'Anda sudah absen hari ini'
             ], 422);
         }
-
-        // 3️⃣ tentukan status hadir / telat
+        
         $now = Carbon::now();
         $jamMasuk = Carbon::parse($jadwal->jam_masuk);
 
         $status = $now->gt($jamMasuk) ? 'telat' : 'hadir';
 
-        // 4️⃣ simpan absen
         JamKerja::create([
             'user_id'   => $user->id,
             'tanggal'   => $today->toDateString(),
