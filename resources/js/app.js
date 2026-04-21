@@ -14,9 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     scanner.render((decodedText) => {
-        if(resultEl){
-            resultEl.innerText = `${decodedText} DITAMBAH ${rawToken.value}`
+        if(decodedText){
             scanner.pause()
+            rawToken.value = `${decodedText}${rawToken.value}`
+            document.querySelector('#formAbsen').submit()
         }
     });
 });
