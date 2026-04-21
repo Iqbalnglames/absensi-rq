@@ -28,7 +28,7 @@
                 @php
                     function generateJamOptions($selected = null)
                     {
-                        $start = strtotime('06:00');
+                        $start = strtotime('07:00');
                         $end = strtotime('22:00');
 
                         $html = '';
@@ -65,15 +65,15 @@
         </form>
     </div>
 
-      @if ($errors->any())
-    <div class="bg-red-100 text-red-700 p-4 rounded mb-4">
-        <ul class="text-sm list-disc list-inside">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+    @if ($errors->any())
+        <div class="bg-red-100 text-red-700 p-4 rounded mb-4">
+            <ul class="text-sm list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <!-- Tabel -->
     <div class="bg-white rounded-xl shadow overflow-hidden">
         <table class="w-full text-sm">
@@ -152,15 +152,15 @@
     </div>
     <script>
         function openModal(jadwalId, jamMasuk, jamPulang) {
-            document.getElementById('formEdit').action = 
-            `/kepegawaian/jadwal/${jadwalId}`
+            document.getElementById('formEdit').action =
+                `/kepegawaian/jadwal/${jadwalId}`
 
             document.getElementById('edit_jam_masuk').value = jamMasuk
             document.getElementById('edit_jam_pulang').value = jamPulang
 
             document.getElementById('modalEdit').classList.remove('hidden')
         }
-        
+
         function closeModal() {
             document.getElementById('modalEdit').classList.add('hidden')
         }

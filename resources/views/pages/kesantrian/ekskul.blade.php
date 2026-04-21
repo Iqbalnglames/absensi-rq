@@ -40,7 +40,8 @@
                     @forelse($ekskul as $e)
                         <tr class="border-b border-gray-200 hover:bg-gray-50">
                             <td class="p-4">{{ $e->nama_ekskul }}</td>
-                            <td class="p-4">{{ $e->murid->count() }} Peserta<a class="text-blue-600 hover:text-blue-800" href="{{ route('kesantrian.ekskul.member', $e->id) }}"> Lihat Peserta</a></td>
+                            <td class="p-4">{{ $e->murid->count() }} Peserta<a class="text-blue-600 hover:text-blue-800"
+                                    href="{{ route('kesantrian.ekskul.member', $e->id) }}"> Lihat Peserta</a></td>
                             <td class="p-4">
                                 @foreach ($e->jadwal_ekskul as $j)
                                     {{ $j->hari }}

@@ -73,23 +73,26 @@
                                         <div>
                                             {{ $jadwal->user->name }}
                                             {{ ucfirst($jadwal->hari) }}
-                                            {{-- {{ $jadwal->jam_pelajaran->jam_mulai . " - " . $jadwal->jam_pelajaran->jam_selesai }} --}}
+                                            {{-- {{ $jadwal->jam_pelajaran->jam_mulai . " - " . $jadwal->jam_pelajaran->jam_selesai
+                                            }} --}}
                                             <div class="block">
                                                 @foreach ($jadwal->jam_pelajaran as $jam_pelajaran)
-                                                    <p>{{ "jam ke " . $jam_pelajaran->jam_ke }} {{ $jam_pelajaran->jam_mulai . " - " . $jam_pelajaran->jam_selesai }}</p> 
+                                                    <p>{{ "jam ke " . $jam_pelajaran->jam_ke }}
+                                                        {{ $jam_pelajaran->jam_mulai . " - " . $jam_pelajaran->jam_selesai }}</p>
                                                 @endforeach
                                             </div>
                                             {{ "Kelas " . $jadwal->kelas->nama_kelas }}
                                         </div>
                                         <div>
-                                            <a href="{{ route('kurikulum.jadwal.edit', $jadwal->id) }}" class="text-blue-700 hover:text-blue-800">Edit</a>
+                                            <a href="{{ route('kurikulum.jadwal.edit', $jadwal->id) }}"
+                                                class="text-blue-700 hover:text-blue-800">Edit</a>
                                             <form action="{{ route('kurikulum.jadwal.delete', $jadwal->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="text-red-700">Hapus</button>
                                             </form>
                                         </div>
-                                        @endforeach
+                                    @endforeach
                                 </div>
                             </td>
                         </tr>

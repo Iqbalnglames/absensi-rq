@@ -10,8 +10,13 @@ class JamKerja extends Model
 
     protected $guarded = ['id'];
     
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function absen_guru()
+    {
+        return $this->hasMany(AbsenGuru::class);
     }
 }

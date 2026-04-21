@@ -23,7 +23,6 @@
             </div>
         @endif
 
-
         <form action="{{ route('kurikulum.mapel-guru.store') }}" method="POST"
             class="bg-white shadow rounded-xl p-6 space-y-4">
             @csrf

@@ -31,9 +31,9 @@
                 {{-- <select id="user" name="user_id" class="border rounded px-3 py-2">
                     <option value="">Semua Guru</option>
                     @foreach($gurus as $guru)
-                        <option value="{{ $guru->id }}" {{ request('user_id') == $guru->id ? 'selected' : '' }}>
-                            {{ $guru->name }}
-                        </option>
+                    <option value="{{ $guru->id }}" {{ request('user_id')==$guru->id ? 'selected' : '' }}>
+                        {{ $guru->name }}
+                    </option>
                     @endforeach
                 </select> --}}
 
@@ -74,7 +74,8 @@
                             <td class="p-4">{{ $j->bab }}</td>
                             <td class="p-4">
                                 <div>
-                                    {{-- <a class="text-blue-600 hover:text-blue-800" href="{{ route('kurikulum.kelas.edit', $k->id) }}">Edit</a>
+                                    {{-- <a class="text-blue-600 hover:text-blue-800"
+                                        href="{{ route('kurikulum.kelas.edit', $k->id) }}">Edit</a>
                                     <form action="{{ route('kurikulum.kelas.delete', $k->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')

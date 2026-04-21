@@ -8,10 +8,10 @@
         <h2 class="text-xl font-semibold">Ekskul {{ $detailEkskul->nama_ekskul }}</h2>
     </div>
     @if (session('error'))
-            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
-                {{ session('error') }}
-            </div>
-        @elseif(session('success'))
+        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+            {{ session('error') }}
+        </div>
+    @elseif(session('success'))
             <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
                 {{ session('success') }}
             </div>
@@ -34,9 +34,9 @@
                         <div id="dropDown" class="overflow-scroll h-[40%] border-gray-400 absolute border rounded-lg px-3 py-2 bg-white hidden">
                             <input id="searchBar" class="w-full border rounded-lg px-3 py-2" placeholder="cari nama santri atau nis...">
                             @foreach ($siswa as $s)
-                            <div class="px-3 py-2 cursor-pointer hover:bg-blue-100" data-id="{{ $s->id }}">
-                                {{ $s->nama . " " . $s->nis }}
-                            </div>
+                                <div class="px-3 py-2 cursor-pointer hover:bg-blue-100" data-id="{{ $s->id }}">
+                                    {{ $s->nama . " " . $s->nis }}
+                                </div>
                             @endforeach
                         </div>
                 </div>

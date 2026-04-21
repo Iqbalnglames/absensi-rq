@@ -22,9 +22,9 @@
                 {{-- <select id="jenjang" name="jenjang_id" class="border rounded px-3 py-2">
                     <option value="">Semua Jenjang</option>
                     @foreach ($jenjang as $j)
-                        <option value="{{ $j->id }}" {{ request('jenjang_id') == $j->id ? 'selected' : '' }}>
-                            {{ $j->nama_jenjang }}
-                        </option>
+                    <option value="{{ $j->id }}" {{ request('jenjang_id')==$j->id ? 'selected' : '' }}>
+                        {{ $j->nama_jenjang }}
+                    </option>
                     @endforeach
                 </select> --}}
 
@@ -58,9 +58,11 @@
                             <td class="p-4">Asrama {{ $a->nama_asrama }}</td>
                             <td class="p-4">
                                 @if (!$a->user_id)
-                                    <a href="{{ route('kesantrian.pengasuh-asrama.edit', $a->id) }}" class="text-blue-600 hover:text-blue-800">Tambah Pengasuh Asrama</a>
+                                    <a href="{{ route('kesantrian.pengasuh-asrama.edit', $a->id) }}"
+                                        class="text-blue-600 hover:text-blue-800">Tambah Pengasuh Asrama</a>
                                 @else
-                                    {{ $a->pengasuh_asrama->name }} <a href="{{ route('kesantrian.pengasuh-asrama.edit', $a->id) }}" class="text-blue-600 hover:text-blue-800">Edit Pengasuh Asrama</a>
+                                    {{ $a->pengasuh_asrama->name }} <a href="{{ route('kesantrian.pengasuh-asrama.edit', $a->id) }}"
+                                        class="text-blue-600 hover:text-blue-800">Edit Pengasuh Asrama</a>
                                 @endif
                             </td>
                             <td class="p-4">{{ $a->jenjang->nama_jenjang }}</td>

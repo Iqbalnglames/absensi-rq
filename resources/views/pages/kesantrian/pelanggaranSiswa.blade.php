@@ -46,10 +46,12 @@
 
             </form>
             <div class="flex space-x-2 items-center">
-                <a href="{{ route('kesantrian.jenis-pelanggaran-siswa.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                <a href="{{ route('kesantrian.jenis-pelanggaran-siswa.create') }}"
+                    class="bg-blue-600 text-white px-4 py-2 rounded-lg">
                     Tambah Data Jenis Pelanggaran
                 </a>
-                <a href="{{ route('kesantrian.pelanggaran-siswa.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                <a href="{{ route('kesantrian.pelanggaran-siswa.create') }}"
+                    class="bg-blue-600 text-white px-4 py-2 rounded-lg">
                     Tambah Data Pelanggaran
                 </a>
             </div>
@@ -72,28 +74,28 @@
                             <td class="p-4">{{ $s->nama }}</td>
                             <td class="p-4">Kelas {{ $s->kelas->nama_kelas }}</td>
                             @if (!$s->pelanggaran->count() == 0)
-                                <td class="p-4">
-                                    @foreach ($s->pelanggaran as $pelanggaran)
-                                        <div>
-                                            {{ $pelanggaran->pelanggaran->jenis_pelanggaran }}
-                                        </div>
-                                    @endforeach
-                                </td>
-                                <td class="p-4">
-                                    @foreach ($s->pelanggaran as $pelanggaran)
-                                        <div>
-                                            {{ $pelanggaran->catatan_pelanggaran }}
-                                        </div>
-                                    @endforeach
-                                </td>
-                                <td class="p-4 font-bold">
-                                    {{ $s->pelanggaran->sum(function ($item) {
-                                        return $item->pelanggaran->poin;
-                                    }) }}
-                                </td>
-                                @else
-                                 <td class="p-4 text-gray-400 text-center" colspan="3">
-                                   Tidak ada data pelanggaran
+                                            <td class="p-4">
+                                                @foreach ($s->pelanggaran as $pelanggaran)
+                                                    <div>
+                                                        {{ $pelanggaran->pelanggaran->jenis_pelanggaran }}
+                                                    </div>
+                                                @endforeach
+                                            </td>
+                                            <td class="p-4">
+                                                @foreach ($s->pelanggaran as $pelanggaran)
+                                                    <div>
+                                                        {{ $pelanggaran->catatan_pelanggaran }}
+                                                    </div>
+                                                @endforeach
+                                            </td>
+                                            <td class="p-4 font-bold">
+                                                {{ $s->pelanggaran->sum(function ($item) {
+                                    return $item->pelanggaran->poin;
+                                }) }}
+                                            </td>
+                            @else
+                                <td class="p-4 text-gray-400 text-center" colspan="3">
+                                    Tidak ada data pelanggaran
                                 </td>
                             @endif
                             <td class="p-4">

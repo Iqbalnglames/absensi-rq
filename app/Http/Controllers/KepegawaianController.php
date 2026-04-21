@@ -11,15 +11,27 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class KepegawaianController extends Controller
 {
+    public function dashboard()
+    {
+        $today = Carbon::today()->toDateString();;
+        $absenGuru = AbsenGuru::where('tanggal', $today)->paginate(20);
+        $absenHariIni = $absenGuru->where('tanggal', $today)->count();
+        $absenTerlambatHariIni = $absenGuru->where('tanggal', $today)->where('status', 'terlambat')->count();
+        $absenIzinHariIni = $absenGuru->where('tanggal', $today)->where('status', 'izin')->count();
+
+        return view('dashboard', compact('absenGuru', 'absenHariIni', 'absenTerlambatHariIni', 'absenIzinHariIni'));
+    }
+
     public function qrGenerator()
     {
         $today = Carbon::today();
         $hariIni = strtolower($today->locale('id')->dayName);
         $hashHariIni = hash('sha256', $hariIni . "|");
-        $qr =  QrCode::size(200)->generate($hashHariIni);
+        $qr =  QrCode::size(400)->generate($hashHariIni);
 
         return view('pages.kepegawaian.qrViewer', compact('hashHariIni', 'qr'));
     }
+
     public function absen()
     {
         $today = Carbon::today();
@@ -31,6 +43,7 @@ class KepegawaianController extends Controller
         });
 
         $rawToken = $jadwalHariIni->exists() ? hash('sha256', $jadwalHariIni->first() . '|' . $secret) : '';
+        // dd($rawToken);
         return view('pages.kepegawaian.absenPegawai', compact('rawToken'));
     }
 
@@ -46,8 +59,6 @@ class KepegawaianController extends Controller
         $hashHariIni = hash('sha256', $hariIni . "|");
         $todayToken = $hashHariIni . hash('sha256', $jadwalHariIni->first() . '|' . $secret);
 
-        dd($todayToken, $request->token_absen);
-
         $jadwal = JamKerja::where('user_id', $user->id)
             ->where('hari', $hariIni)
             ->first();
@@ -60,12 +71,12 @@ class KepegawaianController extends Controller
             return redirect()->back()->with('error', 'qr code tidak valid');
         }
 
-        $sudahAbsen = JamKerja::where('user_id', $user->id)
+        $sudahAbsen = AbsenGuru::where('jadwal_kerja_id', $jadwal->id)
             ->where('tanggal', $today->toDateString())
             ->exists();
 
         if ($sudahAbsen) {
-            return redirect()->back()->with('message', 'Anda sudah absen hari ini');
+            return redirect()->back()->with('info', 'Anda sudah absen hari ini');
         }
 
         $now = Carbon::now();
@@ -86,6 +97,46 @@ class KepegawaianController extends Controller
         //     'status'  => $status,
         //     'jam'     => $now->format('H:i:s')
         // ]);
-        return redirect()->route('kepegawaian.index')->with(['success' => 'Absensi Berhasil', 'status' => $status]);
+        return redirect()->route('kepegawaian.absen')->with(['success' => 'Absensi Berhasil', 'status' => $status]);
     }
+
+    public function absenPulang()
+{
+    $user = Auth::user();
+    $today = Carbon::today();
+    $now = Carbon::now();
+    $hariIni = strtolower($today->locale('id')->dayName);
+
+    $jadwal = JamKerja::where('user_id', $user->id)
+        ->where('hari', $hariIni)
+        ->first();
+
+    if (!$jadwal) {
+        return back()->with('error', 'jadwal tidak ditemukan');
+    }
+
+    $cekAbsen = AbsenGuru::where('jadwal_kerja_id', $jadwal->id)
+        ->where('tanggal', $today->toDateString())
+        ->first();
+
+    if (!$cekAbsen) {
+        return back()->with('error', 'anda belum melakukan absen masuk');
+    }
+
+    if ($cekAbsen->jam_keluar) {
+        return back()->with('error', 'anda sudah melakukan absen keluar');
+    }
+
+    $jamPulang = Carbon::parse($jadwal->jam_pulang);
+    $status = $now->lt($jamPulang) ? 'pulang sebelum waktunya' : 'sesuai waktu';
+
+    $cekAbsen->update([
+        'jam_keluar' => $now->toTimeString(),
+    ]);
+
+    return back()->with([
+        'success' => 'absen keluar berhasil',
+        'status' => $status
+    ]);
+}
 }

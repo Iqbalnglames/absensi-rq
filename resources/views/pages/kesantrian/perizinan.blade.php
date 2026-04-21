@@ -47,20 +47,20 @@
                 <tbody>
                     @forelse ($perizinan as $p)
 
-                            <td class="p-4">{{ $p->tanggal }}</td>
-                            <td class="p-4">{{ $p->murid->nama }}</td>
-                            <td class="p-4">{{ $p->waktu_izin }}</td>
-                            <td class="p-4">
-                                <div>
-                                    <a class="text-blue-600 hover:text-blue-800"
-                                        href="{{ route('kesantrian.perizinan.edit', $p->id) }}">Edit</a>
-                                    {{-- <form action="{{ route('kurikulum.kelas.delete', $a->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="text-red-600 hover:text-red-800">Hapus</button>
-                                    </form> --}}
-                                </div>
-                            </td>
+                        <td class="p-4">{{ $p->tanggal }}</td>
+                        <td class="p-4">{{ $p->murid->nama }}</td>
+                        <td class="p-4">{{ $p->waktu_izin }}</td>
+                        <td class="p-4">
+                            <div>
+                                <a class="text-blue-600 hover:text-blue-800"
+                                    href="{{ route('kesantrian.perizinan.edit', $p->id) }}">Edit</a>
+                                {{-- <form action="{{ route('kurikulum.kelas.delete', $a->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="text-red-600 hover:text-red-800">Hapus</button>
+                                </form> --}}
+                            </div>
+                        </td>
                         </tr>
                     @empty
                         <tr>

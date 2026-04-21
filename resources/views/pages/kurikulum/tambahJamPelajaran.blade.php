@@ -9,13 +9,14 @@
             <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
                 {{ session('error') }}
             </div>
-            @elseif(session('success'))
+        @elseif(session('success'))
             <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
                 {{ session('success') }}
             </div>
         @endif
 
-        <form action="{{ route('kurikulum.jadwal.store-jam-pelajaran') }}" method="POST" class="bg-white shadow rounded-xl p-6 space-y-4">
+        <form action="{{ route('kurikulum.jadwal.store-jam-pelajaran') }}" method="POST"
+            class="bg-white shadow rounded-xl p-6 space-y-4">
             @csrf
 
             <div>
@@ -32,12 +33,12 @@
                 <label class="block text-sm font-medium mb-1">Jam Ke</label>
                 <input type="text" class="w-full border rounded-lg px-3 py-2" name="jam_ke">
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-1">Waktu Mulai</label>
                 <input type="time" class="w-full border rounded-lg px-3 py-2" name="jam_mulai">
             </div>
-            
+
             <div>
                 <label class="block text-sm font-medium mb-1">Waktu selesai</label>
                 <input type="time" class="w-full border rounded-lg px-3 py-2" name="jam_selesai">

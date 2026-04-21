@@ -24,7 +24,8 @@
         @endif
 
 
-        <form action="{{ route('kurikulum.mapel-guru.update', $editGuruMapel->id) }}" method="POST" class="bg-white shadow rounded-xl p-6 space-y-4">
+        <form action="{{ route('kurikulum.mapel-guru.update', $editGuruMapel->id) }}" method="POST"
+            class="bg-white shadow rounded-xl p-6 space-y-4">
             @csrf
             @method('PATCH')
             <div>
@@ -39,7 +40,8 @@
                 <select name="kelas_id" class="w-full border rounded-lg px-3 py-2" required>
                     <option value="">Pilih Kelas</option>
                     @foreach($kelas as $k)
-                        <option value="{{ $k->id }}" {{ $k->id == $editGuruMapel->kelas->id ? 'selected' : '' }}>Kelas {{ $k->nama_kelas }}</option>
+                        <option value="{{ $k->id }}" {{ $k->id == $editGuruMapel->kelas->id ? 'selected' : '' }}>Kelas
+                            {{ $k->nama_kelas }}</option>
                     @endforeach
                 </select>
             </div>
@@ -48,11 +50,12 @@
                 <label class="block text-sm font-medium mb-1">Mata Pelajaran</label>
                 <div class="space-y-4">
                     <select name="mapel_id" class="w-full border rounded-lg px-3 py-2" required>
-                    <option value="">Pilih Mapel</option>
-                    @foreach($mapels as $mapel)
-                        <option value="{{ $mapel->id }}" {{ $mapel->id == $editGuruMapel->mapel->id ? 'selected' : '' }}>{{ $mapel->nama_mapel }}</option>
-                    @endforeach
-                </select>
+                        <option value="">Pilih Mapel</option>
+                        @foreach($mapels as $mapel)
+                            <option value="{{ $mapel->id }}" {{ $mapel->id == $editGuruMapel->mapel->id ? 'selected' : '' }}>
+                                {{ $mapel->nama_mapel }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
 

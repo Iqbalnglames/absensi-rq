@@ -58,9 +58,11 @@
                             <td class="p-4">Kelas {{ $k->nama_kelas }}</td>
                             <td class="p-4">
                                 @if (!$k->user_id)
-                                    <a href="{{ route('kurikulum.wali-kelas.edit', $k->id) }}" class="text-blue-600 hover:text-blue-800">Tambah Wali Kelas</a>
+                                    <a href="{{ route('kurikulum.wali-kelas.edit', $k->id) }}"
+                                        class="text-blue-600 hover:text-blue-800">Tambah Wali Kelas</a>
                                 @else
-                                    {{ $k->wali_kelas->name }} <a href="{{ route('kurikulum.wali-kelas.edit', $k->id) }}" class="text-blue-600 hover:text-blue-800">Edit Wali Kelas</a>
+                                    {{ $k->wali_kelas->name }} <a href="{{ route('kurikulum.wali-kelas.edit', $k->id) }}"
+                                        class="text-blue-600 hover:text-blue-800">Edit Wali Kelas</a>
                                 @endif
                             </td>
                             <td class="p-4">{{ $k->jenjang->nama_jenjang }}</td>

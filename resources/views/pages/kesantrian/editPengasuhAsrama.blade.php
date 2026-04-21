@@ -9,18 +9,20 @@
             <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
                 {{ session('error') }}
             </div>
-            @elseif(session('success'))
+        @elseif(session('success'))
             <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
                 {{ session('success') }}
             </div>
         @endif
 
-        <form action="{{ route('kesantrian.pengasuh-asrama.update', $asrama->id) }}" method="POST" class="bg-white shadow rounded-xl p-6 space-y-4">
+        <form action="{{ route('kesantrian.pengasuh-asrama.update', $asrama->id) }}" method="POST"
+            class="bg-white shadow rounded-xl p-6 space-y-4">
             @csrf
             @method('PATCH')
             <div>
                 <label class="block text-sm font-medium mb-1">Nama Asrama</label>
-                <input type="text" value="{{ $asrama->nama_asrama }}" class="w-full border rounded-lg px-3 py-2" name="nama_asrama" readonly>
+                <input type="text" value="{{ $asrama->nama_asrama }}" class="w-full border rounded-lg px-3 py-2"
+                    name="nama_asrama" readonly>
             </div>
             <div>
                 <label class="block text-sm font-medium mb-1">Pengasuh Asrama</label>

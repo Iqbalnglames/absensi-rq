@@ -54,7 +54,9 @@
                 {{ session('success') }}
             </div>
         @endif
-         <form method="POST" action="{{  !$nilai ? route( 'kurikulum.penilaian.storeNilai' ) : route( 'kurikulum.penilaian.updateNilai', $nilai->id) }}" class="bg-white shadow rounded-xl p-6 space-y-4">
+        <form method="POST"
+            action="{{  !$nilai ? route('kurikulum.penilaian.storeNilai') : route('kurikulum.penilaian.updateNilai', $nilai->id) }}"
+            class="bg-white shadow rounded-xl p-6 space-y-4">
             @csrf
             @if($nilai)
                 @method('PUT')

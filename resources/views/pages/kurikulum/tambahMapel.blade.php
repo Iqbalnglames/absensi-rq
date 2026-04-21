@@ -8,27 +8,28 @@
         <h2 class="text-xl font-semibold">Tambah Mapel</h2>
     </div>
     @if (session('error'))
-            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
-                {{ session('error') }}
-            </div>
-        @elseif(session('success'))
-            <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
-                {{ session('success') }}
-            </div>
-        @endif
+        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+            {{ session('error') }}
+        </div>
+    @elseif(session('success'))
+        <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+            {{ session('success') }}
+        </div>
+    @endif
     <div>
-        <form action="{{ route('kurikulum.mapel.store') }}" method="POST" class="bg-white shadow rounded-xl p-6 space-y-4 mb-2">
-                @csrf
-                <div>
-                    <label class="block text-sm font-medium mb-1">Nama Mapel</label>
-                    <input name="nama_mapel" class="w-full border rounded-lg px-3 py-2">
-                </div>
+        <form action="{{ route('kurikulum.mapel.store') }}" method="POST"
+            class="bg-white shadow rounded-xl p-6 space-y-4 mb-2">
+            @csrf
+            <div>
+                <label class="block text-sm font-medium mb-1">Nama Mapel</label>
+                <input name="nama_mapel" class="w-full border rounded-lg px-3 py-2">
+            </div>
 
-                <div class="flex justify-end gap-3 pt-4">
-                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg">
-                        Tambah Peserta
-                    </button>
-                </div>
+            <div class="flex justify-end gap-3 pt-4">
+                <button class="px-4 py-2 bg-blue-600 text-white rounded-lg">
+                    Tambah Peserta
+                </button>
+            </div>
         </form>
     </div>
     <div class="flex flex-col justify-center gap-10">

@@ -57,7 +57,8 @@
                         <tr class="border-b border-gray-200 hover:bg-gray-50">
                             <td class="p-4">Kelas {{ $k->nama_kelas }}</td>
                             <td class="p-4">
-                                <a href="{{ route('kurikulum.penilaian.detailKelas', $k->id) }}" class="text-blue-600 hover:text-blue-800">Lihat anggota kelas</a>
+                                <a href="{{ route('kurikulum.penilaian.detailKelas', $k->id) }}"
+                                    class="text-blue-600 hover:text-blue-800">Lihat anggota kelas</a>
                             </td>
                             <td class="p-4">{{ $k->jenjang->nama_jenjang }}</td>
                             <td class="p-4">

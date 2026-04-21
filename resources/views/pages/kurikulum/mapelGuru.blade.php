@@ -31,8 +31,8 @@
                 </button>
             </form>
             <a href="{{ route('kurikulum.mapel') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
-                    Tambah Mapel
-                </a>
+                Tambah Mapel
+            </a>
         </div>
         <div class="bg-white shadow rounded-xl overflow-x-auto">
             <table class="w-full text-sm">
@@ -50,18 +50,20 @@
                             <td class="p-4">
                                 <div class="flex gap-2 items-center">
                                     @foreach ($g->guruMapelKelas as $item)
-                                    {{ $item->mapel->nama_mapel . ' ' . $item->kelas->nama_kelas  }}
-                                    <div>
-                                        <a href="{{ route('kurikulum.mapel-guru.edit', $item->id) }}" class="text-blue-600 hover:text-blue-800">Edit</a>
-                                        <form action="{{ route('kurikulum.mapel-guru.delete', $item->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="text-red-600 hover:text-red-800">Hapus</button>
-                                        </form>
-                                    </div>
+                                        {{ $item->mapel->nama_mapel . ' ' . $item->kelas->nama_kelas  }}
+                                        <div>
+                                            <a href="{{ route('kurikulum.mapel-guru.edit', $item->id) }}"
+                                                class="text-blue-600 hover:text-blue-800">Edit</a>
+                                            <form action="{{ route('kurikulum.mapel-guru.delete', $item->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="text-red-600 hover:text-red-800">Hapus</button>
+                                            </form>
+                                        </div>
                                     @endforeach
                                 </div>
-                                <a href="{{ route('kurikulum.mapel-guru.create', $g->id) }}" class="text-blue-600 hover:text-blue-800">Tambah Mapel Ajar</a>
+                                <a href="{{ route('kurikulum.mapel-guru.create', $g->id) }}"
+                                    class="text-blue-600 hover:text-blue-800">Tambah Mapel Ajar</a>
                             </td>
                             <td class="p-4">
                                 {{-- <div>

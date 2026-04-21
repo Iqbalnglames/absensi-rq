@@ -67,15 +67,15 @@
                 <label class="block text-sm font-medium mb-1">Jam Pelajaran</label>
                 <div class="space-y-4">
                     @foreach($jamPelajarans as $nama_jenjang => $jams)
-                    <h2>Jenjang {{ $nama_jenjang }}</h2>
-                    @foreach ($jams as $jam)
-                    <div class="flex items-center gap-2 space-y-4">
-                        <input type="checkbox" name="jam_pelajaran_id[]" value="{{ $jam->id }}">
-                        {{"Jam " . $jam->jam_ke. ": " }}
-                        {{ $jam->jam_mulai }} - {{ $jam->jam_selesai }}
-                        </input>
-                    </div>
-                    @endforeach
+                        <h2>Jenjang {{ $nama_jenjang }}</h2>
+                        @foreach ($jams as $jam)
+                            <div class="flex items-center gap-2 space-y-4">
+                                <input type="checkbox" name="jam_pelajaran_id[]" value="{{ $jam->id }}">
+                                {{"Jam " . $jam->jam_ke . ": " }}
+                                {{ $jam->jam_mulai }} - {{ $jam->jam_selesai }}
+                                </input>
+                            </div>
+                        @endforeach
                     @endforeach
                 </div>
             </div>

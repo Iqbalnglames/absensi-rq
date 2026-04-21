@@ -20,9 +20,8 @@ Route::get('/search-murid', [AdminController::class, 'searchMurid'])
     ->name('search-siswa');
 
 Route::middleware('auth')->group(function() {
-    Route::get('/', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/', [KepegawaianController::class, 'dashboard'])
+        ->name('dashboard');
 
     Route::get('/kepegawaian', function () {
         return view('pages.kepegawaian.index');
@@ -53,6 +52,9 @@ Route::middleware('auth')->group(function() {
     
         Route::post('absen-masuk', [KepegawaianController::class, 'absenMasuk'])
             ->name('absen.masuk');
+
+        Route::put('absen-pulang', [KepegawaianController::class, 'absenPulang'])
+            ->name('absen.pulang');
     
         // Jadwal Kerja
         Route::get('/jadwal', [AdminController::class, 'indexJadwal'])

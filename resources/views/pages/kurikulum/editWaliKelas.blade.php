@@ -9,18 +9,20 @@
             <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
                 {{ session('error') }}
             </div>
-            @elseif(session('success'))
+        @elseif(session('success'))
             <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
                 {{ session('success') }}
             </div>
         @endif
 
-        <form action="{{ route('kurikulum.wali-kelas.update', $kelas->id) }}" method="POST" class="bg-white shadow rounded-xl p-6 space-y-4">
+        <form action="{{ route('kurikulum.wali-kelas.update', $kelas->id) }}" method="POST"
+            class="bg-white shadow rounded-xl p-6 space-y-4">
             @csrf
             @method('PATCH')
             <div>
                 <label class="block text-sm font-medium mb-1">Nama Kelas</label>
-                <input type="text" value="{{ $kelas->nama_kelas }}" class="w-full border rounded-lg px-3 py-2" name="nama_kelas">
+                <input type="text" value="{{ $kelas->nama_kelas }}" class="w-full border rounded-lg px-3 py-2"
+                    name="nama_kelas">
             </div>
             <div>
                 <label class="block text-sm font-medium mb-1">Wali Kelas</label>

@@ -11,7 +11,8 @@
             </div>
         @endif
 
-        <form action="{{ route('kurikulum.jadwal.update', $jadwalEdit->id) }}" method="POST" class="bg-white shadow rounded-xl p-6 space-y-4">
+        <form action="{{ route('kurikulum.jadwal.update', $jadwalEdit->id) }}" method="POST"
+            class="bg-white shadow rounded-xl p-6 space-y-4">
             @csrf
             @method('PUT')
             <div>
@@ -19,7 +20,8 @@
                 <select name="hari" class="w-full border rounded-lg px-3 py-2" required>
                     <option value="">Pilih Hari</option>
                     @foreach(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'] as $hari)
-                        <option value="{{ $hari }}" {{ $hari == ucfirst($jadwalEdit->hari) ? 'selected' : '' }}>{{ $hari }}</option>
+                        <option value="{{ $hari }}" {{ $hari == ucfirst($jadwalEdit->hari) ? 'selected' : '' }}>{{ $hari }}
+                        </option>
                     @endforeach
                 </select>
             </div>
@@ -29,7 +31,8 @@
                 <select name="kelas_id" class="w-full border rounded-lg px-3 py-2" required>
                     <option value="">Pilih Kelas</option>
                     @foreach($kelas as $k)
-                        <option value="{{ $k->id }}" {{ $jadwalEdit->kelas_id == $k->id ? 'selected' : '' }}>Kelas {{ $k->nama_kelas }}</option>
+                        <option value="{{ $k->id }}" {{ $jadwalEdit->kelas_id == $k->id ? 'selected' : '' }}>Kelas
+                            {{ $k->nama_kelas }}</option>
                     @endforeach
                 </select>
             </div>
@@ -57,15 +60,15 @@
                 <label class="block text-sm font-medium mb-1">Jam Pelajaran</label>
                 <div class="space-y-4">
                     @foreach($jamPelajarans as $nama_jenjang => $jams)
-                    <h2>Jenjang {{ $nama_jenjang }}</h2>
-                    @foreach ($jams as $jam)
-                    <div class="flex items-center gap-2 space-y-4">
-                        <input type="checkbox" name="jam_pelajaran_id[]" value="{{ $jam->id }}" {{ $jadwalEdit->jam_pelajaran->contains($jam->id) ? 'checked' : '' }}>
-                        {{"Jam " . $jam->jam_ke. ": " }}
-                        {{ $jam->jam_mulai }} - {{ $jam->jam_selesai }}
-                        </input>
-                    </div>
-                    @endforeach
+                        <h2>Jenjang {{ $nama_jenjang }}</h2>
+                        @foreach ($jams as $jam)
+                            <div class="flex items-center gap-2 space-y-4">
+                                <input type="checkbox" name="jam_pelajaran_id[]" value="{{ $jam->id }}" {{ $jadwalEdit->jam_pelajaran->contains($jam->id) ? 'checked' : '' }}>
+                                {{"Jam " . $jam->jam_ke . ": " }}
+                                {{ $jam->jam_mulai }} - {{ $jam->jam_selesai }}
+                                </input>
+                            </div>
+                        @endforeach
                     @endforeach
                 </div>
             </div>

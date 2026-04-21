@@ -11,7 +11,7 @@
             <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
                 {{ session('error') }}
             </div>
-            @elseif(session('success'))
+        @elseif(session('success'))
             <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
                 {{ session('success') }}
             </div>
@@ -60,7 +60,8 @@
                             <td class="p-4">{{ $k->jenjang->nama_jenjang }}</td>
                             <td class="p-4">
                                 <div>
-                                    <a class="text-blue-600 hover:text-blue-800" href="{{ route('kurikulum.siswa.edit', $k->id) }}">Edit</a>
+                                    <a class="text-blue-600 hover:text-blue-800"
+                                        href="{{ route('kurikulum.siswa.edit', $k->id) }}">Edit</a>
                                     <form action="{{ route('kurikulum.siswa.delete', $k->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
