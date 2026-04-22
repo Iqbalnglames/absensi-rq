@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('jadwal_kerja_id')->constrained('jadwal_kerjas')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
 
             $table->date('tanggal');
 

@@ -68,14 +68,14 @@ class AdminController extends Controller
     // tampilkan perizinan
     public function indexIzin(User $user)
     {
-        $users = User::withCount('izins')->get();
+        $users = User::withCount('izin')->get();
 
         return view('pages.kepegawaian.izin', compact('users'));
     }
 
     public function detailIzin(User $user)
     {
-        $izins = $user->izins()->get();
+        $izins = $user->izin()->get();
 
         return view('pages.kepegawaian.detailIzin', compact('user', 'izins'));
     }

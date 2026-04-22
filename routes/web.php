@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KepegawaianController;
 use App\Http\Controllers\KesantrianController;
 use App\Http\Controllers\KurikulumController;
+use App\Http\Controllers\TahfidzController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,24 @@ Route::middleware('auth')->group(function() {
 
         Route::put('absen-pulang', [KepegawaianController::class, 'absenPulang'])
             ->name('absen.pulang');
+
+        Route::get('izin-user', [KepegawaianController::class, 'izinUser'])
+            ->name('izin-user');
+
+        Route::get('izin-user/ajukan', [KepegawaianController::class, 'pengajuanIzinUser'])
+            ->name('izin-user.create');
+
+        Route::post('izin-user/simpan', [KepegawaianController::class, 'storeIzinUser'])
+            ->name('izin-user.store');
+        
+        Route::get('izin-user/edit-izin/{izin}', [KepegawaianController::class, 'editIzinUser'])
+            ->name('izin-user.edit');
+
+        Route::put('izin-user/update-izin/{izin}', [KepegawaianController::class, 'updateIzinUser'])
+            ->name('izin-user.update');
+
+        Route::delete('izin-user/delete-izin/{izin}', [KepegawaianController::class, 'destroyIzinUser'])
+            ->name('izin-user.delete');
     
         // Jadwal Kerja
         Route::get('/jadwal', [AdminController::class, 'indexJadwal'])
@@ -344,6 +363,11 @@ Route::middleware('auth')->group(function() {
     Route::get('/tahfidz', function () {
         return view('pages.tahfidz.index');
     })->name('tahfidz.index');
+
+    Route::prefix('tahfidz')->name('tahfidz.')->group(function () {
+        Route::get('/halaqah', [TahfidzController::class, 'halaqahData'])
+            ->name('halaqah-data');
+    });
     
     
     Route::get('users-list', [AdminController::class, 'listUser']);

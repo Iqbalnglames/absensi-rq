@@ -27,19 +27,28 @@ class Murid extends Model
         return $this->hasMany(Perizinan::class);
     }
 
-    public function kelas(){
+    public function kelas()
+    {
         return $this->belongsTo(Kelas::class);
     }
 
-    public function nilai(){
+    public function nilai()
+    {
         return $this->hasMany(Nilai::class);
     }
 
-    public function halaqah(){
+    public function halaqah()
+    {
         return $this->belongsTo(Halaqah::class);
     }
 
-    public function mutabaah(){
+    public function mutabaah()
+    {
         return $this->hasMany(Mutabaah::class);
+    }
+
+    public function absen_tahfidz()
+    {
+        return $this->hasMany(AbsenTahfidz::class);
     }
 }

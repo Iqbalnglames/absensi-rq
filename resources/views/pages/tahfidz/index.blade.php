@@ -1,16 +1,66 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="space-y-6">
 
-    <div class="bg-white p-6 rounded-xl shadow">
-        <h2 class="text-lg font-semibold mb-4">Monitoring Tahfidz</h2>
+        <h1 class="text-xl font-bold text-gray-800">
+            Manajemen Tahfidz
+        </h1>
 
-        <div class="space-y-3">
-            <div class="p-4 bg-gray-50 rounded-lg">
-                <p class="font-semibold">Ahmad</p>
-                <p class="text-sm text-gray-600">Hafalan: 3 Juz</p>
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- Pembelajaran -->
+            <a href="{{ route('tahfidz.halaqah-data') }}"
+                class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+                <h2 class="font-semibold text-lg">Halaqah</h2>
+                <p class="text-sm text-gray-500">List Halaqah tahfidz</p>
+            </a>
+
+            <!-- Data Jurnal -->
+            <a href="{{ route('kurikulum.jurnal') }}" class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+                <h2 class="font-semibold text-lg">Data Jurnal</h2>
+                <p class="text-sm text-gray-500">Kelola Jurnal Kelas</p>
+            </a>
+
+            <!-- Data Siswa -->
+            <a href="{{ route('kurikulum.siswa') }}" class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+                <h2 class="font-semibold text-lg">Data Siswa</h2>
+                <p class="text-sm text-gray-500">Tambah & tentukan kelas siswa</p>
+            </a>
+
+            <!-- Data Kelas -->
+            <a href="{{ route('kurikulum.kelas') }}" class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+                <h2 class="font-semibold text-lg">Data Kelas dan Wali Kelas</h2>
+                <p class="text-sm text-gray-500">Tambah & kelola kelas</p>
+            </a>
+
+            <!-- Absen Siswa -->
+            <a href="{{ route('kurikulum.absen-siswa') }}"
+                class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+                <h2 class="font-semibold text-lg">Data Absen Siswa</h2>
+                <p class="text-sm text-gray-500">Rekap absen siswa</p>
+            </a>
+
+            <!-- Mapel Guru -->
+            <a href="{{ route('kurikulum.mapel-guru') }}" class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+                <h2 class="font-semibold text-lg">Mapel & Guru</h2>
+                <p class="text-sm text-gray-500">Tentukan mapel yang diajar guru</p>
+            </a>
+
+            <!-- Jadwal Mengajar -->
+            <a href="{{ route('kurikulum.jadwal') }}" class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+                <h2 class="font-semibold text-lg">Jadwal Mengajar</h2>
+                <p class="text-sm text-gray-500">Atur jadwal guru</p>
+            </a>
+
+            <!-- Penilaian -->
+            <a href="{{ route('kurikulum.penilaian') }}" class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+                <h2 class="font-semibold text-lg">Penilaian Santri</h2>
+                <p class="text-sm text-gray-500">Masukkan nilai santri</p>
+            </a>
+
+
+
         </div>
     </div>
-
 @endsection

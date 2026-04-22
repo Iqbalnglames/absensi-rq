@@ -20,7 +20,7 @@
 
     <div class="bg-white p-4 rounded-xl shadow">
       <p class="text-xs text-gray-500">Tidak Hadir Hari Ini</p>
-      <h2 class="text-2xl font-bold text-red-500">1</h2>
+      <h2 class="text-2xl font-bold text-red-500">{{ $belumAbsen }}</h2>
     </div>
 
   </div>

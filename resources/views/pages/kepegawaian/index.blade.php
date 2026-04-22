@@ -11,7 +11,7 @@
             <div class="text-blue-500 text-3xl mb-3">👤</div>
             <h3 class="font-semibold text-lg">Qr Absen</h3>
             <p class="text-sm text-gray-500 mt-1">
-                Absen Masuk
+                Penampil QR Absen Masuk
             </p>
         </a>
 
@@ -20,7 +20,16 @@
             <div class="text-blue-500 text-3xl mb-3">👤</div>
             <h3 class="font-semibold text-lg">Absen</h3>
             <p class="text-sm text-gray-500 mt-1">
-                Absen Masuk
+                Absen Masuk dan Keluar
+            </p>
+        </a>
+
+        <!-- Kelola Izin -->
+        <a href="{{ route('kepegawaian.izin-user') }}" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+            <div class="text-blue-500 text-3xl mb-3">📄</div>
+            <h3 class="font-semibold text-lg">Izin User</h3>
+            <p class="text-sm text-gray-500 mt-1">
+                Riwayat dan ajukan izin
             </p>
         </a>
 

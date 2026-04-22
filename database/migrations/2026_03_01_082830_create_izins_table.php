@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('izins', function (Blueprint $table) {
             $table->id();
-            $table->date('tanggal');
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_selesai');
             $table->string('alasan');
             $table->string('status');
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();

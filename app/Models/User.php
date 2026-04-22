@@ -42,9 +42,14 @@ class User extends Authenticatable
     }
 
 
-    public function izins()
+    public function izin()
     {
         return $this->hasMany(Izin::class);
+    }
+
+    public function absen_guru()
+    {
+        return $this->hasMany(AbsenGuru::class);
     }
 
     public function guruMapelKelas()
