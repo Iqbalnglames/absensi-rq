@@ -14,6 +14,7 @@ use App\Models\Murid;
 use App\Models\Nilai;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class KurikulumController extends Controller
@@ -23,7 +24,7 @@ class KurikulumController extends Controller
         $mapel = Mapel::paginate(10);
         return view('pages.kurikulum.tambahMapel', compact('mapel'));
     }
-    
+
     public function storeMapel(Request $request)
     {
         $request->validate([
@@ -81,7 +82,6 @@ class KurikulumController extends Controller
     {
         $query = Mapel::query();
 
-        // 🔎 Filter berdasarkan hari
         $query->whereHas('jadwal', function ($q) use ($request) {
 
             if ($request->filled('hari')) {
@@ -276,7 +276,8 @@ class KurikulumController extends Controller
 
     public function pembelajaran()
     {
-        $jadwal = Jadwal::where('user_id', '3')->orderByRaw("FIELD(hari, 'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu')")->get();
+        $user = Auth::user();
+        $jadwal = Jadwal::where('user_id', $user->id)->orderByRaw("FIELD(hari, 'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu')")->get();
 
         return view('pages.kurikulum.pembelajaran', compact('jadwal'));
     }
@@ -285,7 +286,7 @@ class KurikulumController extends Controller
     {
         $jadwal->load('kelas.murid');
         $today = now()->toDateString();
-        
+
         // dd($today);
 
         $jurnal = Jurnal::where('jadwal_mengajar_id', $jadwal->id)
@@ -728,7 +729,7 @@ class KurikulumController extends Controller
             'mapel_id'=> $request->mapel_id,
             'kelas_id'=> $request->kelas_id,
 
-            // 'semester_nilai' => $semester, 
+            // 'semester_nilai' => $semester,
         ]);
 
         return back()->with('success', 'Nilai berhasil ditambahkan');

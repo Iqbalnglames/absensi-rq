@@ -51,7 +51,6 @@ class KepegawaianController extends Controller
         });
 
         $rawToken = $jadwalHariIni->exists() ? hash('sha256', $jadwalHariIni->first() . '|' . $secret) : '';
-        // dd($rawToken);
         return view('pages.kepegawaian.absenPegawai', compact('rawToken'));
     }
 
@@ -151,7 +150,7 @@ class KepegawaianController extends Controller
     public function izinUser()
     {
         $user = Auth::user();
-        
+
         $izin = Izin::where('user_id', $user->id)->get();
 
         return view('pages.kepegawaian.izinUser', compact('user', 'izin'));

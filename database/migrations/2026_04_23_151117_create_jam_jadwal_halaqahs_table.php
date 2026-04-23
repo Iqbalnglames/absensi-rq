@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mutabaahs', function (Blueprint $table) {
+        Schema::create('jam_jadwal_halaqahs', function (Blueprint $table) {
             $table->id();
-            $table->date('tanggal');
-            $table->string('nama_surat');
-            $table->string('ayat_awal');
-            $table->string('ayat_akhir');
-            $table->foreignId('murid_id')->constrained('murids')->cascadeOnDelete();
+            $table->foreignId('jadwal_halaqah_id')->constrained('jadwal_halaqahs')->cascadeOnDelete();
+            $table->foreignId('jam_halaqah_id')->constrained('jam_halaqahs')->cascadeOnDelete();
             $table->timestamps();
+
+            $table->unique(['jadwal_halaqah_id','jam_halaqah_id']);
         });
     }
 
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mutabaahs');
+        Schema::dropIfExists('jam_jadwal_halaqahs');
     }
 };

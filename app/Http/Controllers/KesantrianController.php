@@ -15,6 +15,7 @@ use App\Models\Pelanggaran;
 use App\Models\Perizinan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class KesantrianController extends Controller
@@ -292,7 +293,8 @@ class KesantrianController extends Controller
 
     public function pembelajaranEkskul()
     {
-        $ekskul = JadwalEkskul::where('user_id', '2')->orderByRaw("FIELD(hari, 'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu')")->get();
+        $user = Auth::user();
+        $ekskul = JadwalEkskul::where('user_id', $user->id)->orderByRaw("FIELD(hari, 'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu')")->get();
 
         return view('pages.kesantrian.pembelajaranEkskul', compact('ekskul'));
     }

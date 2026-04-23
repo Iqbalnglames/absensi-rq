@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class JamHalaqah extends Model
 {
-    protected $guarded = []; 
+    protected $guarded = [];
 
-    public function halaqah()
+    public function jadwal_halaqah()
     {
-        return $this->belongsTo(Halaqah::class);
+        return $this->belongsToMany(JadwalHalaqah::class, 'jam_jadwal_halaqahs');
     }
 
-    public function absen_tahfidz()
+     public function absen_halaqah()
     {
-        return $this->hasMany(AbsenTahfidz::class);
+        return $this->hasMany(AbsenHalaqah::class);
     }
 }

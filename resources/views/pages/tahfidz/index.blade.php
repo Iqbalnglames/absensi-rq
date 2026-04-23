@@ -17,21 +17,21 @@
             </a>
 
             <!-- Data Jurnal -->
-            <a href="{{ route('kurikulum.jurnal') }}" class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
-                <h2 class="font-semibold text-lg">Data Jurnal</h2>
-                <p class="text-sm text-gray-500">Kelola Jurnal Kelas</p>
+            <a href="{{ route('tahfidz.rekap-mutabaah') }}" class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+                <h2 class="font-semibold text-lg">Rekap Mutabaah</h2>
+                <p class="text-sm text-gray-500">Kelola Mutabaah Halaqah</p>
             </a>
 
             <!-- Data Siswa -->
-            <a href="{{ route('kurikulum.siswa') }}" class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
-                <h2 class="font-semibold text-lg">Data Siswa</h2>
-                <p class="text-sm text-gray-500">Tambah & tentukan kelas siswa</p>
+            <a href="{{ route('tahfidz.jadwal-halaqah') }}" class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+                <h2 class="font-semibold text-lg">Jadwal Halaqah</h2>
+                <p class="text-sm text-gray-500">Tambah & tentukan jadwal halaqah muhafidz</p>
             </a>
 
             <!-- Data Kelas -->
-            <a href="{{ route('kurikulum.kelas') }}" class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
-                <h2 class="font-semibold text-lg">Data Kelas dan Wali Kelas</h2>
-                <p class="text-sm text-gray-500">Tambah & kelola kelas</p>
+            <a href="{{ route('tahfidz.pembelajaran-tahfidz') }}" class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+                <h2 class="font-semibold text-lg">Pembelajaran Tahfidz</h2>
+                <p class="text-sm text-gray-500">Absen dan isi mutabaah</p>
             </a>
 
             <!-- Absen Siswa -->

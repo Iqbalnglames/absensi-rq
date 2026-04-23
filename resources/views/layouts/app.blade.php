@@ -49,7 +49,7 @@
             Documentation</a>
           <form action="{{ route('logout') }}" method="POST">
             @csrf
-            <button class="block px-4 py-2 rounded-lg hover:bg-gray-100 text-red-500">Logout</button>
+            <button type="submit" class="block px-4 py-2 rounded-lg hover:bg-gray-100 text-red-500">Logout</button>
           </form>
         </nav>
     </aside>
