@@ -358,6 +358,7 @@ Route::middleware('auth')->group(function() {
     
         Route::put('/ekskul/update-jurnal/{jadwal}/{jurnal}', [KesantrianController::class, 'updateJurnalEkskul'])
             ->name('ekskul.updateJurnal');
+            
     });
     
     Route::get('/tahfidz', function () {
@@ -367,6 +368,30 @@ Route::middleware('auth')->group(function() {
     Route::prefix('tahfidz')->name('tahfidz.')->group(function () {
         Route::get('/halaqah', [TahfidzController::class, 'halaqahData'])
             ->name('halaqah-data');
+            
+        Route::get('/tambah-halaqah', [TahfidzController::class, 'tambahHalaqah'])
+            ->name('halaqah-data.create');
+
+        Route::get('/edit-halaqah/{halaqah}', [TahfidzController::class, 'editHalaqah'])
+            ->name('halaqah-data.edit');
+
+        Route::post('/update-halaqah/{halaqah}', [TahfidzController::class, 'updateHalaqah'])
+            ->name('halaqah-data.update');
+
+        Route::delete('/delete-halaqah/{halaqah}', [TahfidzController::class, 'destroyHalaqah'])
+            ->name('halaqah-data.delete');
+
+        Route::post('/simpan-halaqah', [TahfidzController::class, 'storeHalaqah'])
+            ->name('halaqah-data.store');
+
+        Route::get('/halaqah/{halaqah}', [TahfidzController::class, 'pesertaHalaqah'])
+            ->name('halaqah-data.peserta');
+
+        Route::put('/halaqah/simpan-peserta/{halaqah}', [TahfidzController::class, 'storePesertaHalaqah'])
+            ->name('halaqah-data.storePeserta');
+        
+        Route::delete('/halaqah/hapus-peserta/{murid}', [TahfidzController::class, 'hapusPesertaHalaqah'])
+            ->name('halaqah-data.deletePeserta');
     });
     
     

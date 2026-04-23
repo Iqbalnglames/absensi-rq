@@ -46,7 +46,7 @@
 
             </form>
             <div class="flex space-x-2 items-center">
-                <a href="{{ route('kurikulum.siswa.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                <a href="{{ route('tahfidz.halaqah-data.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
                     Tambah Data Halaqah
                 </a>
             </div>
@@ -64,16 +64,25 @@
                     @forelse($halaqah as $h)
                         <tr class="border-b border-gray-200 hover:bg-gray-50">
                             <td class="p-4">{{ $h->nama_halaqah }}</td>
-                            <td class="p-4">{{ $h->user->name }}</td>
                             <td class="p-4">
-                                <div>
-                                    {{-- <a class="text-blue-600 hover:text-blue-800"
-                                        href="{{ route('kurikulum.siswa.edit', $s->id) }}">Edit</a>
-                                    <form action="{{ route('kurikulum.siswa.delete', $s->id) }}" method="POST">
+                                @if (!$h->user_id)
+                                    <a href="{{ route('kurikulum.wali-kelas.edit', $h->id) }}"
+                                        class="text-blue-600 hover:text-blue-800">Tambah Muhafidz</a>
+                                @else
+                                    {{ $h->user->name }}
+                                @endif
+                            </td>
+                            <td class="p-4">
+                                <div class="flex flex-col">
+                                    <a class="text-blue-600 hover:text-blue-800"
+                                        href="{{ route('tahfidz.halaqah-data.peserta', $h->id) }}">Tambah Peserta</a>
+                                    <a href="{{ route('tahfidz.halaqah-data.edit', $h->id) }}"
+                                        class="text-blue-600 hover:text-blue-800">Edit Halaqah / Ganti Muhafidz</a>
+                                    <form action="{{ route('tahfidz.halaqah-data.delete', $h->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="text-red-600 hover:text-red-800">Hapus</button>
-                                    </form> --}}
+                                    </form>
                                 </div>
                             </td>
                         </tr>

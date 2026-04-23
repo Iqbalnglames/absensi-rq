@@ -12,4 +12,14 @@ class Halaqah extends Model
     {
         return $this->hasMany(JamHalaqah::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function murid()
+    {
+        return $this->hasMany(Murid::class);
+    }
 }

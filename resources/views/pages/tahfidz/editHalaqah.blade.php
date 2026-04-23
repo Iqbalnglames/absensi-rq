@@ -6,7 +6,7 @@
         </a>
     <div class="max-w-3xl mx-auto">
 
-        <h1 class="text-2xl font-bold mb-6">Tambah halaqah</h1>
+        <h1 class="text-2xl font-bold mb-6">Edit halaqah</h1>
 
         @if(session('error'))
             <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
@@ -18,12 +18,12 @@
             </div>
         @endif
 
-        <form action="{{ route('tahfidz.halaqah-data.store') }}" method="POST" class="bg-white shadow rounded-xl p-6 space-y-4">
+        <form action="{{ route('tahfidz.halaqah-data.update', $halaqah->id) }}" method="POST" class="bg-white shadow rounded-xl p-6 space-y-4">
             @csrf
 
             <div>
                 <label class="block text-sm font-medium mb-1">Nama Halaqah</label>
-                <input type="text" class="w-full border rounded-lg px-3 py-2" name="nama_halaqah">
+                <input type="text" class="w-full border rounded-lg px-3 py-2" value="{{ $halaqah->nama_halaqah }}" name="nama_halaqah">
             </div>
 
             <div>
@@ -31,7 +31,7 @@
                 <select name="user_id" class="w-full border rounded-lg px-3 py-2" required>
                     <option value="">Pilih Muhafidz</option>
                     @foreach($muhafidz as $m)
-                        <option value="{{ $m->id }}">{{ $m->name }}</option>
+                        <option value="{{ $m->id }}" {{ $m->id == $halaqah->user_id ? 'selected': '' }}>{{ $m->name }}</option>
                     @endforeach
                 </select>
             </div>

@@ -86,6 +86,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(Asrama::class);
     }
+
+    public function halaqah()
+    {
+        return $this->hasOne(Halaqah::class);
+    }
     
 
     public function roles()
