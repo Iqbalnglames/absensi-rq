@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jadwal_halaqahs', function (Blueprint $table) {
+        Schema::create('jam_halaqah_harians', function (Blueprint $table) {
             $table->id();
-            $table->enum('hari', ['senin','selasa','rabu','kamis','jumat','sabtu']);
-            $table->foreignId('halaqah_id')->constrained('halaqahs')->cascadeOnDelete();
+            $table->foreignId('halaqah_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('jam_halaqah_id')->constrained()->cascadeOnDelete();
+
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jadwal_halaqahs');
+        Schema::dropIfExists('jam_halaqah_harians');
     }
 };

@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jam_jadwal_halaqahs', function (Blueprint $table) {
+        Schema::create('jurnal_tahfidzs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('jadwal_halaqah_id')->constrained('jadwal_halaqahs')->cascadeOnDelete();
             $table->foreignId('jam_halaqah_id')->constrained('jam_halaqahs')->cascadeOnDelete();
+            $table->date('tanggal');
+            $table->text('catatan');
             $table->timestamps();
-
-            $table->unique(['jadwal_halaqah_id','jam_halaqah_id']);
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jam_jadwal_halaqahs');
+        Schema::dropIfExists('jurnal_tahfidzs');
     }
 };

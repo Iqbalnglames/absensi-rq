@@ -8,13 +8,18 @@ class JamHalaqah extends Model
 {
     protected $guarded = [];
 
-    public function jadwal_halaqah()
-    {
-        return $this->belongsToMany(JadwalHalaqah::class, 'jam_jadwal_halaqahs');
-    }
-
-     public function absen_halaqah()
+    public function absen_halaqah()
     {
         return $this->hasMany(AbsenHalaqah::class);
+    }
+
+    public function halaqah()
+    {
+        return $this->belongsToMany(Halaqah::class, 'jam_halaqah_harians');
+    }
+
+    public function jurnal_halaqah()
+    {
+        return $this->hasMany(JurnalTahfidz::class, 'jurnal_tahfidzs');
     }
 }

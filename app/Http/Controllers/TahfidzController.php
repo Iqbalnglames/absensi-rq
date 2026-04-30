@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AbsenHalaqah;
 use App\Models\Halaqah;
 use App\Models\JadwalHalaqah;
 use App\Models\JamHalaqah;
+use App\Models\JurnalTahfidz;
 use App\Models\Murid;
 use App\Models\Mutabaah;
 use App\Models\User;
@@ -138,7 +140,7 @@ class TahfidzController extends Controller
         });
 
         $mutabaah = $query->paginate(20)->withQueryString();
-            $murid = Murid::all();
+        $murid = Murid::all();
 
         return view('pages.tahfidz.rekapMutabaah', compact('mutabaah', 'murid'));
     }
@@ -146,11 +148,7 @@ class TahfidzController extends Controller
     public function pembelajaranTahfidz()
     {
         $user = Auth::user();
-        $jadwal = JadwalHalaqah::whereHas('halaqah', function($q) use ($user){
-            $q->whereHas('user', function($qu) use ($user){
-                $qu->where('id', $user->id);
-            });
-        })->orderByRaw("FIELD(hari, 'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu')")->get();
+        $jadwal = Halaqah::where('user_id', $user->id)->get();
 
         return view('pages.tahfidz.pembelajaranTahfidz', compact('jadwal'));
     }
@@ -159,30 +157,9 @@ class TahfidzController extends Controller
     {
         $query = Halaqah::query();
 
-        if ($request->filled('hari')) {
-            $query->whereHas('jadwal_halaqah', function ($q) use ($request) {
-                $q->where('hari', $request->hari);
-            });
-        }
+        $halaqah = $query->with('jam_halaqah')->paginate(10)->withQueryString();
 
-        $query->with([
-            'jadwal_halaqah' => function ($q) use ($request) {
-                if ($request->filled('hari')) {
-                    $q->where('hari', $request->hari);
-                }
-
-                $q->with('jam_halaqah')
-                  ->orderByRaw("FIELD(hari, 'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu')");
-            }
-        ]);
-
-        $halaqah = $query->paginate(10)->withQueryString();
-
-        $gurus = User::whereHas('roles', function ($q) {
-            $q->where('name', 'muhafidz');
-        })->get();
-
-        return view('pages.tahfidz.jadwalHalaqah', compact('halaqah', 'gurus'));
+        return view('pages.tahfidz.jadwalHalaqah', compact('halaqah'));
     }
 
     public function createJamHalaqah()
@@ -235,33 +212,136 @@ class TahfidzController extends Controller
     public function storeJadwalhalaqah(Request $request)
     {
         $request->validate([
-            'hari' => 'required',
             'halaqah_id' => 'required|exists:mapels,id',
             'jam_halaqah_id' => 'required|array',
-            'jam_pelajaran_id.*' => 'exists:jam_pelajarans,id',
+            'jam_halaqahs_id.*' => 'exists:jam_halaqahs,id',
         ]);
 
-        foreach ($request->jam_halaqah_id as $jamId) {
+        // foreach ($request->jam_halaqah_id as $jamId) {
 
-            $halaqahBentrok = JadwalHalaqah::where('hari', $request->hari)
-                ->whereHas('jam_halaqah', function ($q) use ($jamId) {
-                    $q->where('jam_halaqah_id', $jamId);
-                })
-                ->exists();
+        
+        // }
+        $halaqah = Halaqah::find($request->halaqah_id);
 
-            if ($halaqahBentrok) {
-                return back()->with('error', 'Halaqah sudah memiliki jadwal di jam tersebut.');
-            }
-        }
-
-        $jadwalHalaqah = JadwalHalaqah::create([
-            'hari' => $request->hari,
-            'halaqah_id' => $request->halaqah_id,
-        ]);
-
-        $jadwalHalaqah->jam_halaqah()->attach($request->jam_halaqah_id);
+        $halaqah->jam_halaqah()->sync($request->jam_halaqah_id);
 
         return redirect()->route('tahfidz.jadwal-halaqah')->with('success', 'Jadwal berhasil ditambahkan.');
     }
 
+    public function jurnalHalaqah(JamHalaqah $jamHalaqah)
+    {
+        $today = now()->toDateString();
+
+        $jurnal = JurnalTahfidz::where('jam_halaqah_id', $jamHalaqah->id)->where('tanggal', $today)->first();
+
+        return view('pages.tahfidz.jurnalHalaqah', compact('jurnal', 'jamHalaqah'));
+    }
+
+    public function storeJurnalHalaqah(Request $request, JamHalaqah $jamHalaqah, Halaqah $halaqah)
+    {
+        $request->validate([
+            'tanggal' => 'required',
+        ]);
+
+        $jurnal = JurnalTahfidz::create([
+            'tanggal' => $request->tanggal,
+            'catatan' => $request->catatan,
+            'jam_halaqah_id' => $jamHalaqah->id,
+            ]);
+
+            foreach($halaqah->murid as $murid){
+                $status = $request->absen[$murid->id] ?? 'alpha';
+
+            AbsenHalaqah::create([
+                'tanggal' => $request->tanggal,
+                'jurnal_tahfidz_id' => $jurnal->id,
+                'murid_id' => $murid->id,
+                'status' => $status,
+            ]);
+        }
+        return redirect()->back()->with('success', 'berhasil mengisi jurnal');
+    }
+
+    public function updateJurnalHalaqah(Request $request, JurnalTahfidz $jurnal, JamHalaqah $jamHalaqah, Halaqah $halaqah)
+    {
+        $request->validate([
+            'tanggal' => 'required',
+        ]);
+
+        $jurnal->update([
+            'tanggal' => $request->tanggal,
+            'catatan' => $request->catatan,
+            'jam_halaqah_id' => $jamHalaqah->id,
+            ]);
+
+            AbsenHalaqah::where('jurnal_tahfidz_id', $jurnal->id)->where('tanggal', $request->tanggal)->delete();
+
+            foreach($halaqah->murid as $murid) {
+                $status = $request->absen[$murid->id] ?? 'alpha';
+
+
+            AbsenHalaqah::create([
+                'tanggal' => $request->tanggal,
+                'jurnal_tahfidz_id' => $jurnal->id,
+                'murid_id' => $murid->id,
+                'status' => $status,
+            ]);
+        }
+        return redirect()->back()->with('success', 'berhasil mengisi jurnal');
+    }
+
+    public function mutabaah(Murid $murid)
+    {
+        return view('pages.tahfidz.mutabaah', compact('murid'));
+    }
+
+    public function createMutabaah(Murid $murid)
+    {
+        return view('pages.tahfidz.tambahMutabaah', compact('murid'));
+    }
+
+    public function storeMutabaah(Request $request, Murid $murid)
+    {
+        $request->validate([
+            'tanggal' => 'required|date',
+            'nama_surat' => 'required',
+            'ayat_awal' => 'required|numeric',
+            'ayat_akhir' => 'required|numeric',
+        ]);
+
+        Mutabaah::create([
+            'tanggal' => $request->tanggal,
+            'nama_surat' => $request->nama_surat,
+            'ayat_awal' => $request->ayat_awal,
+            'ayat_akhir' => $request->ayat_akhir,
+            'murid_id' => $murid->id,
+        ]);
+
+        return back()->with('success', 'berhasil mengisi mutabaah');
+    }
+
+    public function editMutabaah(Mutabaah $mutabaah, Murid $murid)
+    {
+        return view('pages.tahfidz.editMutabaah', compact('murid', 'mutabaah'));
+    }
+
+    public function updateMutabaah(Request $request, Mutabaah $mutabaah, Murid $murid)
+    {
+        $request->validate([
+            'tanggal' => 'required|date',
+            'nama_surat' => 'required',
+            'ayat_awal' => 'required|numeric',
+            'ayat_akhir' => 'required|numeric',
+        ]);
+
+        $mutabaah->update([
+            'tanggal' => $request->tanggal,
+            'nama_surat' => $request->nama_surat,
+            'ayat_awal' => $request->ayat_awal,
+            'ayat_akhir' => $request->ayat_akhir,
+            'murid_id' => $murid->id,
+        ]);
+
+        return back()->with('success', 'berhasil mengupdate mutabaah');
+    }
 }

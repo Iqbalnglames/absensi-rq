@@ -8,9 +8,9 @@ class Halaqah extends Model
 {
     protected $guarded = [];
 
-    public function jadwal_halaqah()
+    public function jam_halaqah()
     {
-        return $this->hasMany(JadwalHalaqah::class);
+        return $this->belongsToMany(JamHalaqah::class, 'jam_halaqah_harians');
     }
 
     public function user()

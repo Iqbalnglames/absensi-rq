@@ -413,6 +413,30 @@ Route::middleware('auth')->group(function() {
 
         Route::get('/pembelajaran-tahfidz', [TahfidzController::class, 'pembelajaranTahfidz'])
             ->name('pembelajaran-tahfidz');
+
+        Route::get('/pembelajaran-tahfidz/jurnal/{jadwal}/{jamHalaqah}', [TahfidzController::class, 'jurnalHalaqah'])
+            ->name('pembelajaran-tahfidz.jurnal');
+
+        Route::post('/pembelajaran-tahfidz/jurnal/{jadwal}/{jamHalaqah}', [TahfidzController::class, 'storeJurnalHalaqah'])
+            ->name('pembelajaran-tahfidz.jurnal.store');
+
+        Route::put('/pembelajaran-tahfidz/jurnal-update/{jadwal}/{jurnal}/{jamHalaqah}', [TahfidzController::class, 'updateJurnalHalaqah'])
+            ->name('pembelajaran-tahfidz.jurnal.update');
+
+        Route::get('/mutabaah/{murid}', [TahfidzController::class, 'mutabaah'])
+            ->name('mutabaah');
+
+        Route::get('/tambah-mutabaah/{murid}', [TahfidzController::class, 'createMutabaah'])
+            ->name('mutabaah.create');
+
+        Route::post('/mutabaah/{murid}', [TahfidzController::class, 'storeMutabaah'])
+            ->name('mutabaah.store');
+
+        Route::get('/edit-mutabaah/{mutabaah}/{murid}', [TahfidzController::class, 'editMutabaah'])
+            ->name('mutabaah.edit');
+
+        Route::put('/update-mutabaah/{mutabaah}/{murid}', [TahfidzController::class, 'updateMutabaah'])
+            ->name('mutabaah.update');
     });
 
 

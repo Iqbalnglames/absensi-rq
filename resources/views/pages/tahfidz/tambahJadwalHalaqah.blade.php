@@ -14,19 +14,12 @@
             </div>
         @endif
 
+        @if($errors->any)
+            {{ $errors }}
+        @endif
+
         <form action="{{ route('tahfidz.jadwal-halaqah.store') }}" method="POST" class="bg-white shadow rounded-xl p-6 space-y-4">
             @csrf
-
-            {{-- Hari --}}
-            <div>
-                <label class="block text-sm font-medium mb-1">Hari</label>
-                <select name="hari" class="w-full border rounded-lg px-3 py-2" required>
-                    <option value="">Pilih Hari</option>
-                    @foreach(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'] as $hari)
-                        <option value="{{ $hari }}">{{ $hari }}</option>
-                    @endforeach
-                </select>
-            </div>
 
             {{-- Halaqah --}}
             <div>

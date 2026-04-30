@@ -12,18 +12,15 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             @foreach ($jadwal as $j)
-                <a href="{{ route('kurikulum.pembelajaran.jurnal', $j->id) }}"
-                    class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
-                    <h2 class="font-semibold text-lg">Halaqah {{ $j->halaqah->nama_halaqah }}</h2>
-                    <p class="text-sm text-gray-500">
-                        {{ $j->hari }}
-                    </p>
-                    @foreach ($j->jam_halaqah as $jam)
+                @foreach($j->jam_halaqah as $jam)
+                    <a href="{{ route('tahfidz.pembelajaran-tahfidz.jurnal', [$j->id, 2]) }}"
+                        class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
+                        <h2 class="font-semibold text-lg">Halaqah {{ $j->nama_halaqah }}</h2>
                         <p class="text-sm text-gray-500">
                             {{ $jam->jam_mulai . '-' . $jam->jam_selesai }}
                         </p>
-                    @endforeach
-                </a>
+                    </a>
+                @endforeach
             @endforeach
 
         </div>

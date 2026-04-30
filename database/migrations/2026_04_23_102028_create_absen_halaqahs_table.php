@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('absen_halaqahs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('jadwal_halaqah_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('jurnal_tahfidz_id')->constrained()->cascadeOnDelete();
             $table->foreignId('murid_id')->constrained()->cascadeOnDelete();
             $table->enum('status', ['hadir', 'izin', 'sakit', 'alpha']);
             $table->date('tanggal');
 
-            $table->unique(['jadwal_halaqah_id', 'murid_id', 'tanggal']);
+            $table->unique(['jurnal_tahfidz_id', 'murid_id', 'tanggal']);
             $table->timestamps();
         });
     }
