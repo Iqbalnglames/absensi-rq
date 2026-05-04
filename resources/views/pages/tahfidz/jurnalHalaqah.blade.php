@@ -17,15 +17,15 @@
         {{ $errors }}
     @endif
     <form method="POST" action="{{ $jurnal
-        ? route('tahfidz.pembelajaran-tahfidz.jurnal.update', [$jadwal->id, $jurnal->id, $jamHalaqah])
-        : route('tahfidz.pembelajaran-tahfidz.jurnal.store', [$jadwal->id, $jamHalaqah]) }}"
+        ? route('tahfidz.pembelajaran-tahfidz.jurnal.update', [ $jurnal->id, $halaqah, $jamHalaqah])
+        : route('tahfidz.pembelajaran-tahfidz.jurnal.store', [$halaqah, $jamHalaqah]) }}"
         class="bg-white shadow rounded-xl p-6 space-y-4">
         @csrf
         @if($jurnal)
             @method('PUT')
         @endif
         <div>
-            <p class="block text-lg font-bold mb-1">Halaqah {{ $jadwal->halaqah->nama_halaqah }}</p>
+            <p class="block text-lg font-bold mb-1">Halaqah {{ $halaqah->nama_halaqah }}</p>
         </div>
 
         <div>
@@ -55,7 +55,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($jurnal ? $jurnal->absen_halaqah : $jadwal->halaqah->murid as $murid)
+                    @foreach ($jurnal ? $jurnal->absen_halaqah : $halaqah->murid as $murid)
                         <tr>
                             <td>
                                 <div class="flex flex-col">

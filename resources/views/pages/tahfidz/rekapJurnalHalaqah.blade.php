@@ -27,55 +27,42 @@
                 </button>
 
             </form>
-            {{-- <div class="flex space-x-2 items-center">
-                <a href="{{ route('kurikulum.jadwal.jam-pelajaran') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
-                    Tambah Jam Pelajaran
-                </a>
-                <a href="{{ route('kurikulum.jadwal.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
-                    Tambah Jadwal
-                </a>
-            </div> --}}
         </div>
         <div class="bg-white shadow rounded-xl overflow-x-auto">
             <table class="w-full text-sm">
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="text-left p-4">Tanggal</th>
-                        <th class="text-left p-4">Nama Santri</th>
-                        <th class="text-left p-4">Surat Setoran</th>
-                        <th class="text-left p-4">Ayat</th>
-                        <th class="text-left p-4">Aksi</th>
+                        <th class="text-left p-4">Jam</th>
+                        <th class="text-left p-4">Catatan</th>
+                        <th class="text-left p-4">Absensi Kehadiran</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($mutabaah as $m)
+                    @forelse($jurnal as $j)
                         <tr class="border-b border-gray-200 hover:bg-gray-50">
-                            <td class="p-4">{{ $m->tanggal }}</td>
-                            <td class="p-4">{{ $m->surat }}</td>
-                            <td class="p-4">{{ $m->ayat_awal }} {{ $m->ayat_akhir }}</td>
-                            <td class="p-4"></td>
+                            <td class="p-4">{{ $j->tanggal }}</td>
+                            <td class="p-4">{{ $j->jam_halaqah->jam_mulai }} - {{ $j->jam_halaqah->jam_selesai }}</td>
+                            <td class="p-4">{{ $j->catatan }}</td>
                             <td class="p-4">
                                 <div>
-                                    {{-- <a class="text-blue-600 hover:text-blue-800"
-                                        href="{{ route('kurikulum.kelas.edit', $k->id) }}">Edit</a>
-                                    <form action="{{ route('kurikulum.kelas.delete', $k->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="text-red-600 hover:text-red-800">Hapus</button>
-                                    </form> --}}
+                                    <p>{{ $j->absen_halaqah->where('status', 'hadir')->count() }} Hadir</p>
+                                    <p>{{ $j->absen_halaqah->where('status', 'alpha')->count() }} Alpha</p>
+                                    <p>{{ $j->absen_halaqah->where('status', 'izin')->count() }} Izin</p>
+                                    <p>{{ $j->absen_halaqah->where('status', 'sakit')->count() }} Sakit</p>
                                 </div>
                             </td>
                         </tr>
                     @empty
                         <tr>
                             <td colspan="4" class="text-center py-6 text-gray-400">
-                                Tidak ada data mutabaah
+                                Tidak ada data jurnal
                             </td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
-            {{ $mutabaah->links() }}
+            {{ $jurnal->links() }}
         </div>
     </div>
     <script>

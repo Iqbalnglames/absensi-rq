@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('jurnal_tahfidzs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('jam_halaqah_id')->constrained('jam_halaqahs')->cascadeOnDelete();
+            $table->foreignId('halaqah_id')->constrained('halaqahs')->cascadeOnDelete();
             $table->date('tanggal');
             $table->text('catatan');
             $table->timestamps();

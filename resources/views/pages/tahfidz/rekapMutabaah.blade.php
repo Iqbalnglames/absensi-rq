@@ -44,27 +44,15 @@
                         <th class="text-left p-4">Nama Santri</th>
                         <th class="text-left p-4">Surat Setoran</th>
                         <th class="text-left p-4">Ayat</th>
-                        <th class="text-left p-4">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($mutabaah as $m)
                         <tr class="border-b border-gray-200 hover:bg-gray-50">
                             <td class="p-4">{{ $m->tanggal }}</td>
-                            <td class="p-4">{{ $m->surat }}</td>
+                            <td class="p-4">{{ $m->murid->nama }}</td>
+                            <td class="p-4">{{ $m->nama_surat }}</td>
                             <td class="p-4">{{ $m->ayat_awal }} {{ $m->ayat_akhir }}</td>
-                            <td class="p-4"></td>
-                            <td class="p-4">
-                                <div>
-                                    {{-- <a class="text-blue-600 hover:text-blue-800"
-                                        href="{{ route('kurikulum.kelas.edit', $k->id) }}">Edit</a>
-                                    <form action="{{ route('kurikulum.kelas.delete', $k->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="text-red-600 hover:text-red-800">Hapus</button>
-                                    </form> --}}
-                                </div>
-                            </td>
                         </tr>
                     @empty
                         <tr>

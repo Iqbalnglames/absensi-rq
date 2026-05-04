@@ -228,16 +228,16 @@ class TahfidzController extends Controller
         return redirect()->route('tahfidz.jadwal-halaqah')->with('success', 'Jadwal berhasil ditambahkan.');
     }
 
-    public function jurnalHalaqah(JamHalaqah $jamHalaqah)
+    public function jurnalHalaqah(Halaqah $halaqah, JamHalaqah $jamHalaqah)
     {
         $today = now()->toDateString();
 
-        $jurnal = JurnalTahfidz::where('jam_halaqah_id', $jamHalaqah->id)->where('tanggal', $today)->first();
+        $jurnal = JurnalTahfidz::where('jam_halaqah_id', $jamHalaqah->id)->where('halaqah_id', $halaqah->id)->where('tanggal', $today)->first();
 
-        return view('pages.tahfidz.jurnalHalaqah', compact('jurnal', 'jamHalaqah'));
+        return view('pages.tahfidz.jurnalHalaqah', compact('jurnal', 'jamHalaqah', 'halaqah'));
     }
 
-    public function storeJurnalHalaqah(Request $request, JamHalaqah $jamHalaqah, Halaqah $halaqah)
+    public function storeJurnalHalaqah(Request $request, Halaqah $halaqah, JamHalaqah $jamHalaqah)
     {
         $request->validate([
             'tanggal' => 'required',
@@ -246,6 +246,7 @@ class TahfidzController extends Controller
         $jurnal = JurnalTahfidz::create([
             'tanggal' => $request->tanggal,
             'catatan' => $request->catatan,
+            'halaqah_id' => $halaqah->id,
             'jam_halaqah_id' => $jamHalaqah->id,
             ]);
 
@@ -262,7 +263,7 @@ class TahfidzController extends Controller
         return redirect()->back()->with('success', 'berhasil mengisi jurnal');
     }
 
-    public function updateJurnalHalaqah(Request $request, JurnalTahfidz $jurnal, JamHalaqah $jamHalaqah, Halaqah $halaqah)
+    public function updateJurnalHalaqah(Request $request, JurnalTahfidz $jurnal, Halaqah $halaqah, JamHalaqah $jamHalaqah)
     {
         $request->validate([
             'tanggal' => 'required',
@@ -272,6 +273,7 @@ class TahfidzController extends Controller
             'tanggal' => $request->tanggal,
             'catatan' => $request->catatan,
             'jam_halaqah_id' => $jamHalaqah->id,
+            'halaqah_id' => $halaqah->id,
             ]);
 
             AbsenHalaqah::where('jurnal_tahfidz_id', $jurnal->id)->where('tanggal', $request->tanggal)->delete();
@@ -343,5 +345,12 @@ class TahfidzController extends Controller
         ]);
 
         return back()->with('success', 'berhasil mengupdate mutabaah');
+    }
+
+    public function rekapJurnalHalaqah($halaqah)
+    {
+        $jurnal = JurnalTahfidz::where('halaqah_id', $halaqah)->paginate(20);
+
+        return view('pages.tahfidz.rekapJurnalHalaqah', compact('jurnal'));
     }
 }

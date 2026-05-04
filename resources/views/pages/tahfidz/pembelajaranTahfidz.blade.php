@@ -13,7 +13,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             @foreach ($jadwal as $j)
                 @foreach($j->jam_halaqah as $jam)
-                    <a href="{{ route('tahfidz.pembelajaran-tahfidz.jurnal', [$j->id, 2]) }}"
+                    <a href="{{ route('tahfidz.pembelajaran-tahfidz.jurnal', [$j->id, $jam->id]) }}"
                         class="bg-white shadow rounded-xl p-6 hover:shadow-lg transition">
                         <h2 class="font-semibold text-lg">Halaqah {{ $j->nama_halaqah }}</h2>
                         <p class="text-sm text-gray-500">

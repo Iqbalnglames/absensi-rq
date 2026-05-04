@@ -414,13 +414,13 @@ Route::middleware('auth')->group(function() {
         Route::get('/pembelajaran-tahfidz', [TahfidzController::class, 'pembelajaranTahfidz'])
             ->name('pembelajaran-tahfidz');
 
-        Route::get('/pembelajaran-tahfidz/jurnal/{jadwal}/{jamHalaqah}', [TahfidzController::class, 'jurnalHalaqah'])
+        Route::get('/pembelajaran-tahfidz/jurnal/{halaqah}/{jamHalaqah}', [TahfidzController::class, 'jurnalHalaqah'])
             ->name('pembelajaran-tahfidz.jurnal');
 
-        Route::post('/pembelajaran-tahfidz/jurnal/{jadwal}/{jamHalaqah}', [TahfidzController::class, 'storeJurnalHalaqah'])
+        Route::post('/pembelajaran-tahfidz/jurnal/{halaqah}/{jamHalaqah}', [TahfidzController::class, 'storeJurnalHalaqah'])
             ->name('pembelajaran-tahfidz.jurnal.store');
 
-        Route::put('/pembelajaran-tahfidz/jurnal-update/{jadwal}/{jurnal}/{jamHalaqah}', [TahfidzController::class, 'updateJurnalHalaqah'])
+        Route::put('/pembelajaran-tahfidz/jurnal-update/{jurnal}/{halaqah}/{jamHalaqah}', [TahfidzController::class, 'updateJurnalHalaqah'])
             ->name('pembelajaran-tahfidz.jurnal.update');
 
         Route::get('/mutabaah/{murid}', [TahfidzController::class, 'mutabaah'])
@@ -437,6 +437,9 @@ Route::middleware('auth')->group(function() {
 
         Route::put('/update-mutabaah/{mutabaah}/{murid}', [TahfidzController::class, 'updateMutabaah'])
             ->name('mutabaah.update');
+
+        Route::get('/jurnal-halaqah/{halaqah}', [TahfidzController::class, 'rekapJurnalHalaqah'])
+            ->name('rekap-jurnal');
     });
 
 

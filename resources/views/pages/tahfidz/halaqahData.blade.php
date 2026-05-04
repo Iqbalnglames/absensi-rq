@@ -78,6 +78,8 @@
                                         href="{{ route('tahfidz.halaqah-data.peserta', $h->id) }}">Tambah Peserta</a>
                                     <a href="{{ route('tahfidz.halaqah-data.edit', $h->id) }}"
                                         class="text-blue-600 hover:text-blue-800">Edit Halaqah / Ganti Muhafidz</a>
+                                    <a href="{{ route('tahfidz.rekap-jurnal', $h->id) }}"
+                                        class="text-blue-600 hover:text-blue-800">Rekap Jurnal</a>
                                     <form action="{{ route('tahfidz.halaqah-data.delete', $h->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
