@@ -49,7 +49,7 @@ class KesantrianController extends Controller
     public function editPengasuhAsrama(Asrama $asrama)
     {
         $guru = User::whereHas('roles', function ($query) {
-            $query->where('name', 'pengasuh asrama');
+            $query->where('name', 'kesantrian');
         })->get();
 
         return view('pages.kesantrian.editPengasuhAsrama', compact('guru', 'asrama'));
