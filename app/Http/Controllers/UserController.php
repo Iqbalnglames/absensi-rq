@@ -9,27 +9,27 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     // role
-    public function createRole()
-    {
-        return view('pages.kepegawaian.createRole');
-    }
+    // public function createRole()
+    // {
+    //     return view('pages.kepegawaian.createRole');
+    // }
 
-    public function storeRole(Request $request)
-    {
-        $request->validate([
-            'nama_role' => 'required',
-        ]);
+    // public function storeRole(Request $request)
+    // {
+    //     $request->validate([
+    //         'nama_role' => 'required',
+    //     ]);
 
-        if(str_contains(strtolower($request->nama_role), 'admin')){
-            return redirect()->back()->with('error', 'Role ini tidak boleh dibuat!');
-        }
+    //     if(str_contains(strtolower($request->nama_role), 'admin')){
+    //         return redirect()->back()->with('error', 'Role ini tidak boleh dibuat!');
+    //     }
 
-        Role::create([
-            'name' => $request->nama_role,
-        ]);
+    //     Role::create([
+    //         'name' => $request->nama_role,
+    //     ]);
 
-        return redirect()->back()->with('success', 'Role Berhasil Disimpan');
-    }
+    //     return redirect()->back()->with('success', 'Role Berhasil Disimpan');
+    // }
     
     public function index()
     {

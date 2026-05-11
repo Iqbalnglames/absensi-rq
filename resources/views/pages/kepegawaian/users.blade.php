@@ -25,10 +25,10 @@
             <h2 class="text-xl font-semibold">Manajemen User</h2>
 
             <div class="space-x-2">
-                <a href="{{ route('kepegawaian.role.create') }}"
+                {{-- <a href="{{ route('kepegawaian.role.create') }}"
                     class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
                     + Tambah Data Role
-                </a>
+                </a> --}}
                 <a href="{{ route('kepegawaian.users.create') }}"
                     class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
                     + Tambah User

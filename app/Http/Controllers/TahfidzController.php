@@ -26,7 +26,7 @@ class TahfidzController extends Controller
     public function tambahHalaqah()
     {
         $muhafidz = User::whereHas('roles', function ($q) {
-            $q->where('name', 'guru');
+            $q->where('name', 'muhafidz');
         })->get();
 
         return view('pages.tahfidz.tambahHalaqah', compact('muhafidz'));
@@ -46,7 +46,7 @@ class TahfidzController extends Controller
     public function editHalaqah(Halaqah $halaqah)
     {
         $muhafidz = User::whereHas('roles', function ($q) {
-            $q->where('name', 'guru');
+            $q->where('name', 'muhafidz');
         })->get();
 
         return view('pages.tahfidz.editHalaqah', compact('halaqah', 'muhafidz'));
