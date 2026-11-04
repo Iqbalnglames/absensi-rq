@@ -4,17 +4,17 @@
     <a href="{{ route('kepegawaian.index') }}" class="text-sm text-blue-500 mb-4 inline-block">
         ← Kembali ke Menu Kepegawaian
     </a>
-    @if(session('error'))
+    @if (session('error'))
         <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
             {{ session('error') }}
         </div>
     @endif
-    @if(session('info'))
+    @if (session('info'))
         <div class="bg-blue-100 text-blue-700 p-3 rounded mb-4">
             {{ session('info') }}
         </div>
     @endif
-    @if(session('success'))
+    @if (session('success'))
         <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
             {{ session('success') }}
         </div>
@@ -25,10 +25,10 @@
             <h2 class="text-xl font-semibold">Manajemen User</h2>
 
             <div class="space-x-2">
-                {{-- <a href="{{ route('kepegawaian.role.create') }}"
+                <a href="{{ route('kepegawaian.role.create') }}"
                     class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
                     + Tambah Data Role
-                </a> --}}
+                </a>
                 <a href="{{ route('kepegawaian.users.create') }}"
                     class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
                     + Tambah User
@@ -42,6 +42,7 @@
                     <tr>
                         <th class="text-left px-4 py-3">Nama</th>
                         <th class="text-left px-4 py-3">Email</th>
+                        <th class="text-left px-4 py-3">Role</th>
                         <th class="text-left px-4 py-3">Tanggal Dibuat</th>
                         <th class="text-left px-4 py-3">Aksi</th>
                     </tr>
@@ -52,6 +53,11 @@
                             <td class="px-4 py-3 font-medium">{{ $user->name }}</td>
                             <td class="px-4 py-3">{{ $user->email }}</td>
                             <td class="px-4 py-3">
+                                @foreach ($user->roles as $role)
+                                    {{ $role->name }},
+                                @endforeach
+                            </td>
+                            <td class="px-4 py-3">
                                 {{ $user->created_at->format('d M Y') }}
                             </td>
                             <td class="px-4 py-3 space-x-3">
@@ -61,8 +67,8 @@
                                     Edit
                                 </a>
 
-                                <form action="{{ route('kepegawaian.users.destroy', $user) }}" method="POST" class="inline"
-                                    onsubmit="return confirm('Yakin hapus user ini?')">
+                                <form action="{{ route('kepegawaian.users.destroy', $user) }}" method="POST"
+                                    class="inline" onsubmit="return confirm('Yakin hapus user ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button class="text-red-600 hover:text-red-800 text-sm">

@@ -17,8 +17,11 @@ class AuthController extends Controller
     {
         // validasi
         $credentials = $request->validate([
-            'username' => ['required'],
-            'password' => ['required'],
+            'username' => 'required',
+            'password' => 'required',
+        ], [
+            'username.required' => 'Anda belum mengisi kolom username',
+            'password.required' => 'Anda belum mengisi kolom password'
         ]);
 
         $remember = $request->filled('remember');

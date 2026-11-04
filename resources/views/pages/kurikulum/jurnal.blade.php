@@ -74,13 +74,13 @@
                             <td class="p-4">{{ $j->bab }}</td>
                             <td class="p-4">
                                 <div>
-                                    {{-- <a class="text-blue-600 hover:text-blue-800"
-                                        href="{{ route('kurikulum.kelas.edit', $k->id) }}">Edit</a>
+                                    <a class="text-blue-600 hover:text-blue-800"
+                                        href="{{ route('kurikulum.pembelajaran.editJurnal', [$j->jadwal_mengajar_id, $j->id]) }}">Edit</a>
                                     <form action="{{ route('kurikulum.kelas.delete', $k->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="text-red-600 hover:text-red-800">Hapus</button>
-                                    </form> --}}
+                                    </form>
                                 </div>
                             </td>
                         </tr>

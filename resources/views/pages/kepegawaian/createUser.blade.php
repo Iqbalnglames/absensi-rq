@@ -25,20 +25,29 @@
 
         <form action="{{ route('kepegawaian.users.store') }}" method="POST" class="space-y-4">
             @csrf
+             @if ($errors->any())
+                <div class="bg-red-100 text-red-700 p-4 rounded mb-4 max-w-lg w-full mx-auto">
+                    <ul class="list-disc list-inside text-sm">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <div>
                 <label class="text-sm">Nama</label>
-                <input type="text" name="name" class="w-full border rounded-lg px-3 py-2 mt-1">
+                <input type="text" value="{{ old('name') }}" name="name" class="w-full border rounded-lg px-3 py-2 mt-1">
             </div>
 
             <div>
                 <label class="text-sm">Email</label>
-                <input type="email" name="email" class="w-full border rounded-lg px-3 py-2 mt-1">
+                <input type="email" name="email" value="{{ old('email') }}" class="w-full border rounded-lg px-3 py-2 mt-1">
             </div>
 
             <div>
                 <label class="text-sm">Username</label>
-                <input type="text" name="username" class="w-full border rounded-lg px-3 py-2 mt-1">
+                <input type="text" name="username" value="{{ old('username') }}" class="w-full border rounded-lg px-3 py-2 mt-1">
             </div>
 
             <div>

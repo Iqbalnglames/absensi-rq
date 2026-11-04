@@ -26,6 +26,15 @@
         <form action="{{ route('kepegawaian.users.update', $user) }}" method="POST" class="space-y-4">
             @csrf
             @method('PUT')
+            @if ($errors->any())
+                <div class="bg-red-100 text-red-700 p-4 rounded mb-4 max-w-lg w-full mx-auto">
+                    <ul class="list-disc list-inside text-sm">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <div>
                 <label class="text-sm">Nama</label>

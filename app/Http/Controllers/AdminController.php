@@ -36,9 +36,11 @@ class AdminController extends Controller
     public function storeJadwal(Request $request, User $user)
     {
         $request->validate([
-            'hari' => 'required',
+            'hari' => 'required | unique:jadwal_kerjas,hari',
             'jam_masuk' => 'required',
             'jam_pulang' => 'required',
+        ],[
+            "hari.unique" => 'hari '. $request->hari . ' sudah memiliki jadwal'
         ]);
 
         $user->jadwal_kerja()->create($request->all());

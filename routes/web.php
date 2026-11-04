@@ -30,11 +30,11 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('kepegawaian')->name('kepegawaian.')->group(function () {
 
-            // Route::get('/tambah-role', [UserController::class, 'createRole'])
-            //     ->name('role.create');
+            Route::get('/tambah-role', [UserController::class, 'createRole'])
+                ->name('role.create');
 
-            // Route::post('/simpan-role', [UserController::class, 'storeRole'])
-            //     ->name('role.store');
+            Route::post('/simpan-role', [UserController::class, 'storeRole'])
+                ->name('role.store');
             Route::middleware(['role:admin,hrd'])->group(function () {
                 // CRUD User
                 Route::resource('users', UserController::class);
@@ -193,6 +193,9 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/pembelajaran', [KurikulumController::class, 'pembelajaran'])
                 ->name('pembelajaran');
+
+            Route::get('/pembelajaran/edit-jurnal/{jadwal}/{jurnal}', [KurikulumController::class, 'editJurnalKelas'])
+                ->name('pembelajaran.editJurnal');
 
             Route::get('/pembelajaran/{jadwal}', [KurikulumController::class, 'jurnalKelas'])
                 ->name('pembelajaran.jurnal');

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('jam_halaqah_id')->constrained('jam_halaqahs')->cascadeOnDelete();
             $table->foreignId('halaqah_id')->constrained('halaqahs')->cascadeOnDelete();
             $table->date('tanggal');
-            $table->text('catatan');
+            $table->text('catatan')->nullable();
             $table->timestamps();
         });
     }

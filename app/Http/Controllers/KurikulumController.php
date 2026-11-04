@@ -278,22 +278,30 @@ class KurikulumController extends Controller
     {
         $user = Auth::user();
         $jadwal = Jadwal::where('user_id', $user->id)->orderByRaw("FIELD(hari, 'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu')")->get();
+        $today = now('Asia/Jakarta')->toDateString();
+        $jurnalHariIni = Jurnal::whereIn('jadwal_mengajar_id', $jadwal->pluck('id'))
+            ->whereDate('tanggal', $today)
+            ->pluck('jadwal_mengajar_id')
+            ->all();
 
-        return view('pages.kurikulum.pembelajaran', compact('jadwal'));
+        return view('pages.kurikulum.pembelajaran', compact('jadwal', 'jurnalHariIni'));
     }
 
     public function jurnalKelas(Jadwal $jadwal)
     {
-        $jadwal->load('kelas.murid');
-        $today = now()->toDateString();
-
-        // dd($today);
+        $jadwal->load(['kelas.murid', 'jam_pelajaran']);
+        $today = now('Asia/Jakarta')->toDateString();
 
         $jurnal = Jurnal::where('jadwal_mengajar_id', $jadwal->id)
             ->where('tanggal', $today)
             ->first();
 
-        return view('pages.kurikulum.jurnalKelas', compact('jadwal', 'jurnal'));
+        $absensi = $jadwal->absen_murid()
+            ->whereDate('tanggal', $jurnal?->tanggal ?? $today)
+            ->get()
+            ->keyBy('murid_id');
+
+        return view('pages.kurikulum.jurnalKelas', compact('jadwal', 'jurnal', 'absensi'));
     }
 
     public function storeJurnalKelas(Request $request, Jadwal $jadwal)
@@ -323,6 +331,20 @@ class KurikulumController extends Controller
             ]);
         }
         return redirect()->back()->with('success', 'berhasil mengisi jurnal');
+    }
+
+    public function editJurnalKelas(Jadwal $jadwal, Jurnal $jurnal)
+    {
+        $jurnal = Jurnal::where('jadwal_mengajar_id', $jadwal->id)
+            ->findOrFail($jurnal->id);
+
+        $jadwal->load(['kelas.murid', 'mapel', 'jam_pelajaran']);
+        $absensi = $jadwal->absen_murid()
+            ->whereDate('tanggal', $jurnal->tanggal)
+            ->get()
+            ->keyBy('murid_id');
+
+        return view('pages.kurikulum.editJurnalKelas', compact('jadwal', 'jurnal', 'absensi'));
     }
 
     public function updateJurnalKelas(Request $request, Jadwal $jadwal, Jurnal $jurnal)

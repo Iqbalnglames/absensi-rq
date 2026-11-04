@@ -24,21 +24,31 @@
             {{ session('success') }}
         </div>
     @endif
+
     <div class="bg-white p-6 rounded-xl shadow max-w-lg max-h-lg my-auto mx-auto">
 
         <h2 class="text-xl font-semibold mb-6">Login</h2>
 
         <form action="{{ route('login') }}" method="POST" class="space-y-4">
+            @if ($errors->any())
+                <div class="bg-red-100 text-red-700 p-4 rounded mb-4 max-w-lg w-full mx-auto">
+                    <ul class="list-disc list-inside text-sm">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             @csrf
 
             <div>
                 <label class="text-sm">Username</label>
-                <input type="text" name="username" class="w-full border rounded-lg px-3 py-2 mt-1">
+                <input type="text" required name="username" value="{{ old('username') }}" class="w-full border rounded-lg px-3 py-2 mt-1">
             </div>
 
             <div>
                 <label class="text-sm">Password</label>
-                <input type="password" name="password" class="w-full border rounded-lg px-3 py-2 mt-1">
+                <input type="password" required name="password" class="w-full border rounded-lg px-3 py-2 mt-1">
             </div>
 
             <div>

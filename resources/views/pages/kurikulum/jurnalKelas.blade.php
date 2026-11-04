@@ -33,26 +33,26 @@
 
         <div>
             <label class="block text-sm font-medium mb-1">Tanggal</label>
-            <input name="tanggal" type="date" value="{{ $jurnal->tanggal ?? '' }}"
+            <input name="tanggal" type="date" value="{{ old('tanggal', $jurnal->tanggal ?? '') }}"
                 class="w-full border rounded-lg px-3 py-2" required>
         </div>
 
         <div>
             <label class="block text-sm font-medium mb-1">Bab</label>
-            <input name="bab" type="text" value="{{ $jurnal->bab ?? '' }}" class="w-full border rounded-lg px-3 py-2"
+            <input name="bab" type="text" value="{{ old('bab', $jurnal->bab ?? '') }}" class="w-full border rounded-lg px-3 py-2"
                 required>
         </div>
 
         <div>
             <label class="block text-sm font-medium mb-1">Materi</label>
             <textarea name="materi" id=""
-                class="w-full border h-40 rounded-lg px-3 py-2">{{ $jurnal->materi ?? '' }}</textarea>
+                class="w-full border h-40 rounded-lg px-3 py-2">{{ old('materi', $jurnal->materi ?? '') }}</textarea>
         </div>
 
         <div>
             <label class="block text-sm font-medium mb-1">Catatan</label>
             <textarea name="catatan" id=""
-                class="w-full border h-40 rounded-lg px-3 py-2">{{ $jurnal->catatan ?? '' }}</textarea>
+                class="w-full border h-40 rounded-lg px-3 py-2">{{ old('catatan', $jurnal->catatan ?? '') }}</textarea>
         </div>
 
         <div class="w-full border rounded-lg px-3 py-2">
@@ -66,14 +66,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($jurnal ? $jurnal->jadwal->absen_murid : $jadwal->kelas->murid as $murid)
+                    @foreach ($jadwal->kelas->murid as $murid)
+                        @php($statusAbsen = old('absen.' . $murid->id, $absensi->get($murid->id)?->status))
                         <tr>
-                            <td>{{ $jurnal ? $murid->murid->nama : $murid->nama }}</td>
-                            <td><input name="absen[{{ $jurnal ? $murid->murid->id : $murid->id }}]" type="checkbox" {{ $murid->status == 'hadir' ? 'checked' : '' }} value="hadir"
+                            <td>{{ $murid->nama }}</td>
+                            <td><input name="absen[{{ $murid->id }}]" type="checkbox" {{ $statusAbsen == 'hadir' ? 'checked' : '' }} value="hadir"
                                     class="w-full border rounded-lg px-3 py-2"></td>
-                            <td><input name="absen[{{ $jurnal ? $murid->murid->id : $murid->id }}]" type="checkbox" {{ $murid->status == 'sakit' ? 'checked' : '' }} value="sakit"
+                            <td><input name="absen[{{ $murid->id }}]" type="checkbox" {{ $statusAbsen == 'sakit' ? 'checked' : '' }} value="sakit"
                                     class="w-full border rounded-lg px-3 py-2"></td>
-                            <td><input name="absen[{{ $jurnal ? $murid->murid->id : $murid->id }}]" type="checkbox" {{ $murid->status == 'izin' ? 'checked' : '' }} value="izin"
+                            <td><input name="absen[{{ $murid->id }}]" type="checkbox" {{ $statusAbsen == 'izin' ? 'checked' : '' }} value="izin"
                                     class="w-full border rounded-lg px-3 py-2"></td>
                         </tr>
                     @endforeach

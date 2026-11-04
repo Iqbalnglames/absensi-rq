@@ -24,35 +24,40 @@
                     @php
                         $roles = auth()->check() ? auth()->user()->roles : collect();
                     @endphp
-                    <a href="{{ route('dashboard') }}" class="block px-4 py-2 rounded-lg
+                    <a href="{{ route('dashboard') }}"
+                        class="block px-4 py-2 rounded-lg
    {{ Route::is('dashboard') ? 'bg-blue-500 text-white hover:bg-blue-600' : 'text-gray-700 hover:bg-gray-100' }}">
                         Dashboard
                     </a>
 
-                    <a href="{{ route('kepegawaian.index') }}" class="block px-4 py-2 rounded-lg
+                    <a href="{{ route('kepegawaian.index') }}"
+                        class="block px-4 py-2 rounded-lg
    {{ Route::is('kepegawaian.*') ? 'bg-blue-500 text-white hover:bg-blue-600' : 'text-gray-700 hover:bg-gray-100' }}">
                         Kepegawaian
                     </a>
 
                     @if ($roles->contains('name', 'admin') || $roles->contains('name', 'guru'))
-                                            <a href="{{ route('kurikulum.index') }}" class="block px-4 py-2 rounded-lg
+                        <a href="{{ route('kurikulum.index') }}"
+                            class="block px-4 py-2 rounded-lg
                            {{ Route::is('kurikulum.*') ? 'bg-blue-500 text-white hover:bg-blue-600' : 'text-gray-700 hover:bg-gray-100' }}">
-                                                Kurikulum
-                                            </a>
+                            Kurikulum
+                        </a>
                     @endif
 
-                     @if ($roles->contains('name', 'admin') || $roles->contains('name', 'muhafidz'))
-                    <a href="{{ route('tahfidz.index') }}" class="block px-4 py-2 rounded-lg
+                    @if ($roles->contains('name', 'admin') || $roles->contains('name', 'muhafidz'))
+                        <a href="{{ route('tahfidz.index') }}"
+                            class="block px-4 py-2 rounded-lg
    {{ Route::is('tahfidz.*') ? 'bg-blue-500 text-white hover:bg-blue-600' : 'text-gray-700 hover:bg-gray-100' }}">
-                        Tahfidz
-                    </a>
+                            Tahfidz
+                        </a>
                     @endif
 
-                     @if ($roles->contains('name', 'admin') || $roles->contains('name', 'kesantrian'))
-                    <a href="{{ route('kesantrian.index') }}" class="block px-4 py-2 rounded-lg
+                    @if ($roles->contains('name', 'admin') || $roles->contains('name', 'kesantrian'))
+                        <a href="{{ route('kesantrian.index') }}"
+                            class="block px-4 py-2 rounded-lg
    {{ Route::is('kesantrian.*') ? 'bg-blue-500 text-white hover:bg-blue-600' : 'text-gray-700 hover:bg-gray-100' }}">
-                        Kesantrian
-                    </a>
+                            Kesantrian
+                        </a>
                     @endif
 
                     <a href="{{ route('kesantrian.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-100">APi
@@ -82,6 +87,7 @@
                     <div class="flex items-center space-x-3">
                         <span
                             class="text-sm text-gray-600">{{ Carbon::now()->locale('id')->translatedFormat('l, d M Y') }}</span>
+                        <h1 class="font-bold">{{ auth()->user()->name }}</h1>
                         <div class="w-9 h-9 bg-gray-300 rounded-full"></div>
                     </div>
                 </div>

@@ -219,7 +219,7 @@ class TahfidzController extends Controller
 
         // foreach ($request->jam_halaqah_id as $jamId) {
 
-        
+
         // }
         $halaqah = Halaqah::find($request->halaqah_id);
 
@@ -241,6 +241,7 @@ class TahfidzController extends Controller
     {
         $request->validate([
             'tanggal' => 'required',
+            'catatan' => 'nullable',
         ]);
 
         $jurnal = JurnalTahfidz::create([
