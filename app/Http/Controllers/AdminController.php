@@ -40,7 +40,9 @@ class AdminController extends Controller
             'jam_masuk' => 'required',
             'jam_pulang' => 'required',
         ],[
-            "hari.unique" => 'hari '. $request->hari . ' sudah memiliki jadwal'
+            "hari.unique" => 'Hari '. $request->hari . ' sudah memiliki jadwal',
+            "jam_masuk.required" => 'Jam masuk belum diisi',
+            "jam_pulang.required" => 'Jam pulang belum diisi',
         ]);
 
         $user->jadwal_kerja()->create($request->all());
